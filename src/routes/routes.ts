@@ -1,10 +1,6 @@
 // src/config/routes.js
 const ROUTES = {
-  HOME: 'Home',
-  LOGIN: 'Login',
-  PROFILE: 'Profile',
-  SETTINGS: 'Settings',
-  // Add more route definitions if needed
+  SPLASH: 'splash',
 };
 
 export default ROUTES;

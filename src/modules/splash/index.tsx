@@ -1,11 +1,11 @@
+import { Animated } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 
+import { styles } from './styles';
 import SplashScreen from 'react-native-splash-screen';
 import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
-import { styles } from './styles';
-import { Animated } from 'react-native';
 
 const Splash = () => {
   const opacity = useRef(new Animated.Value(0)).current;

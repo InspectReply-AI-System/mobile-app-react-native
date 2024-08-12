@@ -15,6 +15,15 @@
     [super application:application didFinishLaunchingWithOptions:launchOptions];
     [RNSplashScreen show]; 
     return YES;
+    for (NSString* family in [UIFont familyNames])
+{
+    NSLog(@"%@", family);
+
+    for (NSString* name in [UIFont fontNamesForFamilyName: family])
+    {
+        NSLog(@"Family name:  %@", name);
+    }
+}
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

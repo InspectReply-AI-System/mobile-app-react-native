@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
+import { Text } from 'react-native';
 
 import Row from '../general/Row';
 import { styles } from './styles';
@@ -8,6 +8,7 @@ import Column from '../general/Column';
 import Touchable from '../general/Touchable';
 import { goBack } from '@inspectreplyai/utils/navigationUtils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import LocalImage from '../general/LocalImage';
 
 const CustomHeader: React.FC<HeaderProps> = ({
   leftIcon,
@@ -22,7 +23,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
       <Column style={styles.leftContainer}>
         {leftIcon && (
           <Touchable onPress={onLeftPress}>
-            <Image source={leftIcon} />
+            <LocalImage source={leftIcon} />
           </Touchable>
         )}
       </Column>
@@ -32,7 +33,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
       <Column style={styles.rightContainer}>
         {rightIcon && (
           <Touchable onPress={onRightPress}>
-            <Image source={rightIcon} />
+            <LocalImage source={rightIcon} />
           </Touchable>
         )}
       </Column>

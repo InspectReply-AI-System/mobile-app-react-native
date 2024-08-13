@@ -26,7 +26,7 @@ const Welcome = () => {
         <Column style={styles.buttonContainer}>
           <PrimaryButton
             onPress={() => {
-              navigate(ROUTES.SIGNUP);
+              navigate(ROUTES.LOGIN);
             }}
             title={CommonStrings.getStarted}
           />

@@ -4,6 +4,7 @@ const ROUTES = {
   AUTHNAVIGATOR: 'authNavigator',
   WELCOME: 'welcome',
   SIGNUP: 'signUp',
+  LOGIN: 'Login',
 };
 
 export default ROUTES;

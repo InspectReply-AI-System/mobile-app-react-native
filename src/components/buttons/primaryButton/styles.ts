@@ -1,4 +1,4 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize } from '@inspectreplyai/utils/Dimensions';
 import { StyleSheet } from 'react-native';
 
@@ -26,9 +26,11 @@ export const styles = StyleSheet.create({
   disableText: {
     fontSize: normalize(16),
     color: colors.grey47464F,
+    fontFamily: fonts.MEDIUM,
   },
   title: {
     fontSize: normalize(16),
     color: colors.white,
+    fontFamily: fonts.MEDIUM,
   },
 });

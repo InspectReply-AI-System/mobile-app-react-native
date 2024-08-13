@@ -26,5 +26,8 @@ export const CommonStrings = {
   privacyPolicy: ' Privacy Policy',
   Continue: 'Continue',
   alreadyAccount: 'Already have an account? ',
-  forgotPassword: 'Forgot password?',
+  forgotPassword: 'Forgot password',
+  next: 'Next',
+  dontHaveAccount: 'Don’t have an account? ',
+  registerHere: 'Register here! ',
 };

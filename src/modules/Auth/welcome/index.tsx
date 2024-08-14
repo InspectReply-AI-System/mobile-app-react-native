@@ -30,7 +30,7 @@ const Welcome = () => {
             }}
             title={CommonStrings.getStarted}
           />
-          <Text style={[typography.body, styles.signIntext]}>
+          <Text style={[typography.h6, styles.signIntext]}>
             {CommonStrings.signIn}
           </Text>
         </Column>

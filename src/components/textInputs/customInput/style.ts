@@ -1,35 +1,43 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    marginBottom: vh(20),
-  },
-  input: {
     backgroundColor: colors.black,
     borderWidth: 1,
     borderColor: colors.grey47464F,
     borderRadius: 4,
-    color: colors.white,
-    paddingVertical: vh(16),
+    marginTop: vh(24),
+    paddingVertical: vh(18),
     paddingLeft: vw(16),
-    fontSize: normalize(18),
-    marginTop: vh(6),
+  },
+  error: {
+    color: colors.red,
+    fontSize: normalize(12),
+    fontFamily: fonts.BOLD,
+    marginLeft: vw(8),
+    marginTop: vh(4),
+  },
+  input: {
+    color: colors.white,
+    fontSize: normalize(16),
+    fontFamily: fonts.REGULAR,
   },
   label: {
     color: colors.white,
     paddingHorizontal: vh(4),
     paddingVertical: vw(2),
-    fontSize: normalize(14),
-    fontWeight: 'bold',
+    fontSize: normalize(12),
+    fontFamily: fonts.REGULAR,
     alignSelf: 'flex-start',
   },
   labelContiainer: {
     backgroundColor: colors.primaryBlue,
     borderRadius: normalize(2),
     alignSelf: 'flex-start',
-    marginBottom: vh(-16),
+    position: 'absolute',
+    top: -10,
     zIndex: 1,
     marginLeft: vw(12),
   },

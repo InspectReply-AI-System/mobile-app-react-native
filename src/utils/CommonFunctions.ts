@@ -1,13 +1,6 @@
 import { Platform, Keyboard, UIManager, LayoutAnimation } from 'react-native';
-import {
-  emailRegex,
-  regexPhoneNo,
-  passwordRegex,
-  userNameEmailRegex,
-} from './Constant';
 
 import { getUniqueId } from 'react-native-device-info';
-import { CommonStrings } from '@inspectreplyai/utils';
 import moment from 'moment';
 
 const springAnimation = (duration = 700) => {
@@ -70,53 +63,6 @@ const getDeviceDetail = () => {
 
 const dismissKeyboard = () => {
   Keyboard.dismiss();
-};
-
-const mobileNumberValidation = (val: string) => {
-  if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterMobile };
-  } else if (!regexPhoneNo.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidMobile };
-  } else if (regexPhoneNo.test(val)) {
-    return { error: false, errorMsg: '' };
-  } else {
-    return { error: false, errorMsg: '' };
-  }
-};
-
-const userNameEmailValidation = (val: string) => {
-  if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterUserNameEmail };
-  } else if (!userNameEmailRegex.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidCred };
-  } else if (userNameEmailRegex.test(val)) {
-    return { error: false, errorMsg: '' };
-  } else {
-    return { error: false, errorMsg: '' };
-  }
-};
-
-const passwordValidation = (val: string) => {
-  if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterPassword };
-  } else if (!passwordRegex.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidPassword };
-  } else if (passwordRegex.test(val)) {
-    return { error: false, errorMsg: '' };
-  } else {
-    return { error: false, errorMsg: '' };
-  }
-};
-const emailValidation = (val: string) => {
-  if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterEmail };
-  } else if (!emailRegex.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidEmail };
-  } else if (emailRegex.test(val)) {
-    return { error: false, errorMsg: '' };
-  } else {
-    return { error: false, errorMsg: '' };
-  }
 };
 
 const isDeviceIOS = () => {
@@ -189,21 +135,26 @@ const getFormattedDate = (date: string | undefined, format: string) => {
   return moment(date).format(format);
 };
 
+const removeEmojis = (string: string) => {
+  // emoji regex from the emoji-regex library
+  const regex =
+    /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+
+  return string?.replace(regex, '');
+};
+
 export default {
   debounce,
   isNumeric,
   isDeviceIOS,
+  removeEmojis,
   // showSnackbar,
   springAnimation,
   linearAnimation,
   getDeviceDetail,
   dismissKeyboard,
-  emailValidation,
   isDeviceAndroid,
   getFormattedDate,
-  passwordValidation,
   getAssetDataFromPath,
   addOpacityToHexColor,
-  mobileNumberValidation,
-  userNameEmailValidation,
 };

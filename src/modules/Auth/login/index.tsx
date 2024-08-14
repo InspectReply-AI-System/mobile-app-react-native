@@ -40,8 +40,9 @@ const Login = () => {
 
   const onPressForgot = () => {};
 
-  const onPressRegister = () => {};
-
+  const onPressRegister = () => {
+    navigate(ROUTES.SIGNUP);
+  };
   return (
     <Column style={styles.container}>
       <CustomHeader leftIcon={Icons.backIcon} onLeftPress={onPressBack} />

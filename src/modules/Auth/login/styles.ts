@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-
 import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 
@@ -18,25 +17,25 @@ export const styles = StyleSheet.create({
     color: colors.primaryBlue,
   },
   forgot: {
-    textDecorationLine: 'underline',
+    alignSelf: 'center',
     fontFamily: fonts.MEDIUM,
     marginTop: normalize(16),
-    alignSelf: 'center',
+    textDecorationLine: 'underline',
   },
   imageStyle: {
-    height: vw(80),
-    width: vw(80),
+    width: vw(120),
+    height: vw(120),
     alignSelf: 'center',
   },
   innerContainer: { paddingHorizontal: vw(16) },
   registerView: {
-    marginTop: normalize(16),
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: normalize(16),
   },
   signIntext: {
-    textAlign: 'center',
     marginTop: vh(24),
+    textAlign: 'center',
     color: colors.primaryBlue,
   },
   underlineText: { textDecorationLine: 'underline' },

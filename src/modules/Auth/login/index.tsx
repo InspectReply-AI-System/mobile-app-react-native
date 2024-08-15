@@ -1,40 +1,83 @@
-import { Alert, Text } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import Column from '@inspectreplyai/components/general/Column';
-import CustomHeader from '@inspectreplyai/components/header';
-import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
-import ImageWrapper from '@inspectreplyai/components/general/Image';
-import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
-import { typography } from '@inspectreplyai/themes';
-import { CommonStrings, normalize } from '@inspectreplyai/utils';
+import {
+  emailValidation,
+  passwordValidation,
+} from '@inspectreplyai/utils/validatorsUtils';
 import { styles } from './styles';
+import { Text } from 'react-native';
+import React, { useEffect } from 'react';
+import ROUTES from '@inspectreplyai/routes/routes';
+import { typography } from '@inspectreplyai/themes';
+import { useSimpleReducer } from '@inspectreplyai/hooks';
 import Row from '@inspectreplyai/components/general/Row';
+import CustomHeader from '@inspectreplyai/components/header';
+import Column from '@inspectreplyai/components/general/Column';
+import { CommonStrings, normalize } from '@inspectreplyai/utils';
+import ImageWrapper from '@inspectreplyai/components/general/Image';
+import Touchable from '@inspectreplyai/components/general/Touchable';
+import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
+import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import ROUTES from '@inspectreplyai/routes/routes';
+import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
 
 const Login = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [state, updateState] = useSimpleReducer({
+    currentStep: 1,
+    email: '',
+    emailError: '',
+    password: '',
+    passwordError: '',
+  });
+
+  const { currentStep, email, emailError, password, passwordError } = state;
 
   useEffect(() => {
-    setCurrentStep(currentStep);
+    updateState({
+      currentStep: currentStep,
+    });
   }, [currentStep]);
-
-  const onPressNext = () => {
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    } else {
-      navigate(ROUTES.SIGNUP);
-    }
-  };
 
   const onPressBack = () => {
     if (currentStep === 1) {
       goBack();
     } else {
-      setCurrentStep(1);
+      updateState({
+        currentStep: 1,
+      });
+    }
+  };
+
+  const onChangeEmail = (email: string) => {
+    const _emailError = emailValidation(email.trim());
+    updateState({
+      email: email,
+      emailError: _emailError.errorMsg,
+    });
+  };
+
+  const onEnterPassword = (password: string) => {
+    const passwordError = passwordValidation(password.trim());
+    updateState({
+      password,
+      passwordError: passwordError.errorMsg,
+    });
+  };
+
+  const onPressNext = () => {
+    if (currentStep === 1) {
+      updateState({
+        currentStep: 2,
+      });
+    } else {
+      navigate(ROUTES.SIGNUP);
+    }
+  };
+
+  const isNextDisabled = () => {
+    if (currentStep === 1) {
+      return email && !emailError;
+    } else {
+      return password && !passwordError;
     }
   };
 
@@ -45,6 +88,7 @@ const Login = () => {
   const onPressRegister = () => {
     navigate(ROUTES.SIGNUP);
   };
+
   return (
     <Column style={styles.container}>
       <CustomHeader leftIcon={Icons.backIcon} onLeftPress={onPressBack} />
@@ -69,20 +113,30 @@ const Login = () => {
         </Row>
         {currentStep === 1 ? (
           <CustomInput
+            value={email}
+            maxLength={320}
             autoFocus={true}
+            isError={emailError}
             returnKeyType='next'
-            onKeyPress={() => Alert.alert('lkjh')}
             label={CommonStrings.email}
+            onChangeText={onChangeEmail}
+            keyboardType='email-address'
             placeholder={CommonStrings.email}
           />
         ) : (
           <CustomInput
+            maxLength={25}
+            value={password}
+            returnKeyType='next'
+            isError={passwordError}
+            keyboardType='ascii-capable'
+            onChangeText={onEnterPassword}
             label={CommonStrings.password}
             placeholder={CommonStrings.password}
           />
         )}
         <PrimaryButton
-          disabled={false}
+          disabled={!isNextDisabled()}
           title={CommonStrings.next}
           onPress={onPressNext}
         />

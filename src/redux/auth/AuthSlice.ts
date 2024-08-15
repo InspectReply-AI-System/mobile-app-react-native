@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authExtraReducer } from './authExtraReducer';
-import { ActionType, AuthModal } from '@inspectreplyai/models/Modal';
+import { ActionType, AuthModal } from '@inspectreplyai/models/authModal';
 
 let initialState = new AuthModal();
 

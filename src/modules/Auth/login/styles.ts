@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   forgot: {
     textDecorationLine: 'underline',
-    fontFamily: fonts.medium,
+    fontFamily: fonts.MEDIUM,
     marginTop: normalize(16),
     alignSelf: 'center',
   },

@@ -36,4 +36,16 @@ export const CommonStrings = {
   next: 'Next',
   dontHaveAccount: 'Don’t have an account? ',
   registerHere: 'Register here! ',
+  resetPassword: 'Reset Password',
+  verifyCode: 'Verification code',
+  enterVerificationCode: 'Enter verification Code',
+  resendCode: 'Resend Code',
+  checkEmailForVerification:
+    'Please check your email for the verification code',
+  enterVerificationCodeToReset:
+    'Please enter your verification code to reset your password',
+  codeIsInvalid: 'Code is invalid',
+  welcomeBack: 'Welcome back',
+  welComeBackDescription:
+    'Welcome back to InspectReply-AI! Dive back into seamless home inspections with instant insights, accurate cost estimates, and top local contractors ready to help.',
 };

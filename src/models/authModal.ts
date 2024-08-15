@@ -23,6 +23,7 @@ export class AuthModal {
 export class ConfigModal {
   isLoading: boolean = false;
   firstOpen: boolean = true;
+  welocmeScreen: boolean = false;
   snackBarMessage: string = '';
   theme: 'light' | 'dark' = 'light';
 }

@@ -5,6 +5,10 @@ const ROUTES = {
   WELCOME: 'welcome',
   SIGNUP: 'signUp',
   LOGIN: 'login',
+  HOME: 'home',
+  FORGOTPASSWORD: 'forgotPassword',
+  VERIFYCODE: 'verifyCode',
+  SETPASSWORD: 'setPassword',
 };
 
 export default ROUTES;

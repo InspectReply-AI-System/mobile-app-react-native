@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 
 const Splash = () => {
@@ -22,7 +22,7 @@ const Splash = () => {
     const timeoutId = setTimeout(() => {
       SplashScreen.hide();
       setTimeout(() => {
-        navigate(ROUTES.AUTHNAVIGATOR);
+        reset(ROUTES.AUTHNAVIGATOR);
       }, 1000);
     }, 1000);
 

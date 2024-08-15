@@ -4,6 +4,7 @@ import {
   passwordRegex,
   emailRegex,
   nameRegex,
+  verificationCode,
 } from './Constant';
 import { InputFieldType } from './Enums';
 import { CommonStrings } from './stringsUtils';
@@ -79,10 +80,25 @@ const nameValidation = (name: string, type: InputFieldType) => {
   }
 };
 
+const verificationCodeValidation = (code: string) => {
+  if (code.length === 0) {
+    return {
+      error: true,
+      errorMsg: CommonStrings.enterVerificationCodeToReset,
+    };
+  } else if (!verificationCode.test(code)) {
+    return { error: true, errorMsg: CommonStrings.codeIsInvalid };
+  } else if (verificationCode.test(code)) {
+    return { error: false, errorMsg: '' };
+  } else {
+    return { error: false, errorMsg: '' };
+  }
+};
 export {
   emailValidation,
   passwordValidation,
   mobileNumberValidation,
   userNameEmailValidation,
   nameValidation,
+  verificationCodeValidation,
 };

@@ -137,7 +137,7 @@ const Login = () => {
         )}
         <PrimaryButton
           disabled={!isNextDisabled()}
-          title={CommonStrings.next}
+          title={currentStep == 1 ? CommonStrings.next : CommonStrings.Continue}
           onPress={onPressNext}
         />
         <Touchable onPress={onPressForgot}>

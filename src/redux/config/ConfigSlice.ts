@@ -1,4 +1,4 @@
-import { ActionType, ConfigModal } from '@inspectreplyai/utils/Modal.d';
+import { ActionType, ConfigModal } from '@inspectreplyai/models/authModal';
 import { createSlice } from '@reduxjs/toolkit';
 
 let initialState = new ConfigModal();

@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import AuthSlice from './auth/AuthSlice';
-import ConfigSlice from './config/ConfigSlice';
+
 import { StoreActions } from '@inspectreplyai/utils/Enums';
+import ConfigSlice from './config/ConfigSlice';
+import AuthSlice from './auth/AuthSlice';
 
 const RootReducer = combineReducers({
   AuthSlice,
@@ -15,6 +16,7 @@ const rootReducer = (state: any, action: any) => {
     const res = RootReducer(state, action);
     res.ConfigSlice.firstOpen = oldConfig.tutorial;
     res.ConfigSlice.theme = oldConfig.theme;
+    res.ConfigSlice.welocme = oldConfig.welocme;
     return res;
   }
   return RootReducer(state, action);

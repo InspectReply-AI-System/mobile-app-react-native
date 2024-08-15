@@ -38,7 +38,9 @@ const Login = () => {
     }
   };
 
-  const onPressForgot = () => {};
+  const onPressForgot = () => {
+    navigate(ROUTES.FORGOTPASSWORD);
+  };
 
   const onPressRegister = () => {
     navigate(ROUTES.SIGNUP);

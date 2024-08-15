@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.primaryBalck,
   },
   description: { textAlign: 'center', marginTop: vh(16) },
+  dontAccount: {
+    color: colors.primaryBlue,
+    textAlign: 'center',
+    marginTop: vh(16),
+  },
   imageStyle: {
     height: vh(180),
     width: vw(180),

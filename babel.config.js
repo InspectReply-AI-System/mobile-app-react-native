@@ -16,6 +16,7 @@ module.exports = {
           '@themes': './src/themes',
           '@service': './src/service',
           '@reduxstore': './src/redux',
+          '@models': './src/models',
           types: './@types',
         },
       },

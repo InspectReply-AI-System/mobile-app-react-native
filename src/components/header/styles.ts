@@ -11,11 +11,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: vw(15),
   },
   leftContainer: {
-    flex: 1,
     alignItems: 'flex-start',
   },
   rightContainer: {
-    flex: 1,
     alignItems: 'flex-end',
   },
   title: {

@@ -9,6 +9,11 @@ const ROUTES = {
   FORGOTPASSWORD: 'forgotPassword',
   VERIFYCODE: 'verifyCode',
   SETPASSWORD: 'setPassword',
+  REPORTS: 'reports',
+  CONTRACTORS: 'contractors',
+  NOTIFICATIONS: 'notifications',
+  PROFILE: 'profile',
+  BOTTOMTAB: 'bottomTab',
 };
 
 export default ROUTES;

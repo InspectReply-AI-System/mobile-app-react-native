@@ -14,12 +14,11 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
-import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
+import { goBack, navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
-import { CommonFunctions } from '@inspectreplyai/utils';
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -69,8 +68,7 @@ const Login = () => {
         currentStep: 2,
       });
     } else {
-      // navigate(ROUTES.SIGNUP);
-      CommonFunctions.showSnackbar('Work in progress...');
+      reset(ROUTES.BOTTOMTAB);
     }
   };
 

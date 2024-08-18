@@ -9,13 +9,13 @@ import {
 } from '@inspectreplyai/utils/validatorsUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { typography } from '@inspectreplyai/themes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
 import { InputFieldType } from '@inspectreplyai/utils/Enums';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -238,7 +238,7 @@ const SignUp = () => {
           disabled={!isContinueButtonEnabled()}
           title={CommonStrings.Continue}
           onPress={() => {
-            CommonFunctions.showSnackbar('Work in progress...');
+            reset(ROUTES.BOTTOMTAB);
           }}
         />
         <Text style={[typography.body, styles.signIntext]}>

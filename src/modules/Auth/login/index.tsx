@@ -14,12 +14,11 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
-import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
+import { goBack, navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
-
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -69,7 +68,7 @@ const Login = () => {
         currentStep: 2,
       });
     } else {
-      navigate(ROUTES.SIGNUP);
+      reset(ROUTES.BOTTOMTAB);
     }
   };
 
@@ -82,6 +81,13 @@ const Login = () => {
   };
 
   const onPressForgot = () => {
+    updateState({
+      currentStep: 1,
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: '',
+    });
     navigate(ROUTES.FORGOTPASSWORD);
   };
 
@@ -93,6 +99,7 @@ const Login = () => {
     <Column style={styles.container}>
       <CustomHeader leftIcon={Icons.backIcon} onLeftPress={onPressBack} />
       <ScrollContainer
+        keyboardShouldPersistTaps='handled'
         showsVerticalScrollIndicator={false}
         style={styles.innerContainer}>
         <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
@@ -148,11 +155,12 @@ const Login = () => {
         <Column style={styles.registerView}>
           <Text style={[typography.body, styles.dontHaveAccount]}>
             {CommonStrings.dontHaveAccount}
-            <Touchable onPress={onPressRegister}>
-              <Text style={[typography.body, styles.underlineText]}>
-                {CommonStrings.registerHere}
-              </Text>
-            </Touchable>
+
+            <Text
+              onPress={onPressRegister}
+              style={[typography.body, styles.underlineText]}>
+              {CommonStrings.registerHere}
+            </Text>
           </Text>
         </Column>
       </ScrollContainer>

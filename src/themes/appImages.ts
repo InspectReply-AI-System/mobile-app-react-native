@@ -9,6 +9,10 @@ import connector from '../assets/svg/Connector.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
+  reports: require(`${fixedPath}/icons/reports.png`),
+  contractors: require(`${fixedPath}/icons/contractors.png`),
+  notifications: require(`${fixedPath}/icons/notifications.png`),
+  profile: require(`${fixedPath}/icons/profile.png`),
 };
 
 export const Images = {

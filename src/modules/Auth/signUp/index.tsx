@@ -15,7 +15,7 @@ import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
 import { InputFieldType } from '@inspectreplyai/utils/Enums';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -237,7 +237,9 @@ const SignUp = () => {
         <PrimaryButton
           disabled={!isContinueButtonEnabled()}
           title={CommonStrings.Continue}
-          onPress={() => {}}
+          onPress={() => {
+            reset(ROUTES.BOTTOMTAB);
+          }}
         />
         <Text style={[typography.body, styles.signIntext]}>
           {CommonStrings.alreadyAccount}

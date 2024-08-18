@@ -8,11 +8,11 @@ import { typography } from '@inspectreplyai/themes';
 import { CommonStrings } from '@inspectreplyai/utils';
 import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
-import { reset } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
-import ImageWrapper from '@inspectreplyai/components/general/Image';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
+import LocalImage from '@inspectreplyai/components/general/LocalImage';
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Welcome = () => {
   const onPressContinue = () => {
     dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
     if (welocmeScreen) {
-      reset(ROUTES.LOGIN);
+      navigate(ROUTES.LOGIN);
     } else reset(ROUTES.SIGNUP);
   };
   const onPressSignIn = () => {
@@ -30,12 +30,12 @@ const Welcome = () => {
 
   const onPressRegister = () => {
     dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
-    reset(ROUTES.SIGNUP);
+    navigate(ROUTES.SIGNUP);
   };
 
   return (
     <Column style={styles.container}>
-      <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
+      <LocalImage style={styles.imageStyle} source={Images.appIcon} />
       <Column style={styles.innerContainer}>
         <Text style={[typography.h1, styles.welcomeHeading]}>
           {welocmeScreen

@@ -1,7 +1,8 @@
 import { Platform, Keyboard, UIManager, LayoutAnimation } from 'react-native';
-
+import Snackbar from 'react-native-snackbar';
 import { getUniqueId } from 'react-native-device-info';
 import moment from 'moment';
+import { colors } from '@inspectreplyai/themes';
 
 const springAnimation = (duration = 700) => {
   if (Platform.OS === 'android') {
@@ -54,6 +55,26 @@ const linearAnimation = () => {
 //     }
 //   }
 // };
+
+const showSnackbar = (title: string, color?: string) => {
+  if (title !== '' && title !== undefined && title !== null) {
+    Snackbar.show({
+      text: title,
+      duration: 2000,
+      numberOfLines: 3,
+      textColor: colors.white,
+      backgroundColor: color ? color : colors.primaryBlue,
+      // fontFamily: fontFamily.HelveticaBold,
+      // action: {
+      //   text: 'Close',
+      //   textColor: COLORS.WHITE,
+      //   onPress: () => {
+      //     Snackbar.dismiss();
+      //   },
+      // },
+    });
+  }
+};
 
 const getDeviceDetail = () => {
   const deviceId = getUniqueId();
@@ -148,7 +169,7 @@ export default {
   isNumeric,
   isDeviceIOS,
   removeEmojis,
-  // showSnackbar,
+  showSnackbar,
   springAnimation,
   linearAnimation,
   getDeviceDetail,

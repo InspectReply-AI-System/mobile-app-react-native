@@ -5,9 +5,9 @@ import { styles } from './styles';
 import SplashScreen from 'react-native-splash-screen';
 import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
-import ImageWrapper from '@inspectreplyai/components/general/Image';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
+import LocalImage from '@inspectreplyai/components/general/LocalImage';
 
 const Splash = () => {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -32,7 +32,7 @@ const Splash = () => {
   return (
     <Column style={styles.container}>
       <Animated.View style={{ opacity }}>
-        <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
+        <LocalImage source={Images.appIcon} style={styles.imageStyle} />
       </Animated.View>
     </Column>
   );

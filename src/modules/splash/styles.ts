@@ -1,5 +1,4 @@
 import { colors } from '@inspectreplyai/themes';
-import { vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -9,5 +8,5 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  imageStyle: { width: vh(180), height: vw(180) },
+  imageStyle: { alignSelf: 'center' },
 });

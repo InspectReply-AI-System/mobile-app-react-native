@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     borderColor: colors.grey47464F,
     borderRadius: 4,
     marginTop: vh(24),
-    paddingVertical: vh(18),
+    justifyContent: 'center',
+    height: normalize(56),
     paddingLeft: vw(16),
   },
   error: {

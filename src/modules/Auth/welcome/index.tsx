@@ -10,9 +10,9 @@ import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
-import ImageWrapper from '@inspectreplyai/components/general/Image';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
+import LocalImage from '@inspectreplyai/components/general/LocalImage';
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const Welcome = () => {
 
   return (
     <Column style={styles.container}>
-      <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
+      <LocalImage style={styles.imageStyle} source={Images.appIcon} />
       <Column style={styles.innerContainer}>
         <Text style={[typography.h1, styles.welcomeHeading]}>
           {welocmeScreen

@@ -9,7 +9,7 @@ import {
 } from '@inspectreplyai/utils/validatorsUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { typography } from '@inspectreplyai/themes';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -237,7 +237,9 @@ const SignUp = () => {
         <PrimaryButton
           disabled={!isContinueButtonEnabled()}
           title={CommonStrings.Continue}
-          onPress={() => {}}
+          onPress={() => {
+            CommonFunctions.showSnackbar('Work in progress...');
+          }}
         />
         <Text style={[typography.body, styles.signIntext]}>
           {CommonStrings.alreadyAccount}

@@ -16,8 +16,6 @@ export const styles = StyleSheet.create({
     marginTop: vh(16),
   },
   imageStyle: {
-    height: vh(180),
-    width: vw(180),
     alignSelf: 'center',
   },
   innerContainer: { paddingHorizontal: vw(16), marginTop: vh(44) },

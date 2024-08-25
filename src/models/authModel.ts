@@ -4,30 +4,12 @@ export type ActionType = {
 };
 
 export class AuthModel {
-  user: {
-    token: string;
-    email: string;
-    refreshToken: string;
-    firstName: string;
-    lastName: string;
-    userId: string;
-  };
-
-  loading: boolean;
-  error: string;
-
-  constructor() {
-    this.user = {
-      token: '',
-      email: '',
-      refreshToken: '',
-      firstName: '',
-      lastName: '',
-      userId: '',
-    };
-    this.loading = false;
-    this.error = '';
-  }
+  token: string = '';
+  email: string = '';
+  refreshToken: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  userId: string = '';
 }
 
 export class ConfigModal {

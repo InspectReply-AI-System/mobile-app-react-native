@@ -1,47 +1,55 @@
-import { AuthModel } from '@inspectreplyai/models/authModel';
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from './action';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { CommonFunctions } from '@inspectreplyai/utils';
+import { AuthState } from './AuthSlice';
 
 export const authExtraReducer = (
-  builder: ActionReducerMapBuilder<AuthModel>,
+  builder: ActionReducerMapBuilder<AuthState>,
 ) => {
   builder
-    .addCase(loginUser.pending, (state) => {
+    .addCase(loginUser.pending, (state: AuthState) => {
       state.loading = true;
       state.error = '';
     })
-    .addCase(loginUser.fulfilled, (state, action) => {
+    .addCase(loginUser.fulfilled, (state: AuthState, action) => {
       const { customer, token } = action.payload;
-      state.user.token = token;
-      state.user.firstName = customer?.first_name;
-      state.user.lastName = customer?.last_name;
-      state.user.email = customer?.email;
-      state.user.userId = customer?._id;
+      state.user.token = token || '';
+      state.user.firstName = customer?.first_name || '';
+      state.user.lastName = customer?.last_name || '';
+      state.user.email = customer?.email || '';
+      state.user.userId = customer?._id || '';
       state.loading = false;
-      reset(ROUTES.BOTTOMTAB);
+      setTimeout(() => {
+        reset(ROUTES.BOTTOMTAB);
+      }, 0);
     })
-    .addCase(loginUser.rejected, (state, action) => {
+    .addCase(loginUser.rejected, (state: AuthState, action) => {
       state.loading = false;
-      state.error = action.payload as string;
-      CommonFunctions.showSnackbar(action?.payload);
+      state.error = action.payload
+        ? (action.payload as string)
+        : 'An error occurred';
+      CommonFunctions.showSnackbar(action.payload as string);
     });
 
   builder
-    .addCase(registerUser.pending, (state) => {
+    .addCase(registerUser.pending, (state: AuthState) => {
       state.loading = true;
       state.error = '';
     })
-    .addCase(registerUser.fulfilled, (state, action) => {
+    .addCase(registerUser.fulfilled, (state: AuthState, action) => {
       state.loading = false;
-      state.user.token = action.payload; // TO DO NOT RECIEVE TOKEN IN SIGN UP
-      reset(ROUTES.BOTTOMTAB);
+      state.user.token = action.payload || ''; // Ensure the token is not undefined
+      setTimeout(() => {
+        reset(ROUTES.BOTTOMTAB);
+      }, 0);
     })
-    .addCase(registerUser.rejected, (state, action) => {
+    .addCase(registerUser.rejected, (state: AuthState, action) => {
       state.loading = false;
-      state.error = action.payload as string;
-      CommonFunctions.showSnackbar(action?.payload);
+      state.error = action.payload
+        ? (action.payload as string)
+        : 'An error occurred';
+      CommonFunctions.showSnackbar(action.payload as string);
     });
 };

@@ -15,7 +15,7 @@ import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
 import { InputFieldType } from '@inspectreplyai/utils/Enums';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -23,10 +23,17 @@ import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
+import { registerUser } from '@inspectreplyai/redux/auth/action';
+import { RootState } from '@inspectreplyai/redux/Store';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
   const [checked, setChecked] = React.useState(false);
+  const { loading } = useAppSelector((store: RootState) => store.AuthSlice);
 
   const [state, updateState] = useSimpleReducer({
     firstName: '',
@@ -52,6 +59,8 @@ const SignUp = () => {
     passwordError,
     confirmPasswordError,
   } = state;
+
+  const dispatch = useAppDispatch();
   const onPressCheckButton = () => {
     setChecked(!checked);
   };
@@ -130,7 +139,17 @@ const SignUp = () => {
       checked
     );
   };
-
+  const onPressContinue = () => {
+    dispatch(
+      registerUser({
+        first_name: firstName,
+        last_name: lastName,
+        email: email?.toLowerCase(),
+        password,
+        status: 1,
+      }),
+    );
+  };
   const onPressSignIn = () => {
     navigate(ROUTES.LOGIN);
   };
@@ -237,9 +256,8 @@ const SignUp = () => {
         <PrimaryButton
           disabled={!isContinueButtonEnabled()}
           title={CommonStrings.Continue}
-          onPress={() => {
-            reset(ROUTES.BOTTOMTAB);
-          }}
+          onPress={onPressContinue}
+          loading={loading}
         />
         <Text style={[typography.body, styles.signIntext]}>
           {CommonStrings.alreadyAccount}

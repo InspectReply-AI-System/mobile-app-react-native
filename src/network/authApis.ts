@@ -1,12 +1,18 @@
+import { endpoints } from './endpoints';
 import { postApiCall } from './networkMethods';
 
-const signInWithEmail = async (data: any) => {
-  try {
-    const response = await postApiCall('endpoints', data);
-    return response;
-  } catch (error: any) {
-    throw new Error(error?.message);
-  }
+const signInWithEmail = async (params: { email: string; password: string }) => {
+  return await postApiCall(endpoints.auth.login, params);
 };
 
-export { signInWithEmail };
+const registerWithEmail = async (params: {
+  email: string;
+  password: string;
+  last_name: string;
+  first_name: string;
+  status: number;
+}) => {
+  return await postApiCall(endpoints.auth.register, params);
+};
+
+export { signInWithEmail, registerWithEmail };

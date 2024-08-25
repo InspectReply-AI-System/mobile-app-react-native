@@ -1,4 +1,4 @@
-import { apiConfig } from '.';
+import { apiConfig } from './api';
 
 // src/config/environment.js
 const ENV = {

@@ -39,7 +39,9 @@ $http.interceptors.response.use(
     );
     handleApiError(error?.response?.status?.toString());
     console.log('API Response Error:', error.message, error?.code);
-    return Promise.reject(error);
+    return Promise.reject(
+      error?.response?.data?.message || 'Something went wrong',
+    );
   },
 );
 

@@ -14,11 +14,17 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
-import { goBack, navigate, reset } from '@inspectreplyai/utils/navigationUtils';
+import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
 import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
+import { loginUser } from '@inspectreplyai/redux/auth/action';
+import { RootState } from '@inspectreplyai/redux/Store';
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -29,6 +35,8 @@ const Login = () => {
   });
 
   const { currentStep, email, emailError, password, passwordError } = state;
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state: RootState) => state.AuthSlice);
 
   useEffect(() => {
     updateState({
@@ -68,7 +76,7 @@ const Login = () => {
         currentStep: 2,
       });
     } else {
-      reset(ROUTES.BOTTOMTAB);
+      dispatch(loginUser({ email: email?.toLowerCase(), password }));
     }
   };
 
@@ -146,6 +154,7 @@ const Login = () => {
           disabled={!isNextDisabled()}
           title={currentStep == 1 ? CommonStrings.next : CommonStrings.Continue}
           onPress={onPressNext}
+          loading={loading}
         />
         <Touchable onPress={onPressForgot}>
           <Text style={[typography.body, styles.forgot]}>

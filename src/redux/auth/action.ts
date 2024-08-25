@@ -1,18 +1,17 @@
-import { endpoints } from '@inspectreplyai/network/endpoints';
-import { postApiCall } from '@inspectreplyai/network/networkMethods';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginUserPayload, RegisterUserPayload } from './@types';
-import { registerWithEmail } from '@inspectreplyai/network/authApis';
+import {
+  registerWithEmail,
+  signInWithEmail,
+} from '@inspectreplyai/network/authApis';
 const sliceName = 'auth';
 
 export const loginUser = createAsyncThunk(
   `${sliceName}/loginUser`,
-  async ({ email, password }: LoginUserPayload, thunkAPI) => {
+
+  async (payload: LoginUserPayload, thunkAPI) => {
     try {
-      const response = await postApiCall(endpoints.auth.login, {
-        email,
-        password,
-      });
+      const response = await signInWithEmail(payload);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

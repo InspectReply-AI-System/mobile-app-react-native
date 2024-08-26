@@ -1,5 +1,5 @@
 // src/config/index.js
-import apiConfig from './api';
+import { apiConfig } from './api';
 import envConfig from './environment';
 import routesConfig from '../routes/routes';
 import constantsConfig from './constants';

@@ -38,8 +38,12 @@ $http.interceptors.response.use(
       error,
     );
     handleApiError(error?.response?.status?.toString());
-    console.log('API Response Error:', error.message, error?.code);
-    return Promise.reject(error);
+    console.log('API Response Error:', error.response, error?.code);
+    return Promise.reject(
+      error?.response?.data?.msg ||
+        error?.response?.data?.message ||
+        'Something went wrong',
+    );
   },
 );
 

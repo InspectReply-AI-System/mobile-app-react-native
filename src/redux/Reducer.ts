@@ -16,7 +16,7 @@ const rootReducer = (state: any, action: any) => {
     const res = RootReducer(state, action);
     res.ConfigSlice.firstOpen = oldConfig.tutorial;
     res.ConfigSlice.theme = oldConfig.theme;
-    res.ConfigSlice.welocme = oldConfig.welocme;
+    res.ConfigSlice.welocmeScreen = oldConfig.welocme;
     return res;
   }
   return RootReducer(state, action);

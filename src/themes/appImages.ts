@@ -13,6 +13,7 @@ export const Icons = {
   contractors: require(`${fixedPath}/icons/contractors.png`),
   notifications: require(`${fixedPath}/icons/notifications.png`),
   profile: require(`${fixedPath}/icons/profile.png`),
+  loader: require(`${fixedPath}/icons/loader.png`),
 };
 
 export const Images = {

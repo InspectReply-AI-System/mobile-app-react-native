@@ -1,92 +1,32 @@
-import { Keyboard } from 'react-native';
 import { $http } from './networkServices';
 
 /**
- * post api call common function
- * @param endPoint endpoint of api
- * @param params data to send
-
+ * Generic API call function
+ * @param method HTTP method (post, put, get, patch, delete)
+ * @param endPoint endpoint of the API
+ * @param data request payload or parameters
+ * @param config additional axios config options (optional)
  */
-
-const postApiCall = async (endPoint: string, params: object) => {
-  try {
-    const response: any = await $http.post(endPoint, params);
-    console.log('postApiCall', response);
-    return response.data;
-  } catch (error: any) {
-    console.log('postApiCall', error);
-    throw new Error(error.message);
-  }
-};
-
-/**
- * put api call common function
- * @param endPoint endpoint of api
- * @param params data to send
- */
-const putApiCall = async (endPoint: string, params?: object) => {
-  try {
-    const response = await $http.put(endPoint, params);
-    console.log('responseputApiCall', response);
-    return response;
-  } catch (error: any) {
-    console.log('responseputApiCall error', error);
-    throw new Error(error?.message || 'Some thing wrong');
-  }
-};
-
-/**
- * get api call common function
- * @param endPoint endpoint of api
- * @param paramsData data to send
- */
-const getApiCall = async (endPoint: string, body: any = {}) => {
-  try {
-    const response = await $http.get(endPoint, { params: body });
-    console.log('getapi', response);
-    return response?.data;
-  } catch (error: any) {
-    console.log('getapi error', error);
-    throw new Error(error?.message);
-  }
-};
-
-/**
- * patch api call common function
- * @param endPoint endpoint of api
- * @param params data to send
-
- */
-const patchApiCall = async (endPoint: string, params?: object) => {
-  try {
-    const result = await $http.patch(endPoint, params);
-    console.log('for chat response', result);
-    return result;
-  } catch (error: any) {
-    throw new Error(error?.message);
-  }
-};
-
-/**
- * delete api call common function
- * @param endPoint endpoint of api
- * @param paramsData data to send
- */
-const deleteApiCall = async (
+const apiCall = async (
+  method: 'get' | 'post' | 'put' | 'patch' | 'delete',
   endPoint: string,
-  paramsData = '',
-  requestBody = {},
+  data?: object,
+  config = {},
 ) => {
-  try {
-    const requestConfig = {
-      data: requestBody, // Data for the request body
-    };
-    const result = await $http.delete(endPoint + paramsData, requestConfig);
-    return result;
-  } catch (error: any) {
-    Keyboard.dismiss();
-    throw new Error(error?.message);
-  }
+  return await $http[method](endPoint, data, config);
+};
+
+const postApiCall = (endPoint: string, params: object) =>
+  apiCall('post', endPoint, params);
+const putApiCall = (endPoint: string, params?: object) =>
+  apiCall('put', endPoint, params);
+const getApiCall = (endPoint: string, params?: object) =>
+  apiCall('get', endPoint, { params });
+const patchApiCall = (endPoint: string, params?: object) =>
+  apiCall('patch', endPoint, params);
+const deleteApiCall = (endPoint: string, paramsData = '', requestBody = {}) => {
+  const requestConfig = { data: requestBody };
+  return apiCall('delete', endPoint + paramsData, requestConfig);
 };
 
 export { postApiCall, deleteApiCall, patchApiCall, getApiCall, putApiCall };

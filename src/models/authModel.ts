@@ -3,20 +3,12 @@ export type ActionType = {
   payload: any;
 };
 
-export class AuthModal {
+export class AuthModel {
   token: string = '';
-  username: string = '';
   email: string = '';
-  interests: string[] = [];
   refreshToken: string = '';
   firstName: string = '';
   lastName: string = '';
-  imageUrl: string = '';
-  bio: string = '';
-  gender: string = '';
-  facebookLink: string = '';
-  instagramLink: string = '';
-  linkedinLink: string = '';
   userId: string = '';
 }
 
@@ -29,6 +21,6 @@ export class ConfigModal {
 }
 
 export type ReducersModal = {
-  AuthSlice: AuthModal;
+  AuthSlice: AuthModel;
   ConfigSlice: ConfigModal;
 };

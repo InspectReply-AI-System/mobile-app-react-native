@@ -16,8 +16,11 @@ import { Text } from 'react-native';
 import { typography } from '@inspectreplyai/themes';
 import TimerComponent from '@inspectreplyai/components/timerComponent';
 import { verificationCodeValidation } from '@inspectreplyai/utils/validatorsUtils';
+import { useRoute } from '@react-navigation/native';
 
 const VerifyCode = () => {
+  const params = useRoute().params;
+  console.log('params verify', params);
   const [state, updateState] = useSimpleReducer({
     verificationCode: '',
     verificationCodeError: '',
@@ -37,7 +40,10 @@ const VerifyCode = () => {
   };
 
   const onPressContinue = () => {
-    navigate(ROUTES.SETPASSWORD);
+    navigate(ROUTES.SETPASSWORD, {
+      email: params?.email,
+      verifyCode: verificationCode,
+    });
   };
 
   return (

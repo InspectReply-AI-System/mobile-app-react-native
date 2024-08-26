@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
@@ -33,8 +33,13 @@ const ForgotPassword = () => {
     return email && !emailError;
   };
 
-  const onPressContinue = () => {
-    navigate(ROUTES.VERIFYCODE);
+  const onPressContinue = async () => {
+    try {
+      // await resetPassword({ email: email.toLowerCase() });
+      navigate(ROUTES.VERIFYCODE, { email });
+    } catch (error: any) {
+      CommonFunctions.showSnackbar(error);
+    }
   };
   return (
     <Column style={styles.container}>

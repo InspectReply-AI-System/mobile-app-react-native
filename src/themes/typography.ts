@@ -40,6 +40,11 @@ const typography = {
     fontSize: normalize(14),
     color: colors.white,
   },
+  subBody: {
+    fontFamily: fonts.REGULAR,
+    fontSize: normalize(10),
+    color: colors.white,
+  },
   // Add more typography styles as needed
 };
 

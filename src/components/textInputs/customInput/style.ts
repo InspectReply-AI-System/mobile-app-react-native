@@ -42,4 +42,8 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     marginLeft: vw(12),
   },
+  rightIconContainer: {
+    position: 'absolute',
+    right: vw(18),
+  },
 });

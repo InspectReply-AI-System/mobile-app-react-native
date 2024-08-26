@@ -14,6 +14,7 @@ const ROUTES = {
   NOTIFICATIONS: 'notifications',
   PROFILE: 'profile',
   BOTTOMTAB: 'bottomTab',
+  ADDREPORTS: 'addReports',
 };
 
 export default ROUTES;

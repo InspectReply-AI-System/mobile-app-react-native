@@ -1,6 +1,7 @@
 import { Icons } from '@inspectreplyai/themes/appImages';
 import React, { useEffect, useRef } from 'react';
-import { View, Animated, Easing, StyleSheet } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
+import { styles } from './styles';
 
 const Loader = () => {
   const rotateValue = useRef(new Animated.Value(0)).current;
@@ -30,13 +31,5 @@ const Loader = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default Loader;

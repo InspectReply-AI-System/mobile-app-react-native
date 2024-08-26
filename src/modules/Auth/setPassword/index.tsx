@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable etc/no-commented-out-code */
 import React from 'react';
 
 import { styles } from './styles';
-import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import { Icons, Images } from '@inspectreplyai/themes/appImages';
@@ -14,8 +14,14 @@ import { passwordValidation } from '@inspectreplyai/utils/validatorsUtils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
+import { useRoute } from '@react-navigation/native';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
 
 const SetPassword = () => {
+  const params: any = useRoute()?.params;
+  console.log('params setpassword', params);
+
   const { setRef, focusOnElement } = useRefs();
 
   const [state, updateState] = useSimpleReducer({
@@ -65,8 +71,18 @@ const SetPassword = () => {
     );
   };
 
-  const onPressContinue = () => {
-    navigate(ROUTES.LOGIN);
+  const onPressContinue = async () => {
+    // const payload = {
+    //   email: params?.email,
+    //   newPassword: password,
+    //   otp: params?.verifyCode,
+    // };
+    try {
+      // await setNewPassword(payload);
+      navigate(ROUTES.LOGIN);
+    } catch (error: any) {
+      CommonFunctions.showSnackbar(error);
+    }
   };
   return (
     <Column style={styles.container}>

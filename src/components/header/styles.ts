@@ -11,9 +11,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: vw(15),
   },
   leftContainer: {
+    flex: 0.2,
     alignItems: 'flex-start',
   },
   rightContainer: {
+    flex: 0.2,
     alignItems: 'flex-end',
   },
   title: {
@@ -22,7 +24,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   titleContainer: {
-    flex: 1,
+    flex: 0.6,
     alignItems: 'center',
   },
 });

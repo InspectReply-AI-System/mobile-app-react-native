@@ -1,9 +1,10 @@
+import { ReactNode } from 'react';
 import { ImageSourcePropType } from 'react-native';
 
 export interface HeaderProps {
-  leftIcon?: ImageSourcePropType;
+  leftIcon?: ReactNode | ImageSourcePropType;
   title?: string;
-  rightIcon?: ImageSourcePropType;
+  rightIcon?: ReactNode | ImageSourcePropType;
   onLeftPress?: () => void;
   onRightPress?: () => void;
 }

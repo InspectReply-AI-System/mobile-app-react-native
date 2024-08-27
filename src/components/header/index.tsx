@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
-
+import { Text, ImageSourcePropType } from 'react-native';
 import Row from '../general/Row';
 import { styles } from './styles';
 import { HeaderProps } from './@types';
@@ -17,14 +16,25 @@ const CustomHeader: React.FC<HeaderProps> = ({
   onLeftPress = goBack,
   onRightPress,
 }) => {
-  const inset = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
+
+  const renderIcon = (icon?: React.ReactNode | ImageSourcePropType) => {
+    if (React.isValidElement(icon)) {
+      return icon;
+    }
+
+    if (typeof icon === 'number' || typeof icon === 'object') {
+      return <LocalImage source={icon} />;
+    }
+
+    return null;
+  };
+
   return (
-    <Row style={[styles.header, { marginTop: inset.top }]}>
+    <Row style={[styles.header, { marginTop: insets.top }]}>
       <Column style={styles.leftContainer}>
         {leftIcon && (
-          <Touchable onPress={onLeftPress}>
-            <LocalImage source={leftIcon} />
-          </Touchable>
+          <Touchable onPress={onLeftPress}>{renderIcon(leftIcon)}</Touchable>
         )}
       </Column>
       <Column style={styles.titleContainer}>
@@ -32,9 +42,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
       </Column>
       <Column style={styles.rightContainer}>
         {rightIcon && (
-          <Touchable onPress={onRightPress}>
-            <LocalImage source={rightIcon} />
-          </Touchable>
+          <Touchable onPress={onRightPress}>{renderIcon(rightIcon)}</Touchable>
         )}
       </Column>
     </Row>

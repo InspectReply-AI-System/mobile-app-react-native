@@ -48,4 +48,32 @@ export const CommonStrings = {
   welcomeBack: 'Welcome back',
   welComeBackDescription:
     'Welcome back to InspectReply-AI! Dive back into seamless home inspections with instant insights, accurate cost estimates, and top local contractors ready to help.',
+  searchReports: 'Search reports',
+  dateCreated: 'Date Created: ',
+  totalRepairCost: 'Total Repair Cost: ',
+  lastShared: 'Last Shared: ',
+  viewFullReport: 'View Full Report',
+  noReports: 'No Reports',
+  emptyContent: 'Click the + button to add your first report.',
+  uploadFile: 'Select here to upload file',
+  uploadPdf: 'Click to upload a PDF file.',
+  reportGenerated:
+    '...and when your report is generated they can be pre-populated.',
+  generateReport: 'Generate Report',
+  preferredContractor: 'Add Preferred Contractors',
+  addReport: 'Add report',
+  useContractor: 'Use preferred contractors',
+  noteWhenSelected:
+    'Note: when selected, this will pull from your top contractors list.',
+  needChangePdfNote:
+    'Need to make a change? Remove the current report and upload a new one.',
+  reportPdfText1:
+    'Your report is being generated and may take up to 10 minutes to compile. ',
+  reportPdfText2:
+    'You will receive a notification once the report is complete.',
+  coachMarkText1:
+    'This is the report section where you can view all your recent, saved, and shared reports.',
+  coachMarkText2: 'Click this to upload a report.',
+  coachMarkText3: 'This is the Contractor Section. About this section.',
+  gotIt: 'Got it',
 };

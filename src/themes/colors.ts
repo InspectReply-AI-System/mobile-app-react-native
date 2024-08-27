@@ -8,6 +8,9 @@ const colors = {
   black: '#000000',
   red: '#BA1A1A',
   grey999999: '#999999',
+  grey: '#A8A7AA',
+  black27282B: '#27282B',
+  transparent: 'transparent',
 };
 
 export default colors;

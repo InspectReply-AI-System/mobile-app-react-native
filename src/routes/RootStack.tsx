@@ -5,6 +5,7 @@ import ROUTES from './routes';
 import AuthNavigator from './AuthStack';
 import { BottomTab } from './bottomTab';
 import AddReports from '@inspectreplyai/modules/addReports';
+import ProcessReport from '@inspectreplyai/modules/addReports/processReport';
 
 const RootStack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const RootNavigator = () => {
       <RootStack.Screen component={AuthNavigator} name={ROUTES.AUTHNAVIGATOR} />
       <RootStack.Screen component={BottomTab} name={ROUTES.BOTTOMTAB} />
       <RootStack.Screen component={AddReports} name={ROUTES.ADDREPORTS} />
+      <RootStack.Screen component={ProcessReport} name={ROUTES.PROCESSREPORT} />
     </RootStack.Navigator>
   );
 };

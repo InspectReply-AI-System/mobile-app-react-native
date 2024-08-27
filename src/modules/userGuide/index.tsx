@@ -5,28 +5,35 @@ import { BlurView } from '@react-native-community/blur';
 import LeftArrow from '@inspectreplyai/assets/svg/downLeft.svg';
 import Column from '@inspectreplyai/components/general/Column';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import { normalize, vh, vw } from '@inspectreplyai/utils';
+import { CommonStrings, normalize, vh, vw } from '@inspectreplyai/utils';
 import Report from '@inspectreplyai/assets/svg/Report.svg';
 import { typography } from '@inspectreplyai/themes';
 import RightArrow from '@inspectreplyai/assets/svg/downRight.svg';
 import Contractor from '@inspectreplyai/assets/svg/Contractors.svg';
 import AddIcon from '@inspectreplyai/assets/svg/addIconBtn.svg';
+import Skip from '@inspectreplyai/assets/svg/Skip.svg';
+import Touchable from '@inspectreplyai/components/general/Touchable';
 
 interface UserGuideProps {
   isVisible: boolean;
   onClose: () => void;
+  onSkip: () => void;
   step: 1 | 2 | 3;
 }
 
-const UserGuide: React.FC<UserGuideProps> = ({ isVisible, onClose, step }) => {
+const UserGuide: React.FC<UserGuideProps> = ({
+  isVisible,
+  onClose,
+  step,
+  onSkip,
+}) => {
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
           <Column>
             <Text style={[typography.h5, styles.text]}>
-              This is the report section where you can view all your recent,
-              saved, and shared reports.
+              {CommonStrings.coachMarkText1}
             </Text>
             <PrimaryButton
               title='Got it'
@@ -43,7 +50,7 @@ const UserGuide: React.FC<UserGuideProps> = ({ isVisible, onClose, step }) => {
         return (
           <Column style={styles.step2Container}>
             <Text style={[typography.h5, styles.text]}>
-              Click this to upload a report.
+              {CommonStrings.coachMarkText2}
             </Text>
             <PrimaryButton
               title='Got it'
@@ -62,7 +69,7 @@ const UserGuide: React.FC<UserGuideProps> = ({ isVisible, onClose, step }) => {
         return (
           <Column>
             <Text style={[typography.h5, styles.text]}>
-              This is the Contractor Section. About this section.
+              {CommonStrings.coachMarkText3}
             </Text>
             <Column style={styles.step3ButtonContainer}>
               <PrimaryButton
@@ -95,6 +102,11 @@ const UserGuide: React.FC<UserGuideProps> = ({ isVisible, onClose, step }) => {
       }
       animationIn='fadeIn'
       animationOut='fadeOut'>
+      <Column style={styles.skipContainer}>
+        <Touchable onPress={onSkip}>
+          <Skip />
+        </Touchable>
+      </Column>
       <View style={styles.container}>{renderStepContent()}</View>
     </Modal>
   );
@@ -139,6 +151,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginRight: vw(20),
     marginTop: vh(-20),
+  },
+  skipContainer: {
+    position: 'absolute',
+    top: vh(84),
+    right: vw(24),
   },
   step2Container: {
     marginBottom: vh(100),

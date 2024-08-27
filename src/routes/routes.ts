@@ -15,6 +15,7 @@ const ROUTES = {
   PROFILE: 'profile',
   BOTTOMTAB: 'bottomTab',
   ADDREPORTS: 'addReports',
+  PROCESSREPORT: 'processReports',
 };
 
 export default ROUTES;

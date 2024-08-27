@@ -60,7 +60,8 @@ export const RepairItem: React.FC<RepairItemProps> = ({ item }) => {
           placement='bottom'
           onClose={() => setTooltipVisibleId(null)}
           contentStyle={styles.tooltipWrapper}
-          backgroundColor={colors.transparent}>
+          backgroundColor={colors.transparent}
+          backgroundStyle={styles.bgStyle}>
           <Touchable
             onPress={() => setTooltipVisibleId(isSelected ? null : item.id)}>
             <Dot />

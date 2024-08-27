@@ -30,6 +30,7 @@ const Reports: React.FC = () => {
       <UserGuide
         isVisible={isGuideVisible}
         onClose={handleNextStep}
+        onSkip={() => setIsGuideVisible(false)}
         step={step}
       />
       <CustomHeader title='Reports' />

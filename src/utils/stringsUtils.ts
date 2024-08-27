@@ -65,4 +65,14 @@ export const CommonStrings = {
   useContractor: 'Use preferred contractors',
   noteWhenSelected:
     'Note: when selected, this will pull from your top contractors list.',
+  needChangePdfNote:
+    'Need to make a change? Remove the current report and upload a new one.',
+  reportPdfText1:
+    'Your report is being generated and may take up to 10 minutes to compile. ',
+  reportPdfText2:
+    'You will receive a notification once the report is complete.',
+  coachMarkText1:
+    'This is the report section where you can view all your recent, saved, and shared reports.',
+  coachMarkText2: 'Click this to upload a report.',
+  coachMarkText3: 'This is the Contractor Section. About this section.',
 };

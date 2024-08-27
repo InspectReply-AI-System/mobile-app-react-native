@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     color: colors.white,
     marginBottom: 8,
   },
+  bgStyle: {
+    marginTop: vh(-15),
+  },
   container: {
     flex: 1,
     backgroundColor: colors.primaryBalck,
@@ -67,13 +70,13 @@ export const styles = StyleSheet.create({
     fontSize: 18,
   },
   selectedTooltip: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.black27282B,
   },
   sharedText: {
     color: colors.grey,
   },
   tooltipContent: {
-    borderRadius: normalize(8),
+    borderRadius: normalize(12),
     paddingTop: vh(10),
     paddingHorizontal: vw(8),
     paddingBottom: vh(8),

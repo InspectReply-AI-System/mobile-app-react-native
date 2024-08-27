@@ -1,5 +1,5 @@
 import { colors } from '@inspectreplyai/themes';
-import { vh, vw } from '@inspectreplyai/utils';
+import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -24,6 +24,17 @@ export const styles = StyleSheet.create({
     color: colors.grey,
     marginTop: vh(4),
   },
+  pdfNameContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: colors.primaryBlue,
+    padding: normalize(12),
+    borderRadius: normalize(8),
+    backgroundColor: colors.black27282B,
+    marginTop: vh(32),
+  },
+  pdfNameSubContainer: { alignItems: 'center' },
   reportGenerateText: {
     color: colors.grey,
     textAlign: 'center',
@@ -42,6 +53,10 @@ export const styles = StyleSheet.create({
     borderWidth: 1.7,
     borderColor: colors.primaryBlue,
     marginTop: vh(32),
+  },
+  uploadPdfText: {
+    marginLeft: vw(8),
+    width: '82%',
   },
   uploadText: {
     color: colors.grey,

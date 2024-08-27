@@ -1,8 +1,9 @@
 import { Text } from 'react-native';
 import React, { useState } from 'react';
+
 import Column from '@inspectreplyai/components/general/Column';
 import CustomHeader from '@inspectreplyai/components/header';
-import { colors, typography } from '@inspectreplyai/themes';
+import { typography } from '@inspectreplyai/themes';
 import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
 import { CommonStrings } from '@inspectreplyai/utils';
 import Upload from '@inspectreplyai/assets/svg/Upload.svg';
@@ -21,6 +22,10 @@ import Cross from '@inspectreplyai/assets/svg/cross.svg';
 const AddReports = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
+
+  const toggleCheckBox = () => {
+    setIsChecked(!isChecked);
+  };
 
   const selectDoc = async () => {
     try {
@@ -83,7 +88,7 @@ const AddReports = () => {
         {!isChecked && (
           <>
             <Row style={styles.checkContainer}>
-              <Touchable onPress={() => setIsChecked(!isChecked)}>
+              <Touchable onPress={toggleCheckBox}>
                 {isChecked ? <Check /> : <Uncheck />}
               </Touchable>
               <Text style={[typography.h6, styles.usePreferredText]}>
@@ -98,11 +103,7 @@ const AddReports = () => {
         {isChecked && (
           <>
             <PrimaryButton
-              containerStyle={{
-                backgroundColor: colors.primaryBalck,
-                borderWidth: 1,
-                borderColor: colors.primaryBlue,
-              }}
+              containerStyle={styles.generateButtonStyle}
               title={CommonStrings.preferredContractor}
               onPress={() => {}}
             />

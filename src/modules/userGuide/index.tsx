@@ -36,7 +36,7 @@ const UserGuide: React.FC<UserGuideProps> = ({
               {CommonStrings.coachMarkText1}
             </Text>
             <PrimaryButton
-              title='Got it'
+              title={CommonStrings.gotIt}
               containerStyle={styles.button}
               onPress={onClose}
             />
@@ -53,7 +53,7 @@ const UserGuide: React.FC<UserGuideProps> = ({
               {CommonStrings.coachMarkText2}
             </Text>
             <PrimaryButton
-              title='Got it'
+              title={CommonStrings.gotIt}
               containerStyle={styles.button}
               onPress={onClose}
             />
@@ -73,7 +73,7 @@ const UserGuide: React.FC<UserGuideProps> = ({
             </Text>
             <Column style={styles.step3ButtonContainer}>
               <PrimaryButton
-                title='Got it'
+                title={CommonStrings.gotIt}
                 containerStyle={styles.button}
                 onPress={onClose}
               />

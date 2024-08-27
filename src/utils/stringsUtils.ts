@@ -75,4 +75,5 @@ export const CommonStrings = {
     'This is the report section where you can view all your recent, saved, and shared reports.',
   coachMarkText2: 'Click this to upload a report.',
   coachMarkText3: 'This is the Contractor Section. About this section.',
+  gotIt: 'Got it',
 };

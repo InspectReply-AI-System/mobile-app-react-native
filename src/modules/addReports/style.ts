@@ -16,6 +16,11 @@ export const styles = StyleSheet.create({
     color: colors.grey,
     marginTop: vh(24),
   },
+  generateButtonStyle: {
+    backgroundColor: colors.primaryBalck,
+    borderWidth: 1,
+    borderColor: colors.primaryBlue,
+  },
   mainContainer: {
     flex: 1,
     backgroundColor: colors.primaryBalck,

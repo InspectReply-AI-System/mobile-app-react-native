@@ -13,20 +13,30 @@ import { emailValidation } from '@inspectreplyai/utils/validatorsUtils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
+import { resetPassword } from '@inspectreplyai/network/authApis';
 
 const ForgotPassword = () => {
   const [state, updateState] = useSimpleReducer({
     email: '',
     emailError: '',
+    loading: false,
   });
   const { email, emailError } = state;
 
-  const onEnterEmail = (email: string) => {
-    const emailError = emailValidation(email.trim());
+  const validateAndUpdateState = (
+    field: string,
+    value: string,
+    validationFn: (input: string) => { errorMsg: string },
+  ) => {
+    const error = validationFn(value.trim()).errorMsg;
     updateState({
-      email,
-      emailError: emailError.errorMsg,
+      [field]: value,
+      [`${field}Error`]: error,
     });
+  };
+
+  const onEnterEmail = (email: string) => {
+    validateAndUpdateState('email', email, emailValidation);
   };
 
   const isContinueButtonEnabled = () => {
@@ -34,11 +44,16 @@ const ForgotPassword = () => {
   };
 
   const onPressContinue = async () => {
+    if (!isContinueButtonEnabled()) return;
     try {
-      // await resetPassword({ email: email.toLowerCase() });
+      updateState({ loading: true });
+      const result = await resetPassword({ email: email.toLowerCase() });
+      CommonFunctions.showSnackbar(result?.data?.msg);
+      updateState({ loading: false });
       navigate(ROUTES.VERIFYCODE, { email });
     } catch (error: any) {
       CommonFunctions.showSnackbar(error);
+      updateState({ loading: false });
     }
   };
   return (
@@ -49,7 +64,7 @@ const ForgotPassword = () => {
       />
       <ScrollContainer
         keyboardDismissMode='interactive'
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}>
         <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
@@ -65,12 +80,15 @@ const ForgotPassword = () => {
             onChangeText={onEnterEmail}
             value={email}
             isError={emailError}
+            onBlur={() => onEnterEmail(email)}
+            onSubmitEditing={onPressContinue}
           />
 
           <PrimaryButton
             disabled={!isContinueButtonEnabled()}
             title={CommonStrings.Continue}
             onPress={onPressContinue}
+            loading={state.loading}
           />
         </Column>
       </ScrollContainer>

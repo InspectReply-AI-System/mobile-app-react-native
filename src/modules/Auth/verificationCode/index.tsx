@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
@@ -17,10 +17,11 @@ import { typography } from '@inspectreplyai/themes';
 import TimerComponent from '@inspectreplyai/components/timerComponent';
 import { verificationCodeValidation } from '@inspectreplyai/utils/validatorsUtils';
 import { useRoute } from '@react-navigation/native';
+import { resetPassword } from '@inspectreplyai/network/authApis';
 
 const VerifyCode = () => {
   const params = useRoute().params;
-  console.log('params verify', params);
+
   const [state, updateState] = useSimpleReducer({
     verificationCode: '',
     verificationCodeError: '',
@@ -46,6 +47,17 @@ const VerifyCode = () => {
     });
   };
 
+  const onPressResendCode = async () => {
+    try {
+      const result = await resetPassword({
+        email: params?.email.toLowerCase(),
+      });
+      CommonFunctions.showSnackbar(result?.data?.msg);
+    } catch (error: any) {
+      CommonFunctions.showSnackbar(error);
+    }
+  };
+
   return (
     <Column style={styles.container}>
       <CustomHeader
@@ -54,7 +66,7 @@ const VerifyCode = () => {
       />
       <ScrollContainer
         keyboardDismissMode='interactive'
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}>
         <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
@@ -73,7 +85,7 @@ const VerifyCode = () => {
           <Text style={[typography.body, styles.emailVerificationText]}>
             {CommonStrings.checkEmailForVerification}
           </Text>
-          <TimerComponent timer={60} />
+          <TimerComponent timer={60} onPressResend={onPressResendCode} />
           <PrimaryButton
             disabled={!isContinueButtonEnabled()}
             title={CommonStrings.Continue}

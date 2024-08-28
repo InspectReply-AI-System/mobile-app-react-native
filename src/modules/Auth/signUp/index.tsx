@@ -9,7 +9,7 @@ import {
 } from '@inspectreplyai/utils/validatorsUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { typography } from '@inspectreplyai/themes';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -61,40 +61,43 @@ const SignUp = () => {
   } = state;
 
   const dispatch = useAppDispatch();
+
   const onPressCheckButton = () => {
     setChecked(!checked);
   };
 
+  const validateAndUpdateState = (
+    field: string,
+    value: string,
+    validationFn: (input: string) => { errorMsg: string },
+  ) => {
+    const error = validationFn(value.trim()).errorMsg;
+    updateState({
+      [field]: value,
+      [`${field}Error`]: error,
+    });
+  };
+
   const onEnterName = (name: string) => {
-    const nameError = nameValidation(
-      name.trimStart(),
-      InputFieldType.FIRSTNAME,
+    validateAndUpdateState('firstName', name, (name) =>
+      nameValidation(name, InputFieldType.FIRSTNAME),
     );
-    updateState({
-      firstName: name,
-      firstNameError: nameError.errorMsg,
-    });
   };
+
   const onEnterLastName = (lastName: string) => {
-    const lastNameError = nameValidation(
-      lastName.trimStart(),
-      InputFieldType.LASTNAME,
+    validateAndUpdateState('lastName', lastName, (lastName) =>
+      nameValidation(lastName, InputFieldType.LASTNAME),
     );
-    updateState({
-      lastName,
-      lastNameError: lastNameError.errorMsg,
-    });
   };
+
   const onEnterEmail = (email: string) => {
-    const emailError = emailValidation(email.trim());
-    updateState({
-      email,
-      emailError: emailError.errorMsg,
-    });
+    validateAndUpdateState('email', email, emailValidation);
   };
+
   const onEnterPassword = (password: string) => {
-    const passwordError = passwordValidation(password.trim());
+    const passwordError = passwordValidation(password.trim()).errorMsg;
     let confirmPasswordError = '';
+
     if (
       confirmPassword.length > 0 &&
       confirmPassword.trim() !== password.trim()
@@ -103,20 +106,24 @@ const SignUp = () => {
     } else {
       confirmPasswordError = '';
     }
+
     updateState({
       password,
-      passwordError: passwordError.errorMsg,
+      passwordError,
       confirmPasswordError,
     });
   };
+
   const onEnterConfirmPassword = (confirmPassword: string) => {
     let confirmPasswordError = '';
 
     if (confirmPassword.trim() !== password.trim()) {
       confirmPasswordError = CommonStrings.passwordsMustMatch;
     } else {
-      const validationError = passwordValidation(confirmPassword.trim());
-      confirmPasswordError = validationError.errorMsg;
+      const validationError = passwordValidation(
+        confirmPassword.trim(),
+      ).errorMsg;
+      confirmPasswordError = validationError;
     }
     updateState({
       confirmPassword,
@@ -139,26 +146,35 @@ const SignUp = () => {
       checked
     );
   };
+
   const onPressContinue = () => {
-    dispatch(
-      registerUser({
-        first_name: firstName,
-        last_name: lastName,
-        email: email?.toLowerCase(),
-        password,
-        status: 1,
-      }),
-    );
+    if (!checked) {
+      CommonFunctions.showSnackbar(CommonStrings.acceptTermsAndConditions);
+      return;
+    }
+    if (isContinueButtonEnabled()) {
+      dispatch(
+        registerUser({
+          first_name: firstName,
+          last_name: lastName,
+          email: email?.toLowerCase(),
+          password,
+          status: 1,
+        }),
+      );
+    }
   };
+
   const onPressSignIn = () => {
     navigate(ROUTES.LOGIN);
   };
+
   return (
     <Column style={styles.container}>
       <CustomHeader leftIcon={Icons.backIcon} />
       <ScrollContainer
         keyboardDismissMode='interactive'
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
         style={styles.innerContainer}>
@@ -178,6 +194,7 @@ const SignUp = () => {
           returnKeyType='next'
           maxLength={300}
           onChangeText={onEnterName}
+          onBlur={() => onEnterName(firstName)}
           value={firstName}
           isError={firstNameError}
         />
@@ -191,6 +208,7 @@ const SignUp = () => {
           returnKeyType='next'
           maxLength={300}
           onChangeText={onEnterLastName}
+          onBlur={() => onEnterLastName(lastName)}
           value={lastName}
           isError={lastNameError}
         />
@@ -205,6 +223,7 @@ const SignUp = () => {
           returnKeyType='next'
           maxLength={320}
           onChangeText={onEnterEmail}
+          onBlur={() => onEnterEmail(email)}
           value={email}
           isError={emailError}
         />
@@ -219,6 +238,7 @@ const SignUp = () => {
           maxLength={25}
           keyboardType='ascii-capable'
           onChangeText={onEnterPassword}
+          onBlur={() => onEnterPassword(password)}
           value={password}
           isError={passwordError}
         />
@@ -231,6 +251,8 @@ const SignUp = () => {
           maxLength={25}
           keyboardType='ascii-capable'
           onChangeText={onEnterConfirmPassword}
+          onBlur={() => onEnterConfirmPassword(confirmPassword)}
+          onSubmitEditing={onPressContinue}
           value={confirmPassword}
           isError={confirmPasswordError}
         />

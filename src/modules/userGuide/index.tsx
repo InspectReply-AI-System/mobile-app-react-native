@@ -18,7 +18,7 @@ interface UserGuideProps {
   isVisible: boolean;
   onClose: () => void;
   onSkip: () => void;
-  step: 1 | 2 | 3;
+  step: number | 1 | 2 | 3;
 }
 
 const UserGuide: React.FC<UserGuideProps> = ({
@@ -73,6 +73,7 @@ const UserGuide: React.FC<UserGuideProps> = ({
             </Text>
             <Column style={styles.step3ButtonContainer}>
               <PrimaryButton
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 title={CommonStrings.gotIt}
                 containerStyle={styles.button}
                 onPress={onClose}

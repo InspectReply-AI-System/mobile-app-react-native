@@ -8,7 +8,7 @@ import { typography } from '@inspectreplyai/themes';
 import { CommonStrings } from '@inspectreplyai/utils';
 import { Images } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
@@ -21,11 +21,11 @@ const Welcome = () => {
     dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
     if (welocmeScreen) {
       navigate(ROUTES.LOGIN);
-    } else reset(ROUTES.SIGNUP);
+    } else navigate(ROUTES.SIGNUP);
   };
   const onPressSignIn = () => {
     dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
-    reset(ROUTES.LOGIN);
+    navigate(ROUTES.LOGIN);
   };
 
   const onPressRegister = () => {

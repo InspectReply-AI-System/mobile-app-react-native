@@ -18,6 +18,7 @@ const PrimaryButton = (props: CustomButtonPropsType) => {
     disabled,
     titleStyle,
     containerStyle,
+    ...rest
   } = props;
 
   return (
@@ -27,7 +28,8 @@ const PrimaryButton = (props: CustomButtonPropsType) => {
       style={[
         disabled ? styles.disableButtonStyle : styles.contentContainer,
         containerStyle,
-      ]}>
+      ]}
+      {...rest}>
       {loading ? (
         <Loader />
       ) : (

@@ -2,10 +2,11 @@ import {
   ImageSourcePropType,
   ImageStyle,
   TextStyle,
+  TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
 
-export interface CustomButtonPropsType {
+export interface CustomButtonPropsType extends TouchableOpacityProps {
   title?: string;
   leftIcon?: ImageSourcePropType;
   disabled?: boolean;

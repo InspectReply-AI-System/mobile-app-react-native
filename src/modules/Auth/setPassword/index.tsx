@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable etc/no-commented-out-code */
 import React from 'react';
 
 import { styles } from './styles';
@@ -17,10 +15,10 @@ import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer'
 import { useRoute } from '@react-navigation/native';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
+import { setNewPassword } from '@inspectreplyai/network/authApis';
 
 const SetPassword = () => {
   const params: any = useRoute()?.params;
-  console.log('params setpassword', params);
 
   const { setRef, focusOnElement } = useRefs();
 
@@ -72,13 +70,14 @@ const SetPassword = () => {
   };
 
   const onPressContinue = async () => {
-    // const payload = {
-    //   email: params?.email,
-    //   newPassword: password,
-    //   otp: params?.verifyCode,
-    // };
+    if (!isContinueButtonEnabled()) return;
+    const payload = {
+      email: params?.email,
+      newPassword: password,
+      otp: params?.verifyCode,
+    };
     try {
-      // await setNewPassword(payload);
+      await setNewPassword(payload);
       navigate(ROUTES.LOGIN);
     } catch (error: any) {
       CommonFunctions.showSnackbar(error);
@@ -89,7 +88,7 @@ const SetPassword = () => {
       <CustomHeader leftIcon={Icons.backIcon} title='Set New Password' />
       <ScrollContainer
         keyboardDismissMode='interactive'
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
         style={styles.innerContainer}>
@@ -108,6 +107,7 @@ const SetPassword = () => {
           onChangeText={onEnterPassword}
           value={password}
           isError={passwordError}
+          onBlur={() => onEnterPassword(password)}
         />
         <CustomInput
           label={CommonStrings.confirmPassword}
@@ -118,6 +118,8 @@ const SetPassword = () => {
           maxLength={25}
           keyboardType='ascii-capable'
           onChangeText={onEnterConfirmPassword}
+          onBlur={() => onEnterConfirmPassword(confirmPassword)}
+          onSubmitEditing={onPressContinue}
           value={confirmPassword}
           isError={confirmPasswordError}
         />

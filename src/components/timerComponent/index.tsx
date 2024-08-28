@@ -6,7 +6,7 @@ import { TimerPropsType } from './@types';
 import { colors, typography } from '@inspectreplyai/themes';
 
 function TimerComponent(props: TimerPropsType) {
-  const { timer } = props;
+  const { timer, onPressResend } = props;
   const [counter, setCounter] = useState(timer);
   const timerRef = useRef<number | null>(null);
 
@@ -40,6 +40,7 @@ function TimerComponent(props: TimerPropsType) {
       BackgroundTimer.clearInterval(timerRef.current);
     }
     setCounter(timer);
+    onPressResend();
   };
 
   return (

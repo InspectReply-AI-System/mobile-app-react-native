@@ -11,28 +11,43 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize, vh } from '@inspectreplyai/utils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import UserGuide from '../userGuide';
+import UserGuide from '../userguide';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
+import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Reports: React.FC = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(true);
   const [step, setStep] = useState(1);
+  const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
+  const dispatch = useAppDispatch();
   const handleNextStep = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
       setIsGuideVisible(false);
+      dispatch(SET_CONFIG_DATA({ firstOpen: false }));
     }
+  };
+
+  const handleSkip = () => {
+    setIsGuideVisible(false);
+    dispatch(SET_CONFIG_DATA({ firstOpen: false }));
   };
   return (
     <Column style={styles.container}>
-      <UserGuide
-        isVisible={isGuideVisible}
-        onClose={handleNextStep}
-        onSkip={() => setIsGuideVisible(false)}
-        step={step}
-      />
+      {firstOpen && (
+        <UserGuide
+          isVisible={isGuideVisible}
+          onClose={handleNextStep}
+          onSkip={handleSkip}
+          step={step}
+        />
+      )}
       <CustomHeader title='Reports' />
       <CustomInput
         RightIcon={Search}

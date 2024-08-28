@@ -25,6 +25,7 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { loginUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
+import { isIOS } from '@inspectreplyai/utils/platform';
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -54,28 +55,32 @@ const Login = () => {
     }
   };
 
-  const onChangeEmail = (email: string) => {
-    const _emailError = emailValidation(email.trim());
+  const validateAndUpdateState = (
+    field: string,
+    value: string,
+    validationFn: (input: string) => { errorMsg: string },
+  ) => {
+    const error = validationFn(value.trim()).errorMsg;
     updateState({
-      email: email,
-      emailError: _emailError.errorMsg,
+      [field]: value,
+      [`${field}Error`]: error,
     });
+  };
+
+  const onChangeEmail = (email: string) => {
+    validateAndUpdateState('email', email, emailValidation);
   };
 
   const onEnterPassword = (password: string) => {
-    const passwordError = passwordValidation(password.trim());
-    updateState({
-      password,
-      passwordError: passwordError.errorMsg,
-    });
+    validateAndUpdateState('password', password, passwordValidation);
   };
 
   const onPressNext = () => {
-    if (currentStep === 1) {
+    if (currentStep === 1 && email && !emailError) {
       updateState({
         currentStep: 2,
       });
-    } else {
+    } else if (currentStep === 2 && password && !passwordError) {
       dispatch(loginUser({ email: email?.toLowerCase(), password }));
     }
   };
@@ -107,7 +112,7 @@ const Login = () => {
     <Column style={styles.container}>
       <CustomHeader leftIcon={Icons.backIcon} onLeftPress={onPressBack} />
       <ScrollContainer
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps='always'
         showsVerticalScrollIndicator={false}
         style={styles.innerContainer}>
         <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
@@ -137,17 +142,22 @@ const Login = () => {
             onChangeText={onChangeEmail}
             keyboardType='email-address'
             placeholder={CommonStrings.email}
+            onBlur={() => onChangeEmail(email)}
+            onSubmitEditing={onPressNext}
           />
         ) : (
           <CustomInput
             maxLength={25}
             value={password}
-            returnKeyType='next'
             isError={passwordError}
             keyboardType='ascii-capable'
+            returnKeyType={'done'}
+            returnKeyLabel={isIOS ? 'done' : 'submit'}
             onChangeText={onEnterPassword}
+            onBlur={() => onEnterPassword(password)}
             label={CommonStrings.password}
             placeholder={CommonStrings.password}
+            onSubmitEditing={onPressNext}
           />
         )}
         <PrimaryButton

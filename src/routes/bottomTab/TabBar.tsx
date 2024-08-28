@@ -77,9 +77,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    backgroundColor: colors.black,
-    borderTopLeftRadius: normalize(10),
-    borderTopRightRadius: normalize(10),
+    backgroundColor: colors.primaryBalck,
   },
 
   innerView: {
@@ -90,6 +88,9 @@ const styles = StyleSheet.create({
   },
   tabIconsContainer: {
     flexDirection: 'row',
+    borderTopLeftRadius: normalize(10),
+    borderTopRightRadius: normalize(10),
+    backgroundColor: colors.black,
   },
   textStyle: {
     fontSize: normalize(10),

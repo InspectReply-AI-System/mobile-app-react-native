@@ -14,6 +14,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primaryBalck,
   },
+  contentContainer: {
+    paddingBottom: vh(90),
+  },
   costText: {
     color: colors.white,
     marginBottom: 8,

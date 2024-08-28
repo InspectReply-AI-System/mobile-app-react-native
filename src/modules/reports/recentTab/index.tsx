@@ -18,6 +18,7 @@ const RecentTab = () => {
         style={styles.list}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={EmptyListComponent}
+        contentContainerStyle={styles.contentContainer}
       />
       <FloatingButton
         onPress={() => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SavedTab from './savedTab';
 import RecentTab from './recentTab';
 import SharedTab from './sharedTab';
@@ -21,7 +21,7 @@ import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 const Tab = createMaterialTopTabNavigator();
 
 const Reports: React.FC = () => {
-  const [isGuideVisible, setIsGuideVisible] = useState(true);
+  const [isGuideVisible, setIsGuideVisible] = useState(false);
   const [step, setStep] = useState(1);
   const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
   const dispatch = useAppDispatch();
@@ -33,6 +33,12 @@ const Reports: React.FC = () => {
       dispatch(SET_CONFIG_DATA({ firstOpen: false }));
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsGuideVisible(true);
+    }, 0);
+  }, []);
 
   const handleSkip = () => {
     setIsGuideVisible(false);

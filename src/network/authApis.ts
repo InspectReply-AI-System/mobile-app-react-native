@@ -18,15 +18,21 @@ const registerWithEmail = async (params: {
 const setNewPassword = async (params: {
   email: string;
   newPassword: string;
-  otp: string;
 }) => {
-  console.log('setPassword api params', params);
   return await postApiCall(endpoints.auth.setNewPassword, params);
 };
 
+const verifyOtp = async (params: { email: string; otp: string }) => {
+  return await postApiCall(endpoints.auth.verifyOtp, params);
+};
 const resetPassword = async (params: { email: string }) => {
-  console.log('reset password params', params);
   return await postApiCall(endpoints.auth.forgotPassword, params);
 };
 
-export { signInWithEmail, registerWithEmail, setNewPassword, resetPassword };
+export {
+  signInWithEmail,
+  registerWithEmail,
+  setNewPassword,
+  resetPassword,
+  verifyOtp,
+};

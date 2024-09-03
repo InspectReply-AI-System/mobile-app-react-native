@@ -17,7 +17,7 @@ import { typography } from '@inspectreplyai/themes';
 import TimerComponent from '@inspectreplyai/components/timerComponent';
 import { verificationCodeValidation } from '@inspectreplyai/utils/validatorsUtils';
 import { useRoute } from '@react-navigation/native';
-import { resetPassword } from '@inspectreplyai/network/authApis';
+import { resetPassword, verifyOtp } from '@inspectreplyai/network/authApis';
 
 const VerifyCode = () => {
   const params = useRoute().params;
@@ -25,8 +25,9 @@ const VerifyCode = () => {
   const [state, updateState] = useSimpleReducer({
     verificationCode: '',
     verificationCodeError: '',
+    loading: false,
   });
-  const { verificationCode, verificationCodeError } = state;
+  const { verificationCode, verificationCodeError, loading } = state;
 
   const onVerificationCode = (verificationCode: string) => {
     const error = verificationCodeValidation(verificationCode);
@@ -40,11 +41,23 @@ const VerifyCode = () => {
     return verificationCode && !verificationCodeError;
   };
 
-  const onPressContinue = () => {
-    navigate(ROUTES.SETPASSWORD, {
+  const onPressContinue = async () => {
+    if (!isContinueButtonEnabled()) return;
+
+    updateState({ loading: true });
+    let body = {
       email: params?.email,
-      verifyCode: verificationCode,
-    });
+      otp: verificationCode,
+    };
+    try {
+      const result = await verifyOtp(body);
+      updateState({ loading: false });
+      CommonFunctions.showSnackbar(result?.data?.msg);
+      navigate(ROUTES.SETPASSWORD, body);
+    } catch (error) {
+      CommonFunctions.showSnackbar(error);
+      updateState({ loading: false });
+    }
   };
 
   const onPressResendCode = async () => {
@@ -52,6 +65,7 @@ const VerifyCode = () => {
       const result = await resetPassword({
         email: params?.email.toLowerCase(),
       });
+
       CommonFunctions.showSnackbar(result?.data?.msg);
     } catch (error: any) {
       CommonFunctions.showSnackbar(error);
@@ -81,12 +95,16 @@ const VerifyCode = () => {
             onChangeText={onVerificationCode}
             value={verificationCode}
             isError={verificationCodeError}
+            onSubmitEditing={onPressContinue}
+            autoCapitalize='none'
+            onBlur={() => onVerificationCode(verificationCode)}
           />
           <Text style={[typography.body, styles.emailVerificationText]}>
             {CommonStrings.checkEmailForVerification}
           </Text>
           <TimerComponent timer={60} onPressResend={onPressResendCode} />
           <PrimaryButton
+            loading={loading}
             disabled={!isContinueButtonEnabled()}
             title={CommonStrings.Continue}
             onPress={onPressContinue}

@@ -74,10 +74,10 @@ const SetPassword = () => {
     const payload = {
       email: params?.email,
       newPassword: password,
-      otp: params?.verifyCode,
     };
     try {
-      await setNewPassword(payload);
+      const result = await setNewPassword(payload);
+      CommonFunctions.showSnackbar(result.data.msg);
       navigate(ROUTES.LOGIN);
     } catch (error: any) {
       CommonFunctions.showSnackbar(error);

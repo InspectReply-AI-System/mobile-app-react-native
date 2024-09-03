@@ -18,19 +18,25 @@ const Welcome = () => {
   const dispatch = useDispatch();
   const { welocmeScreen } = useAppSelector((state) => state.ConfigSlice);
   const onPressContinue = () => {
-    dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
     if (welocmeScreen) {
       navigate(ROUTES.LOGIN);
     } else navigate(ROUTES.SIGNUP);
+    setTimeout(() => {
+      dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+    }, 0);
   };
   const onPressSignIn = () => {
-    dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
     navigate(ROUTES.LOGIN);
+    setTimeout(() => {
+      dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+    }, 0);
   };
 
   const onPressRegister = () => {
-    dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
     navigate(ROUTES.SIGNUP);
+    setTimeout(() => {
+      dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+    }, 0);
   };
 
   return (

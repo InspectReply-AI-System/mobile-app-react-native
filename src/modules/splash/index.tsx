@@ -8,10 +8,12 @@ import Column from '@inspectreplyai/components/general/Column';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import LocalImage from '@inspectreplyai/components/general/LocalImage';
+import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
+import { RootState } from '@inspectreplyai/redux/Store';
 
 const Splash = () => {
   const opacity = useRef(new Animated.Value(0)).current;
-
+  const { user } = useAppSelector((store: RootState) => store.AuthSlice);
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
@@ -22,7 +24,11 @@ const Splash = () => {
     const timeoutId = setTimeout(() => {
       SplashScreen.hide();
       setTimeout(() => {
-        reset(ROUTES.AUTHNAVIGATOR);
+        if (user.token) {
+          reset(ROUTES.BOTTOMTAB);
+        } else {
+          reset(ROUTES.AUTHNAVIGATOR);
+        }
       }, 1000);
     }, 1000);
 

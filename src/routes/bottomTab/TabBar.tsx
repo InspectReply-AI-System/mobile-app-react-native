@@ -1,16 +1,13 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { normalize, SCREEN_HEIGHT, vh } from '@inspectreplyai/utils/Dimensions';
 import { bottomTabs } from './constants';
 import { colors, fonts } from '@inspectreplyai/themes';
 import LocalImage from '@inspectreplyai/components/general/LocalImage';
 
 const TabBar = ({ state, descriptors, navigation }: any) => {
-  const inset = useSafeAreaInsets();
-
   return (
-    <View style={[styles.container, { paddingBottom: inset.bottom - 20 }]}>
+    <View style={styles.container}>
       <View style={styles.tabIconsContainer}>
         {state.routes.map(
           (route: { key: string | number; name: string }, index: number) => {

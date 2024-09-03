@@ -220,6 +220,7 @@ const SignUp = () => {
           onSubmitEditing={() => {
             focusOnElement(CommonStrings.password);
           }}
+          autoCapitalize='none'
           returnKeyType='next'
           maxLength={320}
           onChangeText={onEnterEmail}

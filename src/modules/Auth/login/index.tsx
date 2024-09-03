@@ -139,6 +139,7 @@ const Login = () => {
             isError={emailError}
             returnKeyType='next'
             label={CommonStrings.email}
+            autoCapitalize='none'
             onChangeText={onChangeEmail}
             keyboardType='email-address'
             placeholder={CommonStrings.email}
@@ -150,6 +151,7 @@ const Login = () => {
             maxLength={25}
             value={password}
             isError={passwordError}
+            autoFocus={true}
             keyboardType='ascii-capable'
             returnKeyType={'done'}
             returnKeyLabel={isIOS ? 'done' : 'submit'}

@@ -39,8 +39,13 @@ export const authExtraReducer = (
       state.error = '';
     })
     .addCase(registerUser.fulfilled, (state: AuthState, action) => {
+      const { customer, token } = action.payload;
+      state.user.token = token || '';
+      state.user.firstName = customer?.first_name || '';
+      state.user.lastName = customer?.last_name || '';
+      state.user.email = customer?.email || '';
+      state.user.userId = customer?._id || '';
       state.loading = false;
-      state.user.token = action.payload || ''; // Ensure the token is not undefined
       setTimeout(() => {
         reset(ROUTES.BOTTOMTAB);
       }, 0);

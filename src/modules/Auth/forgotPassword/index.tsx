@@ -81,6 +81,7 @@ const ForgotPassword = () => {
             value={email}
             isError={emailError}
             onBlur={() => onEnterEmail(email)}
+            autoCapitalize='none'
             onSubmitEditing={onPressContinue}
           />
 

@@ -38,6 +38,9 @@ const Reports: React.FC = () => {
     setTimeout(() => {
       setIsGuideVisible(true);
     }, 0);
+    return () => {
+      dispatch(SET_CONFIG_DATA({ firstOpen: false }));
+    };
   }, []);
 
   const handleSkip = () => {

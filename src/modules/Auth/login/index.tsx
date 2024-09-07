@@ -58,9 +58,10 @@ const Login = () => {
   const validateAndUpdateState = (
     field: string,
     value: string,
-    validationFn: (input: string) => { errorMsg: string },
+    validationFn: (input: string, error: string) => { errorMsg: string },
+    errormessage: string,
   ) => {
-    const error = validationFn(value.trim()).errorMsg;
+    const error = validationFn(value.trim(), errormessage).errorMsg;
     updateState({
       [field]: value,
       [`${field}Error`]: error,
@@ -68,11 +69,25 @@ const Login = () => {
   };
 
   const onChangeEmail = (email: string) => {
-    validateAndUpdateState('email', email, emailValidation);
+    validateAndUpdateState(
+      'email',
+      email,
+      emailValidation,
+      email.length == 0
+        ? CommonStrings.pleaseEnterYourEmail
+        : CommonStrings.pleaseCheckYourEntry,
+    );
   };
 
   const onEnterPassword = (password: string) => {
-    validateAndUpdateState('password', password, passwordValidation);
+    validateAndUpdateState(
+      'password',
+      password,
+      passwordValidation,
+      password.length == 0
+        ? CommonStrings.pleaseEnterYourPassword
+        : CommonStrings.pleaseCheckYourEmailAndPassword,
+    );
   };
 
   const onPressNext = () => {

@@ -26,9 +26,14 @@ const ForgotPassword = () => {
   const validateAndUpdateState = (
     field: string,
     value: string,
-    validationFn: (input: string) => { errorMsg: string },
+    validationFn: (input: string, error: string) => { errorMsg: string },
   ) => {
-    const error = validationFn(value.trim()).errorMsg;
+    const error = validationFn(
+      value.trim(),
+      value.trim().length == 0
+        ? CommonStrings.pleaseEnterYourEmailToResetPassword
+        : CommonStrings.pleaseCheckYourEntryMustBeValidEmail,
+    ).errorMsg;
     updateState({
       [field]: value,
       [`${field}Error`]: error,

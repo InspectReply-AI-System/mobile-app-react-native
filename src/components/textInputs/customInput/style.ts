@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: normalize(16),
     fontFamily: fonts.REGULAR,
+    marginRight: vw(16),
   },
   label: {
     color: colors.white,

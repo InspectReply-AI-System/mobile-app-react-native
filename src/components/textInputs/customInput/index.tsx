@@ -58,6 +58,7 @@ const CustomInput = forwardRef<TextInput, CustomInputProps>(
             }
             style={[
               styles.input,
+              { ...(RightIcon && { width: '85%' }) },
               { ...(props.isError && { borderColor: colors.red }) },
               props.style,
             ]}

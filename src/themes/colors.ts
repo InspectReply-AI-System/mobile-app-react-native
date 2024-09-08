@@ -1,13 +1,16 @@
-// src/themes/colors.js
 const colors = {
-  primary: '#3498db',
-  secondary: '#2ecc71',
+  primaryBalck: '#1C1D1F',
+  primaryBlue: '#296FA9',
+  blue296FA91A: '#296FA91A',
+  grey47464F: '#47464F',
   white: '#ffffff',
   text: '#333333',
-  error: '#e74c3c',
-  warning: '#f1c40f',
-  success: '#2ecc71',
-  // Add more color definitions as needed
+  black: '#000000',
+  red: '#BA1A1A',
+  grey999999: '#999999',
+  grey: '#A8A7AA',
+  black27282B: '#27282B',
+  transparent: 'transparent',
 };
 
 export default colors;

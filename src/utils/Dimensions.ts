@@ -10,8 +10,8 @@ export const SCREEN_HEIGHT_SCREEN = Dimensions.get('screen').height;
 export const SCREEN_WIDTH_SCREEN = Dimensions.get('screen').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const SMALL_DEVICE = SCREEN_HEIGHT < 720;
-export const DESIGN_HEIGHT = 800;
-export const DESIGN_WIDTH = 360;
+export const DESIGN_HEIGHT = 852;
+export const DESIGN_WIDTH = 393;
 export const hundred = 100;
 
 // It is based on the screen width of your design layouts e.g Height 600 x Width 375

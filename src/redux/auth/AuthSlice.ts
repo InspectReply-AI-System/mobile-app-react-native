@@ -1,14 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authExtraReducer } from './authExtraReducer';
-import { ActionType, AuthModal } from '@inspectreplyai/models/Modal';
+import { AuthModel, ActionType } from '@inspectreplyai/models/authModel';
 
-let initialState = new AuthModal();
+export interface AuthState {
+  error: string;
+  loading: boolean;
+  user: AuthModel;
+}
+
+let initialState: AuthState = {
+  error: '',
+  loading: false,
+  user: new AuthModel(),
+};
 
 const AuthSlice = createSlice({
   name: 'Auth',
   initialState,
   reducers: {
-    SET_DATA: (state: AuthModal = new AuthModal(), action: ActionType) => {
+    SET_DATA: (state, action: ActionType) => {
       const { payload } = action;
       return { ...state, ...payload };
     },

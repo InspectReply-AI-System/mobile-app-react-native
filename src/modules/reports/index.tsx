@@ -17,6 +17,7 @@ import {
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
+import UserGuide from '../userGuide';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -50,14 +51,14 @@ const Reports: React.FC = () => {
   };
   return (
     <Column style={styles.container}>
-      {/* {firstOpen && (
+      {firstOpen && (
         <UserGuide
           isVisible={isGuideVisible}
           onClose={handleNextStep}
           onSkip={handleSkip}
           step={step}
         />
-      )} */}
+      )}
       <CustomHeader title='Reports' />
       <CustomInput
         RightIcon={Search}

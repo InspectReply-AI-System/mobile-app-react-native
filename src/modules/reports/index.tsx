@@ -11,7 +11,7 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize, vh } from '@inspectreplyai/utils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import UserGuide from '../userguide';
+
 import {
   useAppDispatch,
   useAppSelector,
@@ -50,14 +50,14 @@ const Reports: React.FC = () => {
   };
   return (
     <Column style={styles.container}>
-      {firstOpen && (
+      {/* {firstOpen && (
         <UserGuide
           isVisible={isGuideVisible}
           onClose={handleNextStep}
           onSkip={handleSkip}
           step={step}
         />
-      )}
+      )} */}
       <CustomHeader title='Reports' />
       <CustomInput
         RightIcon={Search}

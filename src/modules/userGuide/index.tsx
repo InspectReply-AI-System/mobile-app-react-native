@@ -73,7 +73,7 @@ const UserGuide: React.FC<UserGuideProps> = ({
             </Text>
             <Column style={styles.step3ButtonContainer}>
               <PrimaryButton
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
                 title={CommonStrings.gotIt}
                 containerStyle={styles.button}
                 onPress={onClose}

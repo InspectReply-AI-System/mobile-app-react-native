@@ -33,22 +33,34 @@ const userNameEmailValidation = (val: string) => {
   }
 };
 
-const passwordValidation = (val: string) => {
+const passwordValidation = (val: string, customError?: string) => {
   if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterPassword };
+    return {
+      error: true,
+      errorMsg: customError || CommonStrings.pleaseEnterPassword,
+    };
   } else if (!passwordRegex.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidPassword };
+    return {
+      error: true,
+      errorMsg: customError || CommonStrings.pleaseEnterValidPassword,
+    };
   } else if (passwordRegex.test(val)) {
     return { error: false, errorMsg: '' };
   } else {
     return { error: false, errorMsg: '' };
   }
 };
-const emailValidation = (val: string) => {
+const emailValidation = (val: string, customError?: string) => {
   if (val.length === 0) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterEmail };
+    return {
+      error: true,
+      errorMsg: customError || CommonStrings.pleaseEnterEmail,
+    };
   } else if (!emailRegex.test(val)) {
-    return { error: true, errorMsg: CommonStrings.pleaseEnterValidEmail };
+    return {
+      error: true,
+      errorMsg: customError || CommonStrings.pleaseEnterValidEmail,
+    };
   } else if (emailRegex.test(val)) {
     return { error: false, errorMsg: '' };
   } else {

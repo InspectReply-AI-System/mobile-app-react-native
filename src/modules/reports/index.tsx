@@ -23,6 +23,7 @@ const Tab = createMaterialTopTabNavigator();
 const Reports: React.FC = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(false);
   const [step, setStep] = useState(1);
+  const [search, setSearch] = useState('');
   const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
@@ -63,6 +64,8 @@ const Reports: React.FC = () => {
         placeholder={CommonStrings.searchReports}
         customStyle={styles.customTextStyle}
         placeholderTextColor={colors.white}
+        value={search}
+        onChangeText={(text) => setSearch(text)}
       />
       <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
         <Tab.Screen name='Recent' component={RecentTab} />

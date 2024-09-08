@@ -14,6 +14,15 @@ export const CommonStrings = {
   pleaseEnterValidMobile: 'Please enter a valid mobile number',
   pleaseEnterValidCred: 'Please enter a valid username or email',
   pleaseEnterUserNameEmail: 'Please enter your username or email',
+  pleaseEnterYourPassword: '*Please enter your password to continue',
+  pleaseEnterYourEmail: '*Please enter your email to continue',
+  pleaseCheckYourEntry: 'Please check your entry and try again',
+  pleaseCheckYourEmailAndPassword:
+    '*Please check your email and password, then try again',
+  pleaseEnterYourEmailToResetPassword:
+    'Please enter your email address to reset your password',
+  pleaseCheckYourEntryMustBeValidEmail:
+    '*Please check your entry, it must be a valid email address',
   passwordsMustMatch: '*Passwords must match',
   WelcomeToInspectReplyAI: 'Welcome to InspectReply-AI!',
   welcomeDescription:

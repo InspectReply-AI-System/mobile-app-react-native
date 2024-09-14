@@ -80,7 +80,7 @@ export default class AppleStyleSwipeableRow extends Component<
         marginLeft: -5,
       }}>
       {!this.props?.hideEdit &&
-        this.renderRightAction('Edit', 'blue', 130, progress)}
+        this.renderRightAction('Edit', colors.blue, 130, progress)}
       {this.renderRightAction('Delete', colors.red, 60, progress)}
     </View>
   );
@@ -112,9 +112,9 @@ export default class AppleStyleSwipeableRow extends Component<
 
 const styles = StyleSheet.create({
   actionText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 16,
-    backgroundColor: 'transparent',
+    backgroundColor: colors.transparent,
     padding: 10,
   },
   binIcon: {
@@ -128,12 +128,12 @@ const styles = StyleSheet.create({
   },
   leftAction: {
     flex: 1,
-    backgroundColor: '#497AFC',
+    backgroundColor: colors.purpleBlue,
     justifyContent: 'center',
   },
   rightAction: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
   },
 });

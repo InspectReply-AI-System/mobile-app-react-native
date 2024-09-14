@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { styles } from './styles';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
@@ -16,6 +16,10 @@ import { useRoute } from '@react-navigation/native';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { setNewPassword } from '@inspectreplyai/network/authApis';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
 
 const SetPassword = () => {
   const params: any = useRoute()?.params;
@@ -27,6 +31,7 @@ const SetPassword = () => {
     confirmPassword: '',
     passwordError: '',
     confirmPasswordError: '',
+    loading: false,
   });
   const { password, confirmPassword, passwordError, confirmPasswordError } =
     state;
@@ -75,12 +80,15 @@ const SetPassword = () => {
       email: params?.email,
       newPassword: password,
     };
+    updateState({ loading: true });
     try {
       const result = await setNewPassword(payload);
-      CommonFunctions.showSnackbar(result.data.msg);
+      showSuccessToast(result?.data?.msg);
+      updateState({ loading: false });
       navigate(ROUTES.LOGIN);
     } catch (error: any) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
+      updateState({ loading: false });
     }
   };
   return (

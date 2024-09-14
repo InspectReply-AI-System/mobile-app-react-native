@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
@@ -18,6 +18,10 @@ import TimerComponent from '@inspectreplyai/components/timerComponent';
 import { verificationCodeValidation } from '@inspectreplyai/utils/validatorsUtils';
 import { useRoute } from '@react-navigation/native';
 import { resetPassword, verifyOtp } from '@inspectreplyai/network/authApis';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
 
 const VerifyCode = () => {
   const params = useRoute().params;
@@ -52,10 +56,10 @@ const VerifyCode = () => {
     try {
       const result = await verifyOtp(body);
       updateState({ loading: false });
-      CommonFunctions.showSnackbar(result?.data?.msg);
+      showSuccessToast(result?.data?.msg);
       navigate(ROUTES.SETPASSWORD, body);
     } catch (error) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
       updateState({ loading: false });
     }
   };
@@ -65,10 +69,9 @@ const VerifyCode = () => {
       const result = await resetPassword({
         email: params?.email.toLowerCase(),
       });
-
-      CommonFunctions.showSnackbar(result?.data?.msg);
+      showSuccessToast(result?.data?.msg);
     } catch (error: any) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
     }
   };
 

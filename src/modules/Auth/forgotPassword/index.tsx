@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
@@ -14,6 +14,10 @@ import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
 import { resetPassword } from '@inspectreplyai/network/authApis';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
 
 const ForgotPassword = () => {
   const [state, updateState] = useSimpleReducer({
@@ -53,11 +57,11 @@ const ForgotPassword = () => {
     try {
       updateState({ loading: true });
       const result = await resetPassword({ email: email.toLowerCase() });
-      CommonFunctions.showSnackbar(result?.data?.msg);
+      showSuccessToast(result?.data?.msg);
       updateState({ loading: false });
       navigate(ROUTES.VERIFYCODE, { email });
     } catch (error: any) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
       updateState({ loading: false });
     }
   };

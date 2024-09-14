@@ -9,7 +9,7 @@ import {
 } from '@inspectreplyai/utils/validatorsUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { typography } from '@inspectreplyai/themes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -29,6 +29,7 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { registerUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
+import { showErrorToast } from '@inspectreplyai/components/toast';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -149,7 +150,7 @@ const SignUp = () => {
 
   const onPressContinue = () => {
     if (!checked) {
-      CommonFunctions.showSnackbar(CommonStrings.acceptTermsAndConditions);
+      showErrorToast(CommonStrings.acceptTermsAndConditions);
       return;
     }
     if (isContinueButtonEnabled()) {

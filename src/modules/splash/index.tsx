@@ -10,6 +10,7 @@ import ROUTES from '@inspectreplyai/routes/routes';
 import LocalImage from '@inspectreplyai/components/general/LocalImage';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 import { RootState } from '@inspectreplyai/redux/Store';
+import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
 
 const Splash = () => {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -25,6 +26,7 @@ const Splash = () => {
       SplashScreen.hide();
       setTimeout(() => {
         if (user.token) {
+          setAuthorizationToken(user?.token);
           reset(ROUTES.BOTTOMTAB);
         } else {
           reset(ROUTES.AUTHNAVIGATOR);

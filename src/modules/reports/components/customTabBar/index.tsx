@@ -3,7 +3,7 @@ import Touchable from '@inspectreplyai/components/general/Touchable';
 import { colors, typography } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TextStyle } from 'react-native';
 
 type CustomTabBarProps = {
   state: {
@@ -20,12 +20,14 @@ type CustomTabBarProps = {
   navigation: {
     navigate: (name: string) => void;
   };
+  customLabelStyle?: TextStyle;
 };
 
 export const CustomTabBar: React.FC<CustomTabBarProps> = ({
   state,
   descriptors,
   navigation,
+  customLabelStyle,
 }) => {
   return (
     <Row style={styles.tabBarContainer}>
@@ -52,6 +54,7 @@ export const CustomTabBar: React.FC<CustomTabBarProps> = ({
               style={[
                 typography.h6,
                 { color: isActive ? colors.white : colors.grey },
+                customLabelStyle,
               ]}>
               {label}
             </Text>

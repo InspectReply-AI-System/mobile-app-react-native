@@ -10,6 +10,7 @@ export class AuthModel {
   firstName: string = '';
   lastName: string = '';
   userId: string = '';
+  profilePhoto?: string = '';
 }
 
 export class ConfigModal {

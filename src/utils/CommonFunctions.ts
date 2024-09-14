@@ -164,6 +164,15 @@ const removeEmojis = (string: string) => {
   return string?.replace(regex, '');
 };
 
+function getFirstAndLastName(fullName: string) {
+  if (fullName) {
+    let [firstName = '', lastName = ''] = fullName.split(' ');
+    return { firstName, lastName };
+  } else {
+    return { firstName: fullName, lastName: '' };
+  }
+}
+
 export default {
   debounce,
   isNumeric,
@@ -176,6 +185,7 @@ export default {
   dismissKeyboard,
   isDeviceAndroid,
   getFormattedDate,
+  getFirstAndLastName,
   getAssetDataFromPath,
   addOpacityToHexColor,
 };

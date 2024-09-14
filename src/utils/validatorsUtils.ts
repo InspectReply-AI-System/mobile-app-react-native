@@ -92,6 +92,24 @@ const nameValidation = (name: string, type: InputFieldType) => {
   }
 };
 
+const fullNameValidation = (name: string) => {
+  if (name.length === 0) {
+    return {
+      error: true,
+      errorMsg: CommonStrings.pleaseEnterName,
+    };
+  } else if (!nameRegex.test(name)) {
+    return {
+      error: true,
+      errorMsg: CommonStrings.pleaseEnterName,
+    };
+  } else if (nameRegex.test(name)) {
+    return { error: false, errorMsg: '' };
+  } else {
+    return { error: false, errorMsg: '' };
+  }
+};
+
 const verificationCodeValidation = (code: string) => {
   if (code.length === 0) {
     return {
@@ -109,6 +127,7 @@ const verificationCodeValidation = (code: string) => {
 export {
   emailValidation,
   passwordValidation,
+  fullNameValidation,
   mobileNumberValidation,
   userNameEmailValidation,
   nameValidation,

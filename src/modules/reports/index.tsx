@@ -18,6 +18,7 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import UserGuide from '../userGuide';
+import { getProfile } from '@inspectreplyai/redux/auth/action';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,6 +27,7 @@ const Reports: React.FC = () => {
   const [step, setStep] = useState(1);
   const [search, setSearch] = useState('');
   const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
+  const { user } = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
     if (step < 3) {
@@ -35,6 +37,10 @@ const Reports: React.FC = () => {
       dispatch(SET_CONFIG_DATA({ firstOpen: false }));
     }
   };
+
+  useEffect(() => {
+    dispatch(getProfile({ customerId: user?.userId }));
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {

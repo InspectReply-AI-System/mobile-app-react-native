@@ -15,6 +15,8 @@ const colors = {
   greenE7F4EA: '#E7F4EA',
   black3A3C3F: '#3A3C3F',
   purple173EAD: '#173EAD',
+  purpleBlue: '#497AFC',
+  blue: 'blue',
 };
 
 export default colors;

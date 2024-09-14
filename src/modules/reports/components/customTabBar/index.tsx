@@ -54,7 +54,7 @@ export const CustomTabBar: React.FC<CustomTabBarProps> = ({
               style={[
                 typography.h6,
                 { color: isActive ? colors.white : colors.grey },
-                { ...customLabelStyle },
+                customLabelStyle,
               ]}>
               {label}
             </Text>

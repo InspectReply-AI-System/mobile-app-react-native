@@ -16,6 +16,8 @@ const ROUTES = {
   BOTTOMTAB: 'bottomTab',
   ADDREPORTS: 'addReports',
   PROCESSREPORT: 'processReports',
+  UNREAD: 'Unread',
+  READ: 'Read',
 };
 
 export default ROUTES;

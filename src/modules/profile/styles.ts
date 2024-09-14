@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
   deleteDesc: {
     fontSize: 14,
-    fontWeight: '400',
+    fontFamily: fonts.ITALIC,
     color: colors.white,
     marginTop: normalize(5),
   },
@@ -82,6 +82,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     ...StyleSheet.absoluteFillObject,
+  },
+  logoutText: {
+    fontSize: normalize(16),
+    color: colors.red,
+    fontFamily: fonts.MEDIUM,
+    textDecorationLine: 'underline',
+    alignSelf: 'center',
   },
   modalContentContainer: {
     height: SCREEN_HEIGHT / 3,

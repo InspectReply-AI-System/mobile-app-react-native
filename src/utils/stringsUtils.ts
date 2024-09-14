@@ -100,4 +100,12 @@ export const CommonStrings = {
   privacy: 'Privacy',
   notifications: 'Notifications',
   pleaseEnterName: 'Please enter an name',
+  imageIsTooBig: 'Image is too big. Max file size is upto 5 MB.',
+  cameraAccessDenied: 'Access Denied Camera',
+  galleryAccessDenied: 'Access Denied Gallery',
+  alertTitle: 'Alert Title',
+  fileSizeTooBig: 'File size to big',
+  goToSetting: 'Go To Settings',
+  permissionNotGranted: 'Permission not granted',
+  permissionBlocked: 'Permissions Blocked',
 };

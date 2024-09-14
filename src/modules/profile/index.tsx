@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-color-literals */
 import React, { useEffect } from 'react';
 import Column from '@inspectreplyai/components/general/Column';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -18,7 +17,7 @@ import eye from '@inspectreplyai/assets/svg/eye.svg';
 import Device from '@inspectreplyai/utils/Device';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
-import { ActivityIndicator, Image, Text } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import { BlurView } from '@react-native-community/blur';
 import Modal from 'react-native-modal';
@@ -28,7 +27,7 @@ import { Icons, Images } from '@inspectreplyai/themes/appImages';
 import styles from './styles';
 import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
 import ImageView from 'react-native-image-viewing';
-import { colors, fonts, typography } from '@inspectreplyai/themes';
+import { colors, typography } from '@inspectreplyai/themes';
 import {
   useAppDispatch,
   useAppSelector,
@@ -42,8 +41,9 @@ import { StoreActions } from '@inspectreplyai/utils/Enums';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { showErrorToast } from '@inspectreplyai/components/toast';
+import ImageWrapper from '@inspectreplyai/components/general/Image';
 
-const Login = () => {
+const Profile = () => {
   const [state, updateState] = useSimpleReducer({
     name: '',
     email: '',
@@ -152,9 +152,7 @@ const Login = () => {
       },
       (err: any) => {
         if (err.message === 'File size to big') {
-          CommonFunctions.showSnackbar(
-            'Image is too big. Max file size is upto 5 MB.',
-          );
+          CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
         }
       },
     );
@@ -206,7 +204,10 @@ const Login = () => {
         disabled={!profileImage?.path}
         style={styles.imageContainer}
         onPress={onPressProfile}>
-        <Image source={{ uri: profileImage?.path }} style={styles.imageStyle} />
+        <ImageWrapper
+          source={{ uri: profileImage?.path }}
+          style={styles.imageStyle}
+        />
       </Touchable>
 
       <ImageView
@@ -234,9 +235,12 @@ const Login = () => {
         animationOut='fadeOut'>
         <Column style={styles.modalContentContainer}>
           <Row style={{ justifyContent: 'space-between' }}>
-            <Image source={Images.redInfo} style={styles.modalInfo} />
+            <ImageWrapper source={Images.redInfo} style={styles.modalInfo} />
             <Touchable onPress={onPressCross}>
-              <Image source={Icons.cross} style={styles.modalCrossIcon} />
+              <ImageWrapper
+                source={Icons.cross}
+                style={styles.modalCrossIcon}
+              />
             </Touchable>
           </Row>
 
@@ -332,16 +336,7 @@ const Login = () => {
           <Touchable
             style={{ marginTop: normalize(36) }}
             onPress={onPressLogout}>
-            <Text
-              style={{
-                fontSize: normalize(16),
-                color: 'green',
-                fontFamily: fonts.MEDIUM,
-                textDecorationLine: 'underline',
-                alignSelf: 'center',
-              }}>
-              {'Logout'}
-            </Text>
+            <Text style={styles.logoutText}>{'Logout'}</Text>
           </Touchable>
           <Row style={styles.termsView}>
             <Touchable onPress={onPressTerms}>
@@ -370,4 +365,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Profile;

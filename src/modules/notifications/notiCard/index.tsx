@@ -1,25 +1,16 @@
 import React from 'react';
-import { normalize } from '@inspectreplyai/utils';
+import styles from './styles';
+import { Text } from 'react-native';
+import { NotiCardProps } from './@types';
+import { typography } from '@inspectreplyai/themes';
 import Row from '@inspectreplyai/components/general/Row';
 import { Icons } from '@inspectreplyai/themes/appImages';
-import { colors, typography } from '@inspectreplyai/themes';
 import Column from '@inspectreplyai/components/general/Column';
+import ImageWrapper from '@inspectreplyai/components/general/Image';
 import Touchable from '@inspectreplyai/components/general/Touchable';
-import { Text, StyleSheet, Image, ViewStyle, TextStyle } from 'react-native';
 import AppleStyleSwipeableRow from '@inspectreplyai/components/swipableCard';
 
-type Props = {
-  heading: string;
-  subLabel: string;
-  description: string;
-  onActionPress: () => void;
-  customDescStyle?: TextStyle;
-  onRightIconPress: () => void;
-  customHeadingStyle?: TextStyle;
-  customSubLabelStyle?: TextStyle;
-  containerCustomStyle?: ViewStyle;
-};
-const NotiCard = (props: Props) => {
+const NotiCard = (props: NotiCardProps) => {
   const {
     heading,
     subLabel,
@@ -35,11 +26,11 @@ const NotiCard = (props: Props) => {
     <AppleStyleSwipeableRow hideEdit leftActionHandler={onActionPress}>
       <Column style={styles.container} {...containerCustomStyle}>
         <Row style={styles.textIconContainer}>
-          <Text style={[typography.body, { flex: 1 }]} {...customHeadingStyle}>
+          <Text style={[typography.body, { flex: 1 }, customHeadingStyle]}>
             {heading}
           </Text>
           <Touchable onPress={onRightIconPress}>
-            <Image source={Icons.cross} style={styles.crossIcon} />
+            <ImageWrapper source={Icons.cross} style={styles.crossIcon} />
           </Touchable>
         </Row>
         <Text
@@ -49,8 +40,7 @@ const NotiCard = (props: Props) => {
         </Text>
         <Text
           numberOfLines={3}
-          style={[typography.h6, styles.description]}
-          {...customDescStyle}>
+          style={[typography.h6, styles.description, customDescStyle]}>
           {description}
         </Text>
       </Column>
@@ -59,31 +49,3 @@ const NotiCard = (props: Props) => {
 };
 
 export default NotiCard;
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderRadius: normalize(10),
-    paddingVertical: normalize(14),
-    borderColor: colors.primaryBlue,
-    paddingHorizontal: normalize(14),
-    backgroundColor: colors.black27282B,
-  },
-  crossIcon: {
-    width: normalize(12),
-    height: normalize(12),
-  },
-  description: {
-    color: colors.white,
-    marginTop: normalize(16),
-    lineHeight: normalize(22),
-  },
-  textIconContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  timeText: {
-    color: colors.grey,
-    marginTop: normalize(4),
-  },
-});

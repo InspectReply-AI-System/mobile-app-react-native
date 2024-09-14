@@ -165,8 +165,12 @@ const removeEmojis = (string: string) => {
 };
 
 function getFirstAndLastName(fullName: string) {
-  let [firstName = '', lastName = ''] = fullName.split(' ');
-  return { firstName, lastName };
+  if (fullName) {
+    let [firstName = '', lastName = ''] = fullName.split(' ');
+    return { firstName, lastName };
+  } else {
+    return { firstName: fullName, lastName: '' };
+  }
 }
 
 export default {

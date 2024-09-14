@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Alert, Platform } from 'react-native';
 import {
   check,
@@ -10,6 +9,7 @@ import {
   PERMISSIONS,
 } from 'react-native-permissions';
 import { isIOS } from './platform';
+import { CommonStrings } from './stringsUtils';
 export const requestPermissions = async (
   PermissionAndroid: Permission,
   PermissionIOS: Permission,
@@ -21,11 +21,11 @@ export const requestPermissions = async (
       const resp = await request(Permission);
       if (resp === RESULTS.BLOCKED) {
         Alert.alert(
-          'Permissions Blocked',
+          CommonStrings.permissionBlocked,
           '',
           [
             {
-              text: 'Go to settings',
+              text: CommonStrings.goToSetting,
               onPress: () => openSettings(),
               isPreferred: true,
               style: 'default',
@@ -40,17 +40,15 @@ export const requestPermissions = async (
       } else if (resp === RESULTS.GRANTED || resp === RESULTS.LIMITED) {
         return true;
       } else {
-        throw new Error('Permission not granted');
+        throw new Error(CommonStrings.permissionNotGranted);
       }
     }
     return true;
   } catch (error: any) {
-    // showSnackbar(error.message);
     return false;
   }
 };
 
-//@ts-ignore
 const CurrentVersion = parseInt(`${Platform.constants.Release}`, 10);
 
 export const permissionComponent = {
@@ -73,9 +71,13 @@ export const permissionComponent = {
             status = false;
             break;
           case RESULTS.GRANTED:
+            status = true;
             break;
           case RESULTS.BLOCKED:
             status = false;
+            break;
+          case RESULTS.LIMITED:
+            status = true;
             break;
           default:
             status = true;
@@ -110,6 +112,7 @@ export const permissionComponent = {
         let status = true;
         switch (result) {
           case RESULTS.UNAVAILABLE:
+            status = false;
             break;
           case RESULTS.DENIED:
             status = false;

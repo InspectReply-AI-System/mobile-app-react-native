@@ -8,6 +8,7 @@ import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
 import { CustomTabBar } from '../reports/components/customTabBar';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ROUTES from '@inspectreplyai/routes/routes';
 
 const Notifications = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -22,8 +23,8 @@ const Notifications = () => {
         tabBar={(props) => (
           <CustomTabBar {...props} customLabelStyle={{ fontWeight: '700' }} />
         )}>
-        <Tab.Screen name='Unread' component={UnreadNoti} />
-        <Tab.Screen name='Read' component={ReadNoti} />
+        <Tab.Screen name={ROUTES.UNREAD} component={UnreadNoti} />
+        <Tab.Screen name={ROUTES.READ} component={ReadNoti} />
       </Tab.Navigator>
     </Column>
   );

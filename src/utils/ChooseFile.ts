@@ -1,14 +1,17 @@
 import { Alert, Linking } from 'react-native';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { permissionComponent } from './permissions';
+import { CommonStrings } from './stringsUtils';
 
 const showError = (type: number) => {
   Alert.alert(
-    'Alert Title',
-    type === 1 ? 'Access Denied Camera' : 'Access Denied Gallery',
+    CommonStrings.alertTitle,
+    type === 1
+      ? CommonStrings.cameraAccessDenied
+      : CommonStrings.galleryAccessDenied,
     [
       {
-        text: 'Go To Settings',
+        text: CommonStrings.goToSetting,
         onPress: () => {
           Linking.openSettings()
             .then(() => {})
@@ -38,7 +41,7 @@ const launchCamera = async (successCallback: any, failureCallback: any) => {
         try {
           const result: any = await ImageCropPicker.openCamera(imageOptions);
           if (result?.size > 5000010) {
-            failureCallback({ message: 'File size to big' });
+            failureCallback({ message: CommonStrings.fileSizeTooBig });
           } else {
             successCallback(result);
           }
@@ -61,7 +64,7 @@ const lauchGallery = async (successCallback: any, failureCallback: any) => {
         try {
           const result: any = await ImageCropPicker.openPicker(imageOptions);
           if (result?.size > 5000010) {
-            failureCallback({ message: 'File size to big' });
+            failureCallback({ message: CommonStrings.fileSizeTooBig });
           } else {
             successCallback(result);
           }

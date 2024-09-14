@@ -15,6 +15,8 @@ const CustomHeader: React.FC<HeaderProps> = ({
   rightIcon,
   onLeftPress = goBack,
   onRightPress,
+  customRightIconStyle,
+  titleCustomStyle,
 }) => {
   const insets = useSafeAreaInsets();
 
@@ -24,7 +26,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
     }
 
     if (typeof icon === 'number' || typeof icon === 'object') {
-      return <LocalImage source={icon} />;
+      return <LocalImage source={icon} style={customRightIconStyle} />;
     }
 
     return null;
@@ -38,7 +40,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
         )}
       </Column>
       <Column style={styles.titleContainer}>
-        {title && <Text style={styles.title}>{title}</Text>}
+        {title && <Text style={[styles.title, titleCustomStyle]}>{title}</Text>}
       </Column>
       <Column style={styles.rightContainer}>
         {rightIcon && (

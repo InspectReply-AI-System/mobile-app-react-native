@@ -1,9 +1,10 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from './action';
+import { getProfile, loginUser, registerUser } from './action';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { AuthState } from './AuthSlice';
 import { showErrorToast } from '@inspectreplyai/components/toast';
+import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
 
 export const authExtraReducer = (
   builder: ActionReducerMapBuilder<AuthState>,
@@ -15,6 +16,7 @@ export const authExtraReducer = (
     })
     .addCase(loginUser.fulfilled, (state: AuthState, action) => {
       const { customer, token } = action.payload;
+      setAuthorizationToken(token);
       state.user.token = token || '';
       state.user.firstName = customer?.first_name || '';
       state.user.lastName = customer?.last_name || '';
@@ -40,6 +42,7 @@ export const authExtraReducer = (
     })
     .addCase(registerUser.fulfilled, (state: AuthState, action) => {
       const { customer, token } = action.payload;
+      setAuthorizationToken(token);
       state.user.token = token || '';
       state.user.firstName = customer?.first_name || '';
       state.user.lastName = customer?.last_name || '';
@@ -51,6 +54,28 @@ export const authExtraReducer = (
       }, 0);
     })
     .addCase(registerUser.rejected, (state: AuthState, action) => {
+      state.loading = false;
+      state.error = action.payload
+        ? (action.payload as string)
+        : 'An error occurred';
+      showErrorToast(action.payload as string);
+    });
+
+  builder
+    .addCase(getProfile.pending, (state: AuthState) => {
+      state.loading = true;
+      state.error = '';
+    })
+    .addCase(getProfile.fulfilled, (state: AuthState, action) => {
+      const { customer } = action.payload;
+      state.user.firstName = customer?.first_name || '';
+      state.user.lastName = customer?.last_name || '';
+      state.user.email = customer?.email || '';
+      state.user.userId = customer?._id || '';
+      state.user.profilePhoto = customer?.profilePhoto || '';
+      state.loading = false;
+    })
+    .addCase(getProfile.rejected, (state: AuthState, action) => {
       state.loading = false;
       state.error = action.payload
         ? (action.payload as string)

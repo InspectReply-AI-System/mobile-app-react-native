@@ -10,6 +10,7 @@ import Success from '@inspectreplyai/assets/svg/success.svg';
 import Cross from '@inspectreplyai/assets/svg/cross.svg';
 import Erorr from '@inspectreplyai/assets/svg/error.svg';
 import Info from '@inspectreplyai/assets/svg/info.svg';
+import eye from '../assets/svg/eye.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -18,10 +19,14 @@ export const Icons = {
   notifications: require(`${fixedPath}/icons/notifications.png`),
   profile: require(`${fixedPath}/icons/profile.png`),
   loader: require(`${fixedPath}/icons/loader.png`),
+  cross: require(`${fixedPath}/icons/cross.png`),
+  edit: require(`${fixedPath}/icons/edit.png`),
+  bin: require(`${fixedPath}/icons/bin.png`),
 };
 
 export const Images = {
   appIcon: require(`${fixedPath}/images/appIcon.png`),
+  redInfo: require(`${fixedPath}/images/redInfo.png`),
 };
 
 export const GIF = {
@@ -39,4 +44,5 @@ export const SvgIcon = {
   Cross,
   Erorr,
   Info,
+  eye,
 };

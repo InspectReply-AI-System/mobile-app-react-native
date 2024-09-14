@@ -5,5 +5,8 @@ export const endpoints = {
     setNewPassword: '/api/customer/set-password',
     forgotPassword: '/api/customer/forgot-password',
     verifyOtp: '/api/customer/validate-otp',
+    getUserProfile: '/api/customer/',
+    updateUserProfile: '/api/customer/update-profile/',
+    updateProfilePhoto: 'api/customer/profile-photo',
   },
 };

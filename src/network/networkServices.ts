@@ -51,4 +51,19 @@ const handleApiError = (errorMessage: string) => {
   console.log('handleApiError', errorMessage);
 };
 
-export { $http, handleApiError };
+const setAuthorizationToken = (token: string) => {
+  console.log('token in the setAuthorizationToken', token);
+  if (token) {
+    $http.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+};
+
+const setContentType = (contentType: string | null) => {
+  if (contentType) {
+    $http.defaults.headers['Content-Type'] = contentType;
+  } else {
+    $http.defaults.headers['Content-Type'] = 'application/json';
+  }
+};
+
+export { $http, handleApiError, setAuthorizationToken, setContentType };

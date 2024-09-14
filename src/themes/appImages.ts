@@ -6,6 +6,10 @@ import checked from '../assets/svg/checked.svg';
 import one from '../assets/svg/one.svg';
 import two from '../assets/svg/two.svg';
 import connector from '../assets/svg/Connector.svg';
+import Success from '@inspectreplyai/assets/svg/success.svg';
+import Cross from '@inspectreplyai/assets/svg/cross.svg';
+import Erorr from '@inspectreplyai/assets/svg/error.svg';
+import Info from '@inspectreplyai/assets/svg/info.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -31,4 +35,8 @@ export const SvgIcon = {
   one,
   two,
   connector,
+  Success,
+  Cross,
+  Erorr,
+  Info,
 };

@@ -2,8 +2,8 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { loginUser, registerUser } from './action';
 import { reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonFunctions } from '@inspectreplyai/utils';
 import { AuthState } from './AuthSlice';
+import { showErrorToast } from '@inspectreplyai/components/toast';
 
 export const authExtraReducer = (
   builder: ActionReducerMapBuilder<AuthState>,
@@ -30,7 +30,7 @@ export const authExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      CommonFunctions.showSnackbar(action.payload as string);
+      showErrorToast(action.payload as string);
     });
 
   builder
@@ -55,6 +55,6 @@ export const authExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      CommonFunctions.showSnackbar(action.payload as string);
+      showErrorToast(action.payload as string);
     });
 };

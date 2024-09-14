@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   addressText: {
     color: colors.white,
-    marginBottom: 8,
+    marginBottom: vh(8),
   },
   bgStyle: {
     marginTop: vh(-15),
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   costText: {
     color: colors.white,
-    marginBottom: 8,
+    marginBottom: vh(8),
   },
   dateText: {
     color: colors.grey,
@@ -49,6 +49,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: vh(14),
   },
+  firstOption: {
+    paddingHorizontal: vw(16),
+    borderTopRightRadius: normalize(12),
+    borderTopLeftRadius: normalize(12),
+  },
   itemContainer: {
     backgroundColor: colors.black27282B,
     borderRadius: normalize(8),
@@ -63,15 +68,21 @@ export const styles = StyleSheet.create({
   },
   itemHeader: {
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: vh(8),
+  },
+  lastOption: {
+    paddingHorizontal: vw(16),
+    borderBottomLeftRadius: normalize(12),
+    borderBottomRightRadius: normalize(12),
   },
   list: {
     flex: 1,
   },
   moreOptions: {
     color: colors.white,
-    fontSize: 18,
+    fontSize: normalize(18),
   },
+  optionStyle: {},
   selectedTooltip: {
     backgroundColor: colors.black27282B,
   },
@@ -80,14 +91,11 @@ export const styles = StyleSheet.create({
   },
   tooltipContent: {
     borderRadius: normalize(12),
-    paddingTop: vh(10),
-    paddingHorizontal: vw(8),
-    paddingBottom: vh(8),
-    backgroundColor: colors.grey,
+    backgroundColor: colors.black27282B,
   },
   tooltipOption: {
     color: colors.white,
-    padding: 8,
+    paddingVertical: vh(10),
   },
   tooltipWrapper: {
     backgroundColor: colors.transparent,

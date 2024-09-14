@@ -86,4 +86,8 @@ export const CommonStrings = {
   coachMarkText3: 'This is the Contractor Section. About this section.',
   gotIt: 'Got it',
   acceptTermsAndConditions: 'Please accept terms and conditions',
+  editReport: 'Edit Report',
+  shareReport: 'Share Report',
+  Error: 'Error',
+  Success: 'Success',
 };

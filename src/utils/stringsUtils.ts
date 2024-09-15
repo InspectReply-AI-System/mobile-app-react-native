@@ -108,4 +108,6 @@ export const CommonStrings = {
   goToSetting: 'Go To Settings',
   permissionNotGranted: 'Permission not granted',
   permissionBlocked: 'Permissions Blocked',
+  logout: 'Logout',
+  save: 'SAVE',
 };

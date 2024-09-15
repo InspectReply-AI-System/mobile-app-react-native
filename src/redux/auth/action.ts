@@ -76,7 +76,7 @@ export const setProfileImage = createAsyncThunk(
   `${sliceName}/setProfileImage`,
   async (args: setProfileImagePayload, thunkAPI) => {
     try {
-      const response = await updateProfilePhoto(args?.payload);
+      const response = await updateProfilePhoto(args?.profilePayload);
       if (response?.data) {
         setContentType(null);
         thunkAPI.dispatch(getProfile({ customerId: args.customerId }));

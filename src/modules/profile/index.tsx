@@ -27,7 +27,6 @@ import { Icons, Images } from '@inspectreplyai/themes/appImages';
 import styles from './styles';
 import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
 import ImageView from 'react-native-image-viewing';
-import { colors, typography } from '@inspectreplyai/themes';
 import {
   useAppDispatch,
   useAppSelector,
@@ -83,7 +82,7 @@ const Profile = () => {
       name: `${user?.firstName} ${user?.lastName}`,
       email: user?.email,
       password: '',
-      profileImage: '',
+      profileImage: { path: user?.profilePhoto },
     });
   }, []);
 
@@ -128,7 +127,7 @@ const Profile = () => {
   };
 
   const onPressEdit = () => {
-    updateState({ isEditableEnable: true });
+    updateState({ isEditableEnable: !isEditableEnable });
   };
 
   const onPressTerms = () => {
@@ -144,14 +143,9 @@ const Profile = () => {
     lauchGallery(
       (response: any) => {
         updateState({ profileImage: response });
-        const payload = {
-          profilePhoto: response?.path,
-          cust_id: user?.userId,
-        };
-        dispatch(setProfileImage({ payload, customerId: user?.userId }));
       },
       (err: any) => {
-        if (err.message === 'File size to big') {
+        if (err.message === CommonStrings.fileSizeTooBig) {
           CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
         }
       },
@@ -173,6 +167,11 @@ const Profile = () => {
       email: email,
       status: 1,
     };
+    const profilePayload = {
+      profilePhoto: profileImage?.path,
+      cust_id: user?.userId,
+    };
+    dispatch(setProfileImage({ profilePayload, customerId: user?.userId }));
     dispatch(
       updateProfile({
         payload,
@@ -319,24 +318,12 @@ const Profile = () => {
             returnKeyLabel={isIOS ? 'done' : 'submit'}
           />
           {isEditableEnable && (
-            <Touchable onPress={onPressSave}>
-              <Text
-                style={[
-                  typography.h3,
-                  {
-                    textAlign: 'center',
-                    color: colors.white,
-                    marginTop: normalize(10),
-                  },
-                ]}>
-                SAVE
-              </Text>
-            </Touchable>
+            <PrimaryButton title={CommonStrings.save} onPress={onPressSave} />
           )}
           <Touchable
             style={{ marginTop: normalize(36) }}
             onPress={onPressLogout}>
-            <Text style={styles.logoutText}>{'Logout'}</Text>
+            <Text style={styles.logoutText}>{CommonStrings.logout}</Text>
           </Touchable>
           <Row style={styles.termsView}>
             <Touchable onPress={onPressTerms}>

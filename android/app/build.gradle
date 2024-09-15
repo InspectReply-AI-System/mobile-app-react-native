@@ -4,8 +4,8 @@ apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'com.facebook.react'
 
 project.ext.envConfigFiles = [
-        stageRelease :'.env.staging',
-        stageDebug:'.env.staging',
+        stagingRelease :".env.staging",
+        stagingDebug:".env.staging",
         productionDebug:'.env.production',
         productionRelease:'.env.production'
 ]

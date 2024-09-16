@@ -57,6 +57,7 @@ export const getProfile = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
   `${sliceName}/updateProfile`,
   async (args: updateProfilePayload, thunkAPI) => {
+    setContentType(null);
     try {
       const response = await updateUserProfile(args?.payload);
       if (response?.data) {

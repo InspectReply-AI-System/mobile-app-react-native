@@ -29,6 +29,6 @@ export interface updateProfilePayload {
 }
 
 export interface setProfileImagePayload {
-  payload: { profilePhoto: string; cust_id: string };
+  profilePayload: { profilePhoto: string; cust_id: string };
   customerId: string;
 }

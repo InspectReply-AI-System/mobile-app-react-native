@@ -62,11 +62,10 @@ export default StyleSheet.create({
     backgroundColor: colors.primaryBalck,
   },
   imageStyle: {
-    zIndex: 1,
     width: normalize(110),
     height: normalize(110),
     borderRadius: normalize(100),
-    backgroundColor: colors.red,
+    backgroundColor: colors.black,
   },
   inputsContainer: {
     flex: 1,
@@ -85,7 +84,7 @@ export default StyleSheet.create({
   },
   logoutText: {
     fontSize: normalize(16),
-    color: colors.red,
+    color: colors.primaryBlue,
     fontFamily: fonts.MEDIUM,
     textDecorationLine: 'underline',
     alignSelf: 'center',

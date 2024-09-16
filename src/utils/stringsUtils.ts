@@ -119,4 +119,6 @@ export const CommonStrings = {
   website: 'Website (optional)',
   deleteContractor: 'Delete Contractor',
   category: 'Category',
+  logout: 'Logout',
+  save: 'SAVE',
 };

@@ -31,7 +31,7 @@ export const requestPermissions = async (
               style: 'default',
             },
             {
-              text: 'Cancel',
+              text: CommonStrings.cancel,
               style: 'destructive',
             },
           ],
@@ -76,9 +76,6 @@ export const permissionComponent = {
           case RESULTS.BLOCKED:
             status = false;
             break;
-          case RESULTS.LIMITED:
-            status = true;
-            break;
           default:
             status = true;
         }
@@ -118,6 +115,9 @@ export const permissionComponent = {
             status = false;
             break;
           case RESULTS.GRANTED:
+            break;
+          case RESULTS.LIMITED:
+            status = true;
             break;
           case RESULTS.BLOCKED:
             status = false;

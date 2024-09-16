@@ -27,6 +27,7 @@ export const Icons = {
 export const Images = {
   appIcon: require(`${fixedPath}/images/appIcon.png`),
   redInfo: require(`${fixedPath}/images/redInfo.png`),
+  dummyProfile: require(`${fixedPath}/images/dummyProfile.png`),
 };
 
 export const GIF = {

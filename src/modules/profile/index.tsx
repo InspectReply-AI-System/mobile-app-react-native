@@ -17,7 +17,7 @@ import eye from '@inspectreplyai/assets/svg/eye.svg';
 import Device from '@inspectreplyai/utils/Device';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator, Alert, Text } from 'react-native';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import { BlurView } from '@react-native-community/blur';
 import Modal from 'react-native-modal';
@@ -130,31 +130,47 @@ const Profile = () => {
     updateState({ isEditableEnable: !isEditableEnable });
   };
 
-  const onPressTerms = () => {
-    launchCamera(
-      (response: any) => {
-        updateState({ profileImage: response });
-      },
-      () => {},
-    );
-  };
+  const onPressTerms = () => {};
 
-  const onPressPrivacy = () => {
-    lauchGallery(
-      (response: any) => {
-        updateState({ profileImage: response });
+  const onPressPrivacy = () => {};
+
+  const handleImagePicker = () => {
+    Alert.alert('Select Image Source', 'Choose from gallery or camera', [
+      {
+        text: 'Camera',
+        onPress: () =>
+          launchCamera(
+            (response: any) => {
+              updateState({ profileImage: response });
+            },
+            () => {},
+          ),
       },
-      (err: any) => {
-        if (err.message === CommonStrings.fileSizeTooBig) {
-          CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
-        }
+      {
+        text: 'Gallery',
+        onPress: () =>
+          lauchGallery(
+            (response: any) => {
+              updateState({ profileImage: response });
+            },
+            (err: any) => {
+              if (err.message === CommonStrings.fileSizeTooBig) {
+                CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
+              }
+            },
+          ),
       },
-    );
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   const onPressProfile = () => {
     if (profileImage?.path) {
       updateState({ isPreviewEnable: true });
+    } else {
+      if (isEditableEnable) {
+        handleImagePicker();
+      }
     }
   };
 
@@ -200,11 +216,15 @@ const Profile = () => {
         customRightIconStyle={styles.headerIconStyle}
       />
       <Touchable
-        disabled={!profileImage?.path}
+        disabled={profileImage?.path || isEditableEnable ? false : true}
         style={styles.imageContainer}
         onPress={onPressProfile}>
         <ImageWrapper
-          source={{ uri: profileImage?.path }}
+          source={
+            profileImage?.path
+              ? { uri: profileImage?.path }
+              : Images.dummyProfile
+          }
           style={styles.imageStyle}
         />
       </Touchable>

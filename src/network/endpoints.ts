@@ -9,4 +9,7 @@ export const endpoints = {
     updateUserProfile: '/api/customer/update-profile/',
     updateProfilePhoto: 'api/customer/profile-photo',
   },
+  contractors: {
+    register: '/api/contractor/register',
+  },
 };

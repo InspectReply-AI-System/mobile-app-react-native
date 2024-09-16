@@ -9,4 +9,5 @@ export interface HeaderProps {
   onRightPress?: () => void;
   customRightIconStyle?: ImageStyle;
   titleCustomStyle?: TextStyle;
+  disabled?: boolean;
 }

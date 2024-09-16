@@ -18,6 +18,7 @@ const ROUTES = {
   PROCESSREPORT: 'processReports',
   UNREAD: 'Unread',
   READ: 'Read',
+  CONTRACTORSDETAILS: 'contractorDetails',
 };
 
 export default ROUTES;

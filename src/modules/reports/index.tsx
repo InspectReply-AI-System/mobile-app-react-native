@@ -8,16 +8,15 @@ import Search from './../../assets/svg/search.svg';
 import { CustomTabBar } from './components/customTabBar';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { CommonStrings, normalize, vh } from '@inspectreplyai/utils';
+import { CommonStrings, normalize, vh, vw } from '@inspectreplyai/utils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import UserGuide from '../userGuide';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
-import UserGuide from '../userGuide';
 import { getProfile } from '@inspectreplyai/redux/auth/action';
 
 const Tab = createMaterialTopTabNavigator();
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primaryBalck,
-    paddingHorizontal: 16,
+    paddingHorizontal: vw(16),
   },
   customTextStyle: {
     borderRadius: normalize(24),

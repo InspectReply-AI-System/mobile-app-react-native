@@ -17,6 +17,7 @@ const CustomHeader: React.FC<HeaderProps> = ({
   onRightPress,
   customRightIconStyle,
   titleCustomStyle,
+  disabled,
 }) => {
   const insets = useSafeAreaInsets();
 
@@ -44,7 +45,9 @@ const CustomHeader: React.FC<HeaderProps> = ({
       </Column>
       <Column style={styles.rightContainer}>
         {rightIcon && (
-          <Touchable onPress={onRightPress}>{renderIcon(rightIcon)}</Touchable>
+          <Touchable onPress={onRightPress} disabled={disabled}>
+            {renderIcon(rightIcon)}
+          </Touchable>
         )}
       </Column>
     </Row>

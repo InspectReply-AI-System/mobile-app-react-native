@@ -50,6 +50,11 @@ const typography = {
     fontSize: normalize(12),
     color: colors.white,
   },
+  h7: {
+    fontFamily: fonts.REGULAR,
+    fontSize: normalize(12),
+    color: colors.white,
+  },
   // Add more typography styles as needed
 };
 

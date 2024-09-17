@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
 import { colors, typography } from '@inspectreplyai/themes';
-import { vh, vw } from '@inspectreplyai/utils';
+import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import Column from '@inspectreplyai/components/general/Column';
 
@@ -15,14 +15,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
   onSelectCategory,
 }) => {
   return (
-    <Column
-      style={{
-        flex: 1,
-        backgroundColor: colors.primaryBalck,
-        paddingHorizontal: vw(16),
-        paddingTop: vh(32),
-      }}>
-      <Text style={styles.header}>Select a Category</Text>
+    <Column style={styles.mainContainer}>
+      <Text style={styles.header}>{CommonStrings.selectCategory}</Text>
       <FlatList
         data={categories}
         keyExtractor={(item) => item}
@@ -45,6 +39,12 @@ const styles = StyleSheet.create({
     ...typography.h6,
     padding: vw(6),
     marginTop: vh(10),
+  },
+  mainContainer: {
+    flex: 1,
+    backgroundColor: colors.primaryBalck,
+    paddingHorizontal: vw(16),
+    paddingTop: vh(32),
   },
 });
 

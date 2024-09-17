@@ -12,6 +12,8 @@ export interface SectionData {
   data: BusinessCardProps[];
 }
 
+import { CommonStrings } from '@inspectreplyai/utils';
+import { emailRegex } from '@inspectreplyai/utils/Constant';
 import * as Yup from 'yup';
 
 export const sections: SectionData[] = [
@@ -108,21 +110,18 @@ export const sections: SectionData[] = [
 ];
 
 export const validationSchema = Yup.object().shape({
-  company: Yup.string().required('Company is required'),
+  company: Yup.string().required(CommonStrings.companyRequired),
   email: Yup.string()
-    .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      'Invalid email format',
-    )
-    .required('Email is required'),
+    .matches(emailRegex, CommonStrings.invalidEmail)
+    .required(CommonStrings.emailRequired),
   phone: Yup.string()
-    .matches(/^\d{10,}$/, 'Phone number must be at least 10 digits')
-    .required('Phone number is required'),
-  address1: Yup.string().required('Address is required'),
+    .matches(/^\d{10,}$/, CommonStrings.phoneNumberMustBe)
+    .required(CommonStrings.phoneNumberRequired),
+  address1: Yup.string().required(CommonStrings.addressRequired),
   address2: Yup.string(),
   city: Yup.string().required('City is required'),
   state: Yup.string().required('State is required'),
-  zip: Yup.string().required('ZIP code is required'),
+  zip: Yup.string().required(CommonStrings.zipRequired),
   category: Yup.string().required('Category is required'),
-  website: Yup.string().url('Invalid URL'),
+  website: Yup.string(),
 });

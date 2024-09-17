@@ -46,7 +46,7 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
         {loader ? (
           <Indicator />
         ) : (
-          <Text style={styles.item}>{CommonStrings.noCategoryAdded}</Text>
+          <Text style={styles.item}>{CommonStrings.noCity}</Text>
         )}
       </Column>
     );

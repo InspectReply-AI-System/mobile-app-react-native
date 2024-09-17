@@ -3,10 +3,12 @@ import { combineReducers } from 'redux';
 import { StoreActions } from '@inspectreplyai/utils/Enums';
 import ConfigSlice from './config/ConfigSlice';
 import AuthSlice from './auth/AuthSlice';
+import contractorSlice from './contractor/contractorSlice';
 
 const RootReducer = combineReducers({
   AuthSlice,
   ConfigSlice,
+  contractorSlice,
 });
 
 const rootReducer = (state: any, action: any) => {

@@ -34,9 +34,19 @@ import CityList from './cityList';
 const ContractorDetails = () => {
   const [editMode, setEditMode] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('Roofing');
-  const [selectedState, setSelectedState] = useState('Select State');
-  const [selectedCity, setSelectedCity] = useState('Select City');
+  const [selectedCategory, setSelectedCategory] = useState({
+    category_name: 'Select Category',
+    _id: '',
+  });
+  const [selectedState, setSelectedState] = useState({
+    name: 'Select State',
+    _id: '',
+    abbreviation: '',
+  });
+  const [selectedCity, setSelectedCity] = useState({
+    name: 'Select City',
+    _id: '',
+  });
 
   const bottomSheetRef = useRef<{
     openSheet: () => void;
@@ -69,8 +79,11 @@ const ContractorDetails = () => {
     }
   };
 
-  const onSelectCategory = (category: string) => {
-    setSelectedCategory(category);
+  const onSelectCategory = (categoryName: string, categoryId: string) => {
+    setSelectedCategory({
+      category_name: categoryName || '',
+      _id: categoryId || '',
+    });
     if (bottomSheetRef.current) {
       bottomSheetRef.current.closeSheet();
     }
@@ -81,8 +94,16 @@ const ContractorDetails = () => {
       bottomSheetRef1.current.openSheet();
     }
   };
-  const onSelectState = (state: string) => {
-    setSelectedState(state);
+  const onSelectState = (state: {
+    name: string;
+    _id: string;
+    abbreviation: string;
+  }) => {
+    setSelectedState({
+      name: state?.name,
+      _id: state?._id,
+      abbreviation: state?.abbreviation,
+    });
     if (bottomSheetRef1.current) {
       bottomSheetRef1.current.closeSheet();
     }
@@ -93,8 +114,8 @@ const ContractorDetails = () => {
       bottomSheetRef2.current.openSheet();
     }
   };
-  const onSelectCity = (city: string) => {
-    setSelectedCity(city);
+  const onSelectCity = (city: { name: string; _id: string }) => {
+    setSelectedCity({ name: city?.name, _id: city?._id });
     if (bottomSheetRef2.current) {
       bottomSheetRef2.current.closeSheet();
     }
@@ -302,13 +323,13 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openCitySheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedCity}</Text>
+                      <Text style={typography.body}>{selectedCity.name}</Text>
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedCity}
+                      {selectedCity.name}
                     </Text>
                   </Row>
                 )}
@@ -321,13 +342,13 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openStateSheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedState}</Text>
+                      <Text style={typography.body}>{selectedState.name}</Text>
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedState}
+                      {selectedState.name}
                     </Text>
                   </Row>
                 )}
@@ -351,14 +372,16 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openCategorySheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedCategory}</Text>
+                      <Text style={typography.body}>
+                        {selectedCategory.category_name}
+                      </Text>
                       <DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedCategory}
+                      {selectedCategory.category_name}
                     </Text>
                     <DownArrow />
                   </Row>
@@ -386,22 +409,13 @@ const ContractorDetails = () => {
               </Column>
             )}
             <RNBottomSheet ref={bottomSheetRef}>
-              <CategoryList
-                categories={['Roofing', 'Plumbing', 'Electrical', 'Carpentry']}
-                onSelectCategory={onSelectCategory}
-              />
+              <CategoryList onSelectCategory={onSelectCategory} />
             </RNBottomSheet>
             <RNBottomSheet ref={bottomSheetRef1}>
-              <StateList
-                states={['New York', 'New Jersey', 'USA', 'America']}
-                onSelectState={onSelectState}
-              />
+              <StateList onSelectState={onSelectState} />
             </RNBottomSheet>
             <RNBottomSheet ref={bottomSheetRef2}>
-              <CityList
-                cities={['New York', 'New Jersey', 'USA', 'America']}
-                onSelectCity={onSelectCity}
-              />
+              <CityList sateData={selectedState} onSelectCity={onSelectCity} />
             </RNBottomSheet>
           </>
         )}

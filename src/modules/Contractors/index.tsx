@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, SectionList } from 'react-native';
 
 import { styles } from './styles';
@@ -16,6 +16,8 @@ import LocalImage from '@inspectreplyai/components/general/LocalImage';
 import FloatingButton from '@inspectreplyai/components/floatingButton';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import Row from '@inspectreplyai/components/general/Row';
+import { useAppDispatch } from '@inspectreplyai/hooks/reduxHooks';
+import { getContractors } from '@inspectreplyai/redux/contractor/action';
 
 const BusinessCard = ({
   name,
@@ -39,6 +41,16 @@ const BusinessCard = ({
 );
 
 const Contractors = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getContractors({
+        page: 1,
+        limit: 10,
+      }),
+    );
+  }, []);
   const renderSectionHeader = ({
     section: { title, data },
   }: {
@@ -77,7 +89,7 @@ const Contractors = () => {
       <CustomHeader title={CommonStrings.contractors} />
       <CustomInput
         RightIcon={Search}
-        placeholder={CommonStrings.searchReports}
+        placeholder={CommonStrings.search}
         customStyle={styles.customTextStyle}
         placeholderTextColor={colors.white}
       />

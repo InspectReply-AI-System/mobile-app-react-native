@@ -1,33 +1,90 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
 import { colors, typography } from '@inspectreplyai/themes';
 import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import Column from '@inspectreplyai/components/general/Column';
+import { getCitiesData } from '@inspectreplyai/network/contractorAPis';
+import { useSimpleReducer } from '@inspectreplyai/hooks';
+import { showErrorToast } from '@inspectreplyai/components/toast';
+import Indicator from '@inspectreplyai/components/general/Indicator';
 
 interface CityListProps {
-  cities: string[];
-  onSelectCity: (category: string) => void;
+  sateData: { name: string; _id: string; abbreviation: string };
+  onSelectCity: (city: { name: string; _id: string }) => void;
 }
 
-const CityList: React.FC<CityListProps> = ({ cities, onSelectCity }) => {
+const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
+  const [state, updateState] = useSimpleReducer({
+    city: [],
+    loader: false,
+  });
+
+  const { city, loader } = state;
+  const getCities = async () => {
+    updateState({ loader: true });
+    try {
+      let params = {
+        state_id: sateData._id,
+        state_code: sateData.abbreviation,
+      };
+      const result = await getCitiesData(params);
+
+      updateState({ city: result.data, loader: false });
+    } catch (error: any) {
+      updateState({ loader: false });
+      showErrorToast(error);
+    }
+  };
+  useEffect(() => {
+    getCities();
+  }, []);
+
+  const listEmpty = () => {
+    return (
+      <Column style={styles.centeredContainer}>
+        {loader ? (
+          <Indicator />
+        ) : (
+          <Text style={styles.item}>{CommonStrings.noCategoryAdded}</Text>
+        )}
+      </Column>
+    );
+  };
+
+  const renderCity = ({ item }: { item: { name: string; _id: string } }) => {
+    return (
+      <Touchable onPress={() => onSelectCity(item)}>
+        <Text style={styles.item}>{item.name}</Text>
+      </Touchable>
+    );
+  };
   return (
     <Column style={styles.mainContainer}>
       <Text style={styles.header}>{CommonStrings.selectCity}</Text>
       <FlatList
-        data={cities}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <Touchable onPress={() => onSelectCity(item)}>
-            <Text style={styles.item}>{item}</Text>
-          </Touchable>
-        )}
+        data={city}
+        keyExtractor={(item) => item._id}
+        renderItem={renderCity}
+        ListEmptyComponent={listEmpty}
+        contentContainerStyle={
+          city?.length === 0 ? styles.flex : styles.contentStyle
+        }
       />
     </Column>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contentStyle: { paddingVertical: vh(20) },
+  flex: {
+    flex: 1,
+  },
   header: {
     ...typography.h2,
     padding: vw(4),
@@ -45,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CityList;
+export default React.memo(CityList);

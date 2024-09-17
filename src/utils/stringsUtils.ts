@@ -131,4 +131,8 @@ export const CommonStrings = {
   phoneNumberRequired: 'Phone number is required',
   addressRequired: 'Address is required',
   zipRequired: 'ZIP code is required',
+  noCategoryAdded: 'No Category Added',
+  noStates: 'No States Added',
+  noCity: 'No City Added',
+  search: 'search',
 };

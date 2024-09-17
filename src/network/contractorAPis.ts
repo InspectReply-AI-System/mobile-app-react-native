@@ -1,6 +1,6 @@
 import { toFormData } from 'axios';
 import { endpoints } from './endpoints';
-import { postApiCall } from './networkMethods';
+import { getApiCall, postApiCall } from './networkMethods';
 import { setContentType } from './networkServices';
 
 const registerContractor = async (params: { email: string }) => {
@@ -16,4 +16,29 @@ const contractorProfilePhoto = async (params: {
   return await postApiCall(endpoints.auth.updateProfilePhoto, data);
 };
 
-export { registerContractor, contractorProfilePhoto };
+const getStatesData = async () => {
+  return await getApiCall(endpoints.contractors.getStates);
+};
+
+const getCategoryData = async () => {
+  return await getApiCall(endpoints.contractors.getCategories);
+};
+
+const getCitiesData = async (payload: {
+  state_code: string;
+  state_id: string;
+}) => {
+  return await postApiCall(endpoints.contractors.getCities, payload);
+};
+
+const getContractorslist = async (payload: { page: number; limit: number }) => {
+  return await getApiCall(endpoints.contractors.contractors, payload);
+};
+export {
+  getCitiesData,
+  getStatesData,
+  getCategoryData,
+  registerContractor,
+  contractorProfilePhoto,
+  getContractorslist,
+};

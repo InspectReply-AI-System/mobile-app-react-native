@@ -12,7 +12,7 @@ export interface ContractorState {
     _id: string;
   }>;
   category: Array<{ _id: string; category_name: string }>;
-  contractors: Array<any>;
+  contractors: object;
 }
 
 let initialState: ContractorState = {
@@ -20,7 +20,7 @@ let initialState: ContractorState = {
   loading: false,
   states: [],
   category: [],
-  contractors: [],
+  contractors: { contractors: [] },
 };
 
 const ContracotrSlice = createSlice({

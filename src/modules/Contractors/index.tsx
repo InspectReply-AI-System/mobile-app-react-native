@@ -10,13 +10,16 @@ import { colors, typography } from '@inspectreplyai/themes';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
-import { BusinessCardProps, SectionData, sections } from './data';
+import { BusinessCardProps, SectionData } from './data';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import LocalImage from '@inspectreplyai/components/general/LocalImage';
 import FloatingButton from '@inspectreplyai/components/floatingButton';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import Row from '@inspectreplyai/components/general/Row';
-import { useAppDispatch } from '@inspectreplyai/hooks/reduxHooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
 import { getContractors } from '@inspectreplyai/redux/contractor/action';
 
 const BusinessCard = ({
@@ -42,7 +45,7 @@ const BusinessCard = ({
 
 const Contractors = () => {
   const dispatch = useAppDispatch();
-
+  const { contractors } = useAppSelector((store) => store.contractorSlice);
   useEffect(() => {
     dispatch(
       getContractors({
@@ -95,8 +98,8 @@ const Contractors = () => {
       />
       <SectionList
         showsVerticalScrollIndicator={false}
-        sections={sections}
-        keyExtractor={(item, index) => item.name + index}
+        sections={[{ title: 'Plumbing', data: contractors?.contractors || [] }]}
+        keyExtractor={(item) => item?._id}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItemInColumns}
       />

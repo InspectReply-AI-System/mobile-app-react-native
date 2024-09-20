@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, ImageSourcePropType } from 'react-native';
 import Row from '../general/Row';
 import { styles } from './styles';
 import { HeaderProps } from './@types';
 import Column from '../general/Column';
 import Touchable from '../general/Touchable';
+import LocalImage from '../general/LocalImage';
+import { typography } from '@inspectreplyai/themes';
+import { Text, ImageSourcePropType } from 'react-native';
 import { goBack } from '@inspectreplyai/utils/navigationUtils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import LocalImage from '../general/LocalImage';
 
 const CustomHeader: React.FC<HeaderProps> = ({
   leftIcon,
@@ -18,6 +19,8 @@ const CustomHeader: React.FC<HeaderProps> = ({
   customRightIconStyle,
   titleCustomStyle,
   disabled,
+  rightLabel,
+  onPressRightLabel,
 }) => {
   const insets = useSafeAreaInsets();
 
@@ -47,6 +50,11 @@ const CustomHeader: React.FC<HeaderProps> = ({
         {rightIcon && (
           <Touchable onPress={onRightPress} disabled={disabled}>
             {renderIcon(rightIcon)}
+          </Touchable>
+        )}
+        {rightLabel && (
+          <Touchable onPress={onPressRightLabel}>
+            <Text style={typography.h6}>{rightLabel}</Text>
           </Touchable>
         )}
       </Column>

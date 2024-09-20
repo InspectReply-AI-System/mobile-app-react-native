@@ -10,4 +10,6 @@ export interface HeaderProps {
   customRightIconStyle?: ImageStyle;
   titleCustomStyle?: TextStyle;
   disabled?: boolean;
+  rightLabel?: string;
+  onPressRightLabel?: () => void;
 }

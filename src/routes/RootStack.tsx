@@ -7,6 +7,7 @@ import { BottomTab } from './bottomTab';
 import AddReports from '@inspectreplyai/modules/addReports';
 import ProcessReport from '@inspectreplyai/modules/addReports/processReport';
 import ContractorDetails from '@inspectreplyai/modules/Contractors/ContractorDetails';
+import Password from '@inspectreplyai/modules/profile/password';
 
 const RootStack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const RootNavigator = () => {
         component={ContractorDetails}
         name={ROUTES.CONTRACTORSDETAILS}
       />
+      <RootStack.Screen component={Password} name={ROUTES.PASSWORDSCREEN} />
     </RootStack.Navigator>
   );
 };

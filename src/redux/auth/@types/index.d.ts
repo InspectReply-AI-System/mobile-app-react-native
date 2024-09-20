@@ -29,6 +29,12 @@ export interface updateProfilePayload {
 }
 
 export interface setProfileImagePayload {
-  profilePayload: { profilePhoto: string; cust_id: string };
+  profilePayload: { base_url: string; cust_id: string };
   customerId: string;
+}
+
+export interface deleteUserPayload {
+  cust_id: string;
+  successCallBack: (args) => void;
+  errorCallBack: (args) => void;
 }

@@ -8,7 +8,7 @@ const registerContractor = async (params: { email: string }) => {
 };
 
 const contractorProfilePhoto = async (params: {
-  profilePhoto: string;
+  base_url: string;
   contractor_id: string;
 }) => {
   const data = toFormData(params);

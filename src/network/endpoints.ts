@@ -15,5 +15,7 @@ export const endpoints = {
     getCategories: '/api/categories',
     getCities: '/api/cities',
     contractors: '/api/contractors',
+    contractorProfile: '/api/contractor',
+    updateContractorProfile: '/api/contractor/update-profile',
   },
 };

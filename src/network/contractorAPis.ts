@@ -7,6 +7,13 @@ const registerContractor = async (params: { email: string }) => {
   return await postApiCall(endpoints.contractors.register, params);
 };
 
+const updateContractorProfile = async (params: { email: string }) => {
+  return await postApiCall(
+    endpoints.contractors.updateContractorProfile,
+    params,
+  );
+};
+
 const contractorProfilePhoto = async (params: {
   profilePhoto: string;
   contractor_id: string;
@@ -34,6 +41,12 @@ const getCitiesData = async (payload: {
 const getContractorslist = async (payload: { page: number; limit: number }) => {
   return await getApiCall(endpoints.contractors.contractors, payload);
 };
+
+const getContractorProfile = async (payload: { contractor_id: string }) => {
+  const url = `${endpoints.contractors.contractorProfile}/${payload.contractor_id}`;
+  return await getApiCall(url);
+};
+
 export {
   getCitiesData,
   getStatesData,
@@ -41,4 +54,6 @@ export {
   registerContractor,
   contractorProfilePhoto,
   getContractorslist,
+  getContractorProfile,
+  updateContractorProfile,
 };

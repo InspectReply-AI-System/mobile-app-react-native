@@ -28,10 +28,13 @@ const BusinessCard = ({
   email,
   phone,
   address,
+  _id,
 }: BusinessCardProps) => (
   <Touchable
     style={styles.card}
-    onPress={() => navigate(ROUTES.CONTRACTORSDETAILS, { isNew: false })}>
+    onPress={() =>
+      navigate(ROUTES.CONTRACTORSDETAILS, { isNew: false, id: _id })
+    }>
     <Column style={styles.imageBox}>
       <LocalImage source={Images.appIcon} style={styles.profileImageStyle} />
     </Column>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ScrollView, Image, Alert, Text } from 'react-native';
 
 import { Formik } from 'formik';
@@ -19,7 +19,11 @@ import { styles } from './styles';
 import { validationSchema } from '../data';
 import RNBottomSheet from '@inspectreplyai/components/rnBottomSheet';
 import CategoryList from './categoryList';
-import { registerContractor } from '@inspectreplyai/network/contractorAPis';
+import {
+  getContractorProfile,
+  registerContractor,
+  updateContractorProfile,
+} from '@inspectreplyai/network/contractorAPis';
 import {
   showErrorToast,
   showSuccessToast,
@@ -30,6 +34,8 @@ import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
 import { useRoute } from '@react-navigation/native';
 import StateList from './stateList';
 import CityList from './cityList';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Loader from '@inspectreplyai/components/general/Loader';
 
 const ContractorDetails = () => {
   const [editMode, setEditMode] = useState(false);
@@ -47,6 +53,18 @@ const ContractorDetails = () => {
     name: 'Select City',
     _id: '',
   });
+  const formRef = useRef(null);
+  const [profileData, setProfileData] = useState({
+    company: '',
+    email: '',
+    phone: '',
+    address1: '',
+    address2: '',
+    zip: '',
+    website: '',
+    contractor_id: '',
+    status: '',
+  });
 
   const bottomSheetRef = useRef<{
     openSheet: () => void;
@@ -61,45 +79,83 @@ const ContractorDetails = () => {
     closeSheet: () => void;
   } | null>(null);
   const route = useRoute();
-  const { isNew } = route.params ?? { isNew: false };
+  const { isNew, id } = route.params ?? { isNew: false };
+
+  const getContractorData = async () => {
+    try {
+      const response = await getContractorProfile({ contractor_id: id });
+      const contractor = response?.data?.contractor;
+      setProfileData({
+        company: contractor?.company_name,
+        email: contractor?.email,
+        phone: contractor?.phone,
+        address1: contractor?.address_1,
+        address2: contractor?.address_2,
+        zip: contractor?.zip_code,
+        website: contractor?.website,
+        contractor_id: contractor?._id,
+        status: contractor?.status,
+      });
+      setSelectedCategory({
+        category_name: contractor?.category?.category_name || '',
+        _id: contractor?.category?._id || '',
+      });
+      setSelectedCity({
+        name: contractor?.city || '',
+        _id: contractor?.city_id || '',
+      });
+      setSelectedState({
+        name: contractor?.state || '',
+        _id: contractor?.state_id || '',
+        abbreviation: 'MO',
+      });
+    } catch (error) {
+      showErrorToast(error?.message);
+    }
+  };
 
   useEffect(() => {
     if (isNew) {
       setEditMode(true);
     } else {
-      setEditMode(false);
+      getContractorData();
     }
-  }, [isNew]);
+  }, []);
 
   const { user } = useAppSelector((store) => store.AuthSlice);
 
-  const openCategorySheet = () => {
+  const openCategorySheet = useCallback(() => {
     if (editMode && bottomSheetRef.current) {
       bottomSheetRef.current.openSheet();
     }
-  };
+  }, [editMode]);
 
-  const onSelectCategory = (categoryName: string, categoryId: string) => {
-    setSelectedCategory({
+  const onSelectCategory = (
+    categoryName: string,
+    categoryId: string,
+    setFieldValue: any,
+  ) => {
+    formRef?.current?.setFieldValue('category', {
       category_name: categoryName || '',
       _id: categoryId || '',
     });
     if (bottomSheetRef.current) {
       bottomSheetRef.current.closeSheet();
     }
+    setFieldValue('category', categoryName);
   };
 
-  const openStateSheet = () => {
+  const openStateSheet = useCallback(() => {
     if (editMode && bottomSheetRef1.current) {
       bottomSheetRef1.current.openSheet();
     }
-  };
+  }, [editMode]);
   const onSelectState = (state: {
     name: string;
     _id: string;
     abbreviation: string;
   }) => {
-    setSelectedState({
+    formRef?.current?.setFieldValue('state', {
       name: state?.name,
       _id: state?._id,
       abbreviation: state?.abbreviation,
@@ -109,13 +165,16 @@ const ContractorDetails = () => {
     }
   };
 
-  const openCitySheet = () => {
+  const openCitySheet = useCallback(() => {
     if (editMode && bottomSheetRef2.current) {
       bottomSheetRef2.current.openSheet();
     }
-  };
+  }, [editMode]);
   const onSelectCity = (city: { name: string; _id: string }) => {
-    setSelectedCity({ name: city?.name, _id: city?._id });
+    formRef?.current?.setFieldValue('city', {
+      name: city?.name,
+      _id: city?._id,
+    });
     if (bottomSheetRef2.current) {
       bottomSheetRef2.current.closeSheet();
     }
@@ -152,7 +211,7 @@ const ContractorDetails = () => {
   };
 
   const submitForm = async (formData: any) => {
-    const profileData = {
+    const newProfileData = {
       customer: user?.userId,
       contractor_name: 'Abhi12',
       company_name: formData.company,
@@ -160,16 +219,38 @@ const ContractorDetails = () => {
       phone: formData.phone,
       address_1: formData.address1,
       address_2: formData.address2,
-      city: '66d82544378c1d0a62f3bdef',
-      state: '66d8254a46017b7430a11c6c',
+      city: selectedCity._id,
+      state: selectedState._id,
       zip_code: formData.zip,
-      category: '66d825416a8d9d15ca5efe56',
+      category: selectedCategory?._id,
       website: formData.website,
     };
+    const updateProfileData = {
+      contractor_id: profileData?.contractor_id,
+      customer: user?.userId,
+      contractor_name: 'Abhi12',
+      company_name: formData.company,
+      email: formData.email,
+      phone: formData.phone,
+      address_1: formData.address1,
+      address_2: formData.address2,
+      city: selectedCity._id,
+      state: selectedState._id,
+      zip_code: formData.zip,
+      category: selectedCategory?._id,
+      website: formData.website,
+      status: profileData?.status,
+    };
     try {
-      const result = await registerContractor(profileData);
-      showSuccessToast(result?.data?.message);
-      goBack();
+      if (isNew) {
+        const result = await registerContractor(newProfileData);
+        showSuccessToast(result?.data?.message);
+        goBack();
+      } else {
+        const result = await updateContractorProfile(updateProfileData);
+        showSuccessToast(result?.data?.message);
+        goBack();
+      }
     } catch (error) {
       showErrorToast(error);
     }
@@ -194,18 +275,20 @@ const ContractorDetails = () => {
   return (
     <Column style={styles.container}>
       <Formik
+        innerRef={formRef}
         initialValues={{
-          company: isNew ? '' : 'Five Star Plumbing',
-          email: isNew ? '' : 'fivestarplumbing@gmail.com',
-          phone: isNew ? '' : '4246869831',
-          address1: isNew ? '' : '7112 Balboa Blvd. Van Nuys, CA 91406',
-          address2: isNew ? '' : '7112 Balboa Blvd. Van Nuys, CA 91406',
-          city: 'New York',
-          state: 'New York',
-          zip: isNew ? '' : '10001',
-          category: 'Roofing',
-          website: isNew ? '' : 'fivestarplumbing.com',
+          company: profileData?.company,
+          email: profileData?.email,
+          phone: profileData.phone.toString(),
+          address1: profileData.address1,
+          address2: profileData.address2,
+          city: selectedCity.name,
+          state: selectedState.name,
+          zip: profileData.zip,
+          category: selectedCategory.category_name,
+          website: profileData.website,
         }}
+        enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
@@ -225,6 +308,7 @@ const ContractorDetails = () => {
           errors,
           touched,
           validateForm,
+          setFieldValue,
         }) => (
           <>
             <CustomHeader
@@ -235,7 +319,7 @@ const ContractorDetails = () => {
               disabled={false}
             />
 
-            <ScrollView
+            <KeyboardAwareScrollView
               contentContainerStyle={styles.form}
               showsVerticalScrollIndicator={false}>
               {editMode ? (
@@ -323,13 +407,13 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openCitySheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedCity.name}</Text>
+                      <Text style={typography.body}>{values.city.name}</Text>
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedCity.name}
+                      {values.city.name}
                     </Text>
                   </Row>
                 )}
@@ -342,13 +426,13 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openStateSheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedState.name}</Text>
+                      <Text style={typography.body}>{values.state.name}</Text>
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedState.name}
+                      {values.state.name}
                     </Text>
                   </Row>
                 )}
@@ -372,16 +456,14 @@ const ContractorDetails = () => {
                 {editMode ? (
                   <Touchable onPress={openCategorySheet}>
                     <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>
-                        {selectedCategory.category_name}
-                      </Text>
+                      <Text style={typography.body}>{values?.category}</Text>
                       <DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedCategory.category_name}
+                      {values?.category}
                     </Text>
                     <DownArrow />
                   </Row>
@@ -398,7 +480,7 @@ const ContractorDetails = () => {
                 isError={errors.website}
                 touched={Boolean(touched.website)}
               />
-            </ScrollView>
+            </KeyboardAwareScrollView>
             {editMode && !isNew && (
               <Column style={{ marginBottom: vh(66) }}>
                 <PrimaryButton
@@ -409,7 +491,11 @@ const ContractorDetails = () => {
               </Column>
             )}
             <RNBottomSheet ref={bottomSheetRef}>
-              <CategoryList onSelectCategory={onSelectCategory} />
+              <CategoryList
+                onSelectCategory={(category_name, _id) =>
+                  onSelectCategory(category_name, _id, setFieldValue)
+                }
+              />
             </RNBottomSheet>
             <RNBottomSheet ref={bottomSheetRef1}>
               <StateList onSelectState={onSelectState} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './styles';
-import { colors } from '@inspectreplyai/themes';
 import { CommonStrings } from '@inspectreplyai/utils';
 import { RootState } from '@inspectreplyai/redux/Store';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -52,26 +51,30 @@ const Password = () => {
     });
   };
 
+  const updatePassword = async () => {
+    try {
+      updateState({ isLoading: true });
+      const response = await changeUserPassword({
+        cust_id: user?.userId,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      });
+      if (response) {
+        showSuccessToast(response?.data?.message);
+        updateState({ isLoading: false });
+        goBack();
+      }
+    } catch (error: any) {
+      showErrorToast(error);
+      updateState({ isLoading: false });
+    }
+  };
+
   const onPressConfirm = async () => {
     if (oldPassword === newPassword) {
       showErrorToast(CommonStrings.passwordCannotBeSame);
     } else {
-      try {
-        updateState({ isLoading: true });
-        const response = await changeUserPassword({
-          cust_id: user?.userId,
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-        });
-        if (response) {
-          showSuccessToast(response?.data?.message);
-          updateState({ isLoading: false });
-          goBack();
-        }
-      } catch (error: any) {
-        showErrorToast(error);
-        updateState({ isLoading: false });
-      }
+      updatePassword();
     }
   };
 
@@ -83,6 +86,14 @@ const Password = () => {
     return oldPassword && newPassword && !oldPasswordError && !newPasswordError;
   };
 
+  const onPressDoneButton = () => {
+    if (oldPassword === newPassword) {
+      showErrorToast(CommonStrings.passwordCannotBeSame);
+    } else if (isContinueButtonEnabled()) {
+      updatePassword();
+    }
+  };
+
   return (
     <Column style={styles.container}>
       <CustomHeader
@@ -92,28 +103,31 @@ const Password = () => {
       />
       <Column style={styles.inputsContainer}>
         <CustomProfileInput
+          maxLength={25}
           autoFocus={true}
           value={oldPassword}
           returnKeyType='next'
           isError={oldPasswordError}
           label={CommonStrings.oldPassword}
           onChangeText={onChangeOldPassword}
+          inputCustomStyle={styles.inputStyle}
           ref={setRef(CommonStrings.oldPassword)}
           onBlur={() => onChangeOldPassword(oldPassword)}
-          inputCustomStyle={{ backgroundColor: colors.black }}
           onSubmitEditing={() => {
             focusOnElement(CommonStrings.newPassword);
           }}
         />
         <CustomProfileInput
+          maxLength={25}
           value={newPassword}
           returnKeyType='done'
           isError={newPasswordError}
           label={CommonStrings.newPassword}
+          onSubmitEditing={onPressDoneButton}
           onChangeText={onChangeNewPassword}
+          inputCustomStyle={styles.inputStyle}
           ref={setRef(CommonStrings.newPassword)}
           onBlur={() => onChangeNewPassword(newPassword)}
-          inputCustomStyle={{ backgroundColor: colors.black }}
         />
         {newPassword?.length > 0 && <PasswordValidation value={newPassword} />}
         <PrimaryButton

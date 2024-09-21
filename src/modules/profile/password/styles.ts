@@ -7,6 +7,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primaryBalck,
   },
+  inputStyle: {
+    backgroundColor: colors.black,
+  },
   inputsContainer: {
     flex: 1,
     marginTop: normalize(62),

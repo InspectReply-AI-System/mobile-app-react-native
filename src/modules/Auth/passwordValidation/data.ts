@@ -1,9 +1,9 @@
 import {
   checklength,
-  checkUpperCase,
   checkLowerCase,
   checkNumeric,
-} from '@inspectreplyai/utils/Constant';
+  checkUpperCase,
+} from '@inspectreplyai/utils/validatorsUtils';
 
 const PasswordValidationData = (value: string) => {
   return [

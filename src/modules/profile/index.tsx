@@ -39,7 +39,7 @@ import ROUTES from '@inspectreplyai/routes/routes';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
-import { colors, typography } from '@inspectreplyai/themes';
+import { typography } from '@inspectreplyai/themes';
 import Svg from '@inspectreplyai/components/general/Svg';
 import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
 
@@ -304,24 +304,26 @@ const Profile = () => {
       <Column style={styles.inputsContainer}>
         <ScrollContainer showsVerticalScrollIndicator={false}>
           <CustomProfileInput
-            label={CommonStrings.name}
             value={name}
-            inputCustomStyle={{ backgroundColor: colors.black }}
-            onChangeText={onEnterName}
-            onBlur={() => onEnterName(name)}
-            editable={isEditableEnable}
-            isEdit={isEditableEnable}
+            maxLength={300}
             isError={nameError}
+            isEdit={isEditableEnable}
+            label={CommonStrings.name}
+            onChangeText={onEnterName}
+            editable={isEditableEnable}
+            onBlur={() => onEnterName(name)}
+            inputCustomStyle={styles.inputStyle}
           />
           <CustomProfileInput
-            label={CommonStrings.email}
             value={email}
-            inputCustomStyle={{ backgroundColor: colors.black }}
+            maxLength={320}
+            isError={emailError}
+            isEdit={isEditableEnable}
+            label={CommonStrings.email}
+            editable={isEditableEnable}
             onChangeText={onEnterEmail}
             onBlur={() => onEnterEmail(email)}
-            editable={isEditableEnable}
-            isEdit={isEditableEnable}
-            isError={emailError}
+            inputCustomStyle={styles.inputStyle}
           />
           <Touchable style={styles.changePassword} onPress={onPressPassword}>
             <Text style={typography.body}>{CommonStrings.changePassword}</Text>

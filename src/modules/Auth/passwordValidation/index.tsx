@@ -16,7 +16,7 @@ const PasswordValidation = (props: { value: string }) => {
     return (
       <Column>
         <Row style={styles.renderSubContainer}>
-          {item.checked === true ? (
+          {item.checked ? (
             <Svg Component={check} style={styles.imageStyle} />
           ) : (
             <Column style={styles.uncheckedView} />
@@ -25,7 +25,7 @@ const PasswordValidation = (props: { value: string }) => {
             style={[
               styles.textStyle,
               {
-                color: item.checked === true ? colors.white : colors.red,
+                color: item.checked ? colors.white : colors.red,
               },
             ]}>
             {item.label}

@@ -81,6 +81,9 @@ export default StyleSheet.create({
     borderRadius: normalize(100),
     backgroundColor: colors.grey313C42,
   },
+  inputStyle: {
+    backgroundColor: colors.black,
+  },
   inputsContainer: {
     flex: 1,
     marginTop: normalize(62),

@@ -1,4 +1,4 @@
-package com.inspectreplyai
+package com.inspectreplyai.dev
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity

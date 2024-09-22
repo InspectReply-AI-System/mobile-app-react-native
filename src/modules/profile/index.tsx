@@ -343,27 +343,32 @@ const Profile = () => {
             <Text style={typography.body}>{CommonStrings.changePassword}</Text>
             <Svg Component={DownArrow} imageStyle={styles.arrowStyle} />
           </Touchable>
-          <Touchable
-            style={{ marginTop: normalize(36) }}
-            onPress={onPressLogout}>
-            <Text style={styles.logoutText}>{CommonStrings.logout}</Text>
-          </Touchable>
-          <Row style={styles.termsView}>
-            <Touchable onPress={onPressTerms}>
-              <Text style={styles.termsText}>{CommonStrings.terms}</Text>
+          <Column style={{ marginHorizontal: normalize(90) }}>
+            <Touchable
+              style={{ marginTop: normalize(36) }}
+              onPress={onPressLogout}>
+              <Text style={styles.logoutText}>{CommonStrings.logout}</Text>
             </Touchable>
-            <Column style={styles.seperatorView} />
-            <Touchable onPress={onPressPrivacy}>
-              <Text style={styles.privacyText}>{CommonStrings.privacy}</Text>
+            <Row style={styles.termsView}>
+              <Touchable onPress={onPressTerms}>
+                <Text style={styles.termsText}>{CommonStrings.terms}</Text>
+              </Touchable>
+              <Column style={styles.seperatorView} />
+              <Touchable onPress={onPressPrivacy}>
+                <Text style={styles.privacyText}>{CommonStrings.privacy}</Text>
+              </Touchable>
+              <Column style={styles.seperatorView} />
+              <Text
+                style={styles.privacyText}>{`v${Device.getVersion()}`}</Text>
+            </Row>
+            <Touchable
+              style={{ marginTop: normalize(36) }}
+              onPress={onPressDeleteProfile}>
+              <Text style={styles.deleteText}>
+                {CommonStrings.deleteProfile}
+              </Text>
             </Touchable>
-            <Column style={styles.seperatorView} />
-            <Text style={styles.privacyText}>{`v${Device.getVersion()}`}</Text>
-          </Row>
-          <Touchable
-            style={{ marginTop: normalize(36) }}
-            onPress={onPressDeleteProfile}>
-            <Text style={styles.deleteText}>{CommonStrings.deleteProfile}</Text>
-          </Touchable>
+          </Column>
         </ScrollContainer>
         {loading && (
           <Column style={styles.loaderStyle}>

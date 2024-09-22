@@ -79,7 +79,7 @@ const Profile = () => {
       name: `${user?.firstName} ${user?.lastName}`,
       email: user?.email,
       password: '',
-      profileImage: { path: user?.base_url },
+      profileImage: { path: `${user?.base_url}${user?.profilePhoto}` },
     });
   }, []);
 
@@ -124,33 +124,37 @@ const Profile = () => {
   const onPressPrivacy = () => {};
 
   const handleImagePicker = () => {
-    Alert.alert('Select Image Source', 'Choose from gallery or camera', [
-      {
-        text: 'Camera',
-        onPress: () =>
-          launchCamera(
-            (response: any) => {
-              updateState({ profileImage: response });
-            },
-            () => {},
-          ),
-      },
-      {
-        text: 'Gallery',
-        onPress: () =>
-          lauchGallery(
-            (response: any) => {
-              updateState({ profileImage: response });
-            },
-            (err: any) => {
-              if (err.message === CommonStrings.fileSizeTooBig) {
-                CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
-              }
-            },
-          ),
-      },
-      { text: 'Cancel', style: 'cancel' },
-    ]);
+    Alert.alert(
+      CommonStrings.selectImageSource,
+      CommonStrings.choosefromGalleryOrCamera,
+      [
+        {
+          text: CommonStrings.camera,
+          onPress: () =>
+            launchCamera(
+              (response: any) => {
+                updateState({ profileImage: response });
+              },
+              () => {},
+            ),
+        },
+        {
+          text: CommonStrings.gallery,
+          onPress: () =>
+            lauchGallery(
+              (response: any) => {
+                updateState({ profileImage: response });
+              },
+              (err: any) => {
+                if (err.message === CommonStrings.fileSizeTooBig) {
+                  CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
+                }
+              },
+            ),
+        },
+        { text: CommonStrings.cancel, style: 'cancel' },
+      ],
+    );
   };
 
   const onPressProfile = () => {
@@ -173,15 +177,24 @@ const Profile = () => {
       status: 1,
     };
     const profilePayload = {
-      base_url: profileImage?.path,
+      profilePhoto: {
+        uri: profileImage?.path,
+        type: 'image/jpeg',
+        name: 'profile-photo.jpg',
+      },
       cust_id: user?.userId,
     };
-    dispatch(setProfileImage({ profilePayload, customerId: user?.userId }));
+
     dispatch(
       updateProfile({
         payload,
         customerId: user?.userId,
         successCallBack: () => {
+          if (profilePayload?.uri) {
+            dispatch(
+              setProfileImage({ profilePayload, customerId: user?.userId }),
+            );
+          }
           updateState({ isEditableEnable: false });
         },
         errorCallBack: (error) => {
@@ -321,6 +334,7 @@ const Profile = () => {
             isEdit={isEditableEnable}
             label={CommonStrings.email}
             editable={isEditableEnable}
+            keyboardType='email-address'
             onChangeText={onEnterEmail}
             onBlur={() => onEnterEmail(email)}
             inputCustomStyle={styles.inputStyle}

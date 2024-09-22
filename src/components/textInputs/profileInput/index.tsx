@@ -17,7 +17,18 @@ interface CustomTextInputProps extends TextInputProps {
 }
 
 const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
-  ({ label, icon: Icon, isError, touched, isEdit, ...textInputProps }, ref) => {
+  (
+    {
+      label,
+      icon: Icon,
+      isError,
+      touched,
+      isEdit,
+      inputCustomStyle,
+      ...textInputProps
+    },
+    ref,
+  ) => {
     return (
       <Column style={styles.container}>
         <Text style={[typography.h7, styles.label]}>{label}</Text>
@@ -25,6 +36,7 @@ const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
           style={[
             styles.inputContainer,
             isError && touched ? styles.errorBorder : null,
+            inputCustomStyle,
           ]}>
           <TextInput
             ref={ref}

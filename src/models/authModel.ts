@@ -11,6 +11,7 @@ export class AuthModel {
   lastName: string = '';
   userId: string = '';
   base_url?: string = '';
+  profilePhoto: any;
 }
 
 export class ConfigModal {

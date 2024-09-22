@@ -29,7 +29,10 @@ export interface updateProfilePayload {
 }
 
 export interface setProfileImagePayload {
-  profilePayload: { base_url: string; cust_id: string };
+  profilePayload: {
+    profilePhoto: { uri: string; type: string; name: string };
+    cust_id: string;
+  };
   customerId: string;
 }
 

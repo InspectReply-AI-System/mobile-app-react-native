@@ -82,7 +82,7 @@ export default StyleSheet.create({
     backgroundColor: colors.grey313C42,
   },
   inputStyle: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.primaryBalck,
   },
   inputsContainer: {
     flex: 1,

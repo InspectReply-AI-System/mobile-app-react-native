@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, Image, Alert, Text } from 'react-native';
-
-import { Formik } from 'formik';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Image, Alert, Text } from 'react-native';
+import Modal from 'react-native-modal';
+import { Formik, FormikProps } from 'formik';
 import { colors, typography } from '@inspectreplyai/themes';
 import { CommonFunctions, CommonStrings, vh } from '@inspectreplyai/utils';
 import Edit from '@inspectreplyai/assets/svg/edit.svg';
@@ -11,7 +11,6 @@ import Column from '@inspectreplyai/components/general/Column';
 import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
 import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
 import Touchable from '@inspectreplyai/components/general/Touchable';
-
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
 import Row from '@inspectreplyai/components/general/Row';
@@ -19,99 +18,210 @@ import { styles } from './styles';
 import { validationSchema } from '../data';
 import RNBottomSheet from '@inspectreplyai/components/rnBottomSheet';
 import CategoryList from './categoryList';
-import { registerContractor } from '@inspectreplyai/network/contractorAPis';
+import {
+  contractorProfilePhoto,
+  deleteContractor,
+  getContractorProfile,
+  registerContractor,
+  updateContractorProfile,
+} from '@inspectreplyai/network/contractorAPis';
 import {
   showErrorToast,
   showSuccessToast,
 } from '@inspectreplyai/components/toast';
-import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
 import { goBack } from '@inspectreplyai/utils/navigationUtils';
 import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import StateList from './stateList';
 import CityList from './cityList';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+  bottomSheetProps,
+  FormValues,
+  RouteParams,
+  SelectCity,
+  StateSelect,
+} from './@types';
+import { getStates } from '@inspectreplyai/redux/contractor/action';
+import { Images } from '@inspectreplyai/themes/appImages';
+import { BlurView } from '@react-native-community/blur';
+import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import { useRefs } from '@inspectreplyai/hooks';
+import { setContentType } from '@inspectreplyai/network/networkServices';
 
 const ContractorDetails = () => {
   const [editMode, setEditMode] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('Roofing');
-  const [selectedState, setSelectedState] = useState('Select State');
-  const [selectedCity, setSelectedCity] = useState('Select City');
+  const [profileImage, setProfileImage] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const dispatch = useAppDispatch();
+  const { states } = useAppSelector((store) => store.contractorSlice);
+  const { setRef, focusOnElement } = useRefs();
 
-  const bottomSheetRef = useRef<{
-    openSheet: () => void;
-    closeSheet: () => void;
-  } | null>(null);
-  const bottomSheetRef1 = useRef<{
-    openSheet: () => void;
-    closeSheet: () => void;
-  } | null>(null);
-  const bottomSheetRef2 = useRef<{
-    openSheet: () => void;
-    closeSheet: () => void;
-  } | null>(null);
-  const route = useRoute();
-  const { isNew } = route.params ?? { isNew: false };
+  const formRef = useRef<FormikProps<FormValues>>(null);
+
+  const [profileData, setProfileData] = useState({
+    contractorName: '',
+    company: '',
+    email: '',
+    phone: '',
+    address1: '',
+    address2: '',
+    zip: '',
+    website: '',
+    contractor_id: '',
+    status: '',
+    category: {
+      category_name: '',
+      _id: '',
+    },
+    city: {
+      name: '',
+      _id: '',
+    },
+    state: {
+      name: '',
+      _id: '',
+      abbreviation: '',
+    },
+  });
+
+  const bottomSheetRef = useRef<bottomSheetProps>(null);
+  const bottomSheetRef1 = useRef<bottomSheetProps>(null);
+  const bottomSheetRef2 = useRef<bottomSheetProps>(null);
+
+  const route = useRoute<RouteProp<RouteParams, 'params'>>();
+  const { isNew, id } = route.params ?? { isNew: false };
+
+  const getContractorData = async () => {
+    try {
+      const response = await getContractorProfile({ contractor_id: id });
+      setLoader(false);
+      const contractor = response?.data?.contractor;
+      setProfileData({
+        contractorName: contractor?.contractor_name,
+        company: contractor?.company_name,
+        email: contractor?.email,
+        phone: contractor?.phone,
+        address1: contractor?.address_1,
+        address2: contractor?.address_2,
+        zip: contractor?.zip_code,
+        website: contractor?.website,
+        contractor_id: contractor?._id,
+        status: contractor?.status,
+        category: {
+          category_name: contractor?.category?.category_name || '',
+          _id: contractor?.category?._id || '',
+        },
+        city: {
+          name: contractor?.city.name || '',
+          _id: contractor?.city_id || '',
+        },
+        state: {
+          name: contractor?.state.name || '',
+          _id: contractor?.state_id || '',
+          abbreviation:
+            states?.find((state) => state._id === contractor?.state_id)
+              ?.abbreviation || '',
+        },
+      });
+      if (contractor?.profilePhoto) {
+        setProfileImage({
+          path: `${contractor.base_url}${contractor?.profilePhoto}` || '',
+        });
+      }
+    } catch (error) {
+      setLoader(false);
+      showErrorToast(error?.message);
+    }
+  };
 
   useEffect(() => {
     if (isNew) {
       setEditMode(true);
     } else {
-      setEditMode(false);
+      setLoader(true);
+      dispatch(getStates());
+      getContractorData();
     }
-  }, [isNew]);
+  }, []);
 
   const { user } = useAppSelector((store) => store.AuthSlice);
 
-  const openCategorySheet = () => {
+  const openCategorySheet = useCallback(() => {
     if (editMode && bottomSheetRef.current) {
       bottomSheetRef.current.openSheet();
     }
-  };
+  }, [editMode]);
 
-  const onSelectCategory = (category: string) => {
-    setSelectedCategory(category);
+  const onSelectCategory = (category: {
+    category_name: string;
+    _id: string;
+  }) => {
+    formRef?.current?.setFieldValue('category', {
+      category_name: category.category_name || '',
+      _id: category._id || '',
+    });
     if (bottomSheetRef.current) {
       bottomSheetRef.current.closeSheet();
     }
   };
 
-  const openStateSheet = () => {
+  const openStateSheet = useCallback(() => {
     if (editMode && bottomSheetRef1.current) {
       bottomSheetRef1.current.openSheet();
     }
-  };
-  const onSelectState = (state: string) => {
-    setSelectedState(state);
+  }, [editMode]);
+  const onSelectState = (state: StateSelect) => {
+    formRef?.current?.setFieldValue('state', {
+      name: state?.name,
+      _id: state?._id,
+      abbreviation: state?.abbreviation,
+    });
     if (bottomSheetRef1.current) {
       bottomSheetRef1.current.closeSheet();
     }
   };
 
-  const openCitySheet = () => {
+  const openCitySheet = useCallback(() => {
+    if (!formRef.current?.values?.state?._id) {
+      showErrorToast(CommonStrings.selectCityFirst);
+      return;
+    }
     if (editMode && bottomSheetRef2.current) {
       bottomSheetRef2.current.openSheet();
     }
-  };
-  const onSelectCity = (city: string) => {
-    setSelectedCity(city);
+  }, [editMode]);
+  const onSelectCity = (city: SelectCity) => {
+    formRef?.current?.setFieldValue('city', {
+      name: city?.name,
+      _id: city?._id,
+    });
     if (bottomSheetRef2.current) {
       bottomSheetRef2.current.closeSheet();
     }
   };
 
   const handleImagePicker = () => {
-    Alert.alert('Select Image Source', 'Choose from gallery or camera', [
-      { text: 'Camera', onPress: () => openCamera() },
-      { text: 'Gallery', onPress: () => openGallery() },
-      { text: 'Cancel', style: 'cancel' },
-    ]);
+    Alert.alert(
+      CommonStrings.selectImageSource,
+      CommonStrings.choosefromGalleryOrCamera,
+      [
+        { text: CommonStrings.camera, onPress: () => openCamera() },
+        { text: CommonStrings.gallery, onPress: () => openGallery() },
+        { text: CommonStrings.cancel, style: 'cancel' },
+      ],
+    );
   };
 
   const openCamera = () => {
     launchCamera(
       (response: any) => {
-        setProfileImage(response?.path);
+        setProfileImage(response);
       },
       () => {},
     );
@@ -120,10 +230,10 @@ const ContractorDetails = () => {
   const openGallery = () => {
     lauchGallery(
       (response: any) => {
-        setProfileImage(response?.path);
+        setProfileImage(response);
       },
       (err: any) => {
-        if (err.message === 'File size to big') {
+        if (err.message === CommonStrings.largeFile) {
           CommonFunctions.showSnackbar(CommonStrings.imageIsTooBig);
         }
       },
@@ -131,26 +241,67 @@ const ContractorDetails = () => {
   };
 
   const submitForm = async (formData: any) => {
-    const profileData = {
+    let params = {
       customer: user?.userId,
-      contractor_name: 'Abhi12',
+      contractor_name: formData.contractorName,
       company_name: formData.company,
       email: formData.email,
       phone: formData.phone,
       address_1: formData.address1,
       address_2: formData.address2,
-      city: '66d82544378c1d0a62f3bdef',
-      state: '66d8254a46017b7430a11c6c',
+      city: formData.city._id,
+      state: formData.state._id,
       zip_code: formData.zip,
-      category: '66d825416a8d9d15ca5efe56',
+      category: formData.category?._id,
       website: formData.website,
+      ...(!isNew && {
+        contractor_id: profileData?.contractor_id,
+        status: 1,
+      }),
     };
+    setLoader(true);
+    setContentType(null);
     try {
-      const result = await registerContractor(profileData);
-      showSuccessToast(result?.data?.message);
-      goBack();
-    } catch (error) {
+      if (isNew) {
+        const result = await registerContractor(params);
+        showSuccessToast(result?.data?.message);
+        try {
+          if (profileImage?.path) {
+            await contractorProfilePhoto({
+              profileDetails: profileImage,
+              contractor_id: result?.data?.contractor?.id,
+            });
+          }
+          setContentType(null);
+          setLoader(false);
+          goBack();
+        } catch (error: any) {
+          showErrorToast(error);
+          setLoader(false);
+          setContentType(null);
+        }
+      } else {
+        const result = await updateContractorProfile(params);
+        try {
+          if (profileImage?.path) {
+            await contractorProfilePhoto({
+              profileDetails: profileImage,
+              contractor_id: profileData?.contractor_id,
+            });
+          }
+          setContentType(null);
+          goBack();
+          setLoader(false);
+        } catch (error: any) {
+          showErrorToast(error);
+          setContentType(null);
+          setLoader(false);
+        }
+        showSuccessToast(result?.data?.message);
+      }
+    } catch (error: any) {
       showErrorToast(error);
+      setLoader(false);
     }
   };
 
@@ -163,28 +314,54 @@ const ContractorDetails = () => {
       if (Object.keys(errors).length === 0) {
         handleSubmit();
       } else {
-        console.log('Validation errors: ', errors);
+        Object.keys(errors).forEach((field) => {
+          formRef?.current?.setFieldTouched(field, true);
+        });
+        formRef?.current?.setErrors(errors);
       }
     } else {
       setEditMode(true);
     }
   };
 
+  const handleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const onDeleteContractor = async () => {
+    handleModal();
+    setLoader(true);
+    try {
+      const result = await deleteContractor({
+        contractor_id: profileData?.contractor_id,
+      });
+      showSuccessToast(result?.data?.message);
+      setLoader(false);
+      goBack();
+    } catch (error: any) {
+      showErrorToast(error);
+      setLoader(false);
+    }
+  };
+
   return (
     <Column style={styles.container}>
       <Formik
+        innerRef={formRef}
         initialValues={{
-          company: isNew ? '' : 'Five Star Plumbing',
-          email: isNew ? '' : 'fivestarplumbing@gmail.com',
-          phone: isNew ? '' : '4246869831',
-          address1: isNew ? '' : '7112 Balboa Blvd. Van Nuys, CA 91406',
-          address2: isNew ? '' : '7112 Balboa Blvd. Van Nuys, CA 91406',
-          city: 'New York',
-          state: 'New York',
-          zip: isNew ? '' : '10001',
-          category: 'Roofing',
-          website: isNew ? '' : 'fivestarplumbing.com',
+          contractorName: profileData?.contractorName,
+          company: profileData?.company,
+          email: profileData?.email,
+          phone: profileData.phone.toString(),
+          address1: profileData.address1,
+          address2: profileData.address2,
+          city: profileData.city,
+          state: profileData.state,
+          zip: profileData.zip,
+          category: profileData.category,
+          website: profileData.website,
         }}
+        enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
@@ -207,42 +384,44 @@ const ContractorDetails = () => {
         }) => (
           <>
             <CustomHeader
-              title='Chuck Smith'
+              title={profileData.contractorName}
               leftIcon={<BackIcon />}
               rightIcon={!editMode ? <Edit /> : <Save />}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
             />
 
-            <ScrollView
+            <KeyboardAwareScrollView
               contentContainerStyle={styles.form}
               showsVerticalScrollIndicator={false}>
-              {editMode ? (
-                <Touchable
-                  style={styles.profileImageView}
-                  onPress={handleImagePicker}>
-                  <Image
-                    source={
-                      profileImage
-                        ? { uri: profileImage }
-                        : require('@inspectreplyai/assets/images/appIcon.png')
-                    }
-                    style={styles.profileImage}
-                  />
-                </Touchable>
-              ) : (
-                <Column style={styles.profileImageView}>
-                  <Image
-                    source={
-                      profileImage
-                        ? { uri: profileImage }
-                        : require('@inspectreplyai/assets/images/appIcon.png')
-                    }
-                    style={styles.profileImage}
-                  />
-                </Column>
-              )}
+              <Touchable
+                disabled={!editMode}
+                style={styles.profileImageView}
+                onPress={handleImagePicker}>
+                <Image
+                  source={
+                    profileImage.path
+                      ? { uri: profileImage.path }
+                      : Images.dummyProfile
+                  }
+                  style={styles.profileImage}
+                />
+              </Touchable>
 
+              <CustomProfileInput
+                label={CommonStrings.contractorName}
+                value={values.contractorName}
+                onChangeText={handleChange(CommonStrings.contractorname)}
+                onBlur={handleBlur(CommonStrings.contractorname)}
+                editable={editMode}
+                isEdit={editMode}
+                isError={errors.contractorName}
+                touched={Boolean(touched.contractorName)}
+                ref={setRef(CommonStrings.contractorName)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.company);
+                }}
+              />
               <CustomProfileInput
                 label={CommonStrings.company}
                 value={values.company}
@@ -252,6 +431,10 @@ const ContractorDetails = () => {
                 isEdit={editMode}
                 isError={errors.company}
                 touched={Boolean(touched.company)}
+                ref={setRef(CommonStrings.company)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.email);
+                }}
               />
               <CustomProfileInput
                 label={CommonStrings.email}
@@ -261,7 +444,12 @@ const ContractorDetails = () => {
                 editable={editMode}
                 isEdit={editMode}
                 isError={errors.email}
+                keyboardType='email-address'
                 touched={Boolean(touched.email)}
+                ref={setRef(CommonStrings.email)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.phone);
+                }}
               />
               <CustomProfileInput
                 label={CommonStrings.phone}
@@ -271,48 +459,42 @@ const ContractorDetails = () => {
                 editable={editMode}
                 isEdit={editMode}
                 isError={errors.phone}
+                keyboardType='number-pad'
+                ref={setRef(CommonStrings.phone)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.address1);
+                }}
                 touched={Boolean(touched.phone)}
                 maxLength={10}
               />
               <CustomProfileInput
                 label={CommonStrings.address1}
                 value={values.address1}
-                onChangeText={handleChange('address1')}
-                onBlur={handleBlur('address1')}
+                onChangeText={handleChange(CommonStrings.addressOne)}
+                onBlur={handleBlur(CommonStrings.addressOne)}
                 editable={editMode}
                 isEdit={editMode}
                 isError={errors.address1}
+                ref={setRef(CommonStrings.address1)}
                 touched={Boolean(touched.address1)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.address2);
+                }}
               />
               <CustomProfileInput
                 label={CommonStrings.address2}
                 value={values.address2}
-                onChangeText={handleChange('address2')}
-                onBlur={handleBlur('address2')}
+                onChangeText={handleChange(CommonStrings.addressTwo)}
+                onBlur={handleBlur(CommonStrings.addressTwo)}
                 editable={editMode}
                 isEdit={editMode}
                 isError={errors.address2}
                 touched={Boolean(touched.address2)}
+                ref={setRef(CommonStrings.address2)}
+                onSubmitEditing={() => {
+                  focusOnElement(CommonStrings.website);
+                }}
               />
-
-              <Column style={styles.categoryContainer}>
-                <Text style={[typography.h7, styles.label]}>
-                  {CommonStrings.city}
-                </Text>
-                {editMode ? (
-                  <Touchable onPress={openCitySheet}>
-                    <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedCity}</Text>
-                    </Row>
-                  </Touchable>
-                ) : (
-                  <Row style={styles.categorySubContainer}>
-                    <Text style={[typography.body, styles.input]}>
-                      {selectedCity}
-                    </Text>
-                  </Row>
-                )}
-              </Column>
 
               <Column style={styles.categoryContainer}>
                 <Text style={[typography.h7, styles.label]}>
@@ -320,16 +502,53 @@ const ContractorDetails = () => {
                 </Text>
                 {editMode ? (
                   <Touchable onPress={openStateSheet}>
-                    <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedState}</Text>
+                    <Row
+                      style={[
+                        styles.categorySubContainer,
+                        errors?.state?.name &&
+                          Boolean(touched.state) && { borderColor: colors.red },
+                      ]}>
+                      <Text style={typography.body}>{values?.state?.name}</Text>
+                      <DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedState}
+                      {values?.state?.name}
                     </Text>
                   </Row>
+                )}
+                {errors?.state?.name && Boolean(touched.state) && (
+                  <Text style={styles.errorText}>{errors?.state?.name}</Text>
+                )}
+              </Column>
+
+              <Column style={styles.categoryContainer}>
+                <Text style={[typography.h7, styles.label]}>
+                  {CommonStrings.city}
+                </Text>
+                {editMode ? (
+                  <Touchable onPress={openCitySheet}>
+                    <Row
+                      style={[
+                        styles.categorySubContainer,
+                        errors?.city?.name &&
+                          Boolean(touched.city) && { borderColor: colors.red },
+                      ]}>
+                      <Text style={typography.body}>{values.city?.name}</Text>
+                      <DownArrow />
+                    </Row>
+                  </Touchable>
+                ) : (
+                  <Row style={styles.categorySubContainer}>
+                    <Text style={[typography.body, styles.input]}>
+                      {values?.city?.name}
+                    </Text>
+                  </Row>
+                )}
+                {errors?.city?.name && Boolean(touched.city) && (
+                  <Text style={styles.errorText}>{errors?.city.name}</Text>
                 )}
               </Column>
 
@@ -350,62 +569,101 @@ const ContractorDetails = () => {
                 </Text>
                 {editMode ? (
                   <Touchable onPress={openCategorySheet}>
-                    <Row style={styles.categorySubContainer}>
-                      <Text style={typography.body}>{selectedCategory}</Text>
+                    <Row
+                      style={[
+                        styles.categorySubContainer,
+                        errors?.category?.category_name &&
+                          Boolean(touched.category) && {
+                            borderColor: colors.red,
+                          },
+                      ]}>
+                      <Text style={typography.body}>
+                        {values?.category?.category_name}
+                      </Text>
                       <DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
                   <Row style={styles.categorySubContainer}>
                     <Text style={[typography.body, styles.input]}>
-                      {selectedCategory}
+                      {values?.category?.category_name}
                     </Text>
-                    <DownArrow />
                   </Row>
                 )}
+                {errors?.category?.category_name &&
+                  Boolean(touched.category) && (
+                    <Text style={styles.errorText}>
+                      {errors?.category?.category_name}
+                    </Text>
+                  )}
               </Column>
-
               <CustomProfileInput
                 label={CommonStrings.website}
                 value={values.website}
-                onChangeText={handleChange('website')}
-                onBlur={handleBlur('website')}
+                onChangeText={handleChange(CommonStrings.web)}
+                onBlur={handleBlur(CommonStrings.web)}
                 editable={editMode}
                 isEdit={editMode}
                 isError={errors.website}
+                ref={setRef(CommonStrings.website)}
                 touched={Boolean(touched.website)}
               />
-            </ScrollView>
+            </KeyboardAwareScrollView>
             {editMode && !isNew && (
               <Column style={{ marginBottom: vh(66) }}>
                 <PrimaryButton
                   title={CommonStrings.deleteContractor}
-                  onPress={() => {}}
+                  onPress={handleModal}
                   containerStyle={{ backgroundColor: colors.red }}
                 />
               </Column>
             )}
             <RNBottomSheet ref={bottomSheetRef}>
-              <CategoryList
-                categories={['Roofing', 'Plumbing', 'Electrical', 'Carpentry']}
-                onSelectCategory={onSelectCategory}
-              />
+              <CategoryList onSelectCategory={onSelectCategory} />
             </RNBottomSheet>
             <RNBottomSheet ref={bottomSheetRef1}>
-              <StateList
-                states={['New York', 'New Jersey', 'USA', 'America']}
-                onSelectState={onSelectState}
-              />
+              <StateList onSelectState={onSelectState} />
             </RNBottomSheet>
             <RNBottomSheet ref={bottomSheetRef2}>
-              <CityList
-                cities={['New York', 'New Jersey', 'USA', 'America']}
-                onSelectCity={onSelectCity}
-              />
+              <CityList sateData={values.state} onSelectCity={onSelectCity} />
             </RNBottomSheet>
           </>
         )}
       </Formik>
+      <Modal
+        isVisible={isModalVisible}
+        hasBackdrop
+        useNativeDriverForBackdrop
+        onBackdropPress={() => setIsModalVisible(false)}
+        style={styles.modalView}
+        useNativeDriver
+        backdropOpacity={1}
+        customBackdrop={
+          <BlurView style={styles.blurView} blurType='dark' blurAmount={4} />
+        }
+        animationIn='fadeIn'
+        animationOut='fadeOut'>
+        <Column style={styles.modalContentContainer}>
+          <Text style={[typography.h5, styles.deleteDesc]}>
+            {CommonStrings.deleteContractor}
+          </Text>
+          <Text style={[typography.body, styles.deleteDesc]}>
+            {CommonStrings.deleteContractorText}
+          </Text>
+
+          <PrimaryButton
+            title={CommonStrings.delete}
+            onPress={onDeleteContractor}
+            containerStyle={styles.confirmButtonView}
+          />
+          <PrimaryButton
+            title={CommonStrings.cancel}
+            onPress={() => setIsModalVisible(false)}
+            containerStyle={styles.cancelButtonView}
+          />
+        </Column>
+      </Modal>
+      {loader && <CustomLoader customContainerStyle={styles.loaderStyle} />}
     </Column>
   );
 };

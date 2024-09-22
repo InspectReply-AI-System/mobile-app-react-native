@@ -1,4 +1,3 @@
-import { toFormData } from 'axios';
 import { endpoints } from './endpoints';
 import { getApiCall, postApiCall } from './networkMethods';
 import { setContentType } from './networkServices';
@@ -48,10 +47,17 @@ const updateUserProfile = async (params: {
 };
 
 const updateProfilePhoto = async (params: {
-  base_url: string;
+  profilePhoto: { uri: string; type: string; name: string };
   cust_id: string;
 }) => {
-  const data = toFormData(params);
+  const data = new FormData();
+  data.append('profilePhoto', {
+    uri: params?.profilePhoto?.uri,
+    type: params?.profilePhoto?.type,
+    name: params?.profilePhoto?.name,
+  });
+
+  data.append('cust_id', params?.cust_id);
   setContentType('multipart/form-data');
   return await postApiCall(endpoints.auth.updateProfilePhoto, data);
 };

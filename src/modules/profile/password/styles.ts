@@ -8,7 +8,7 @@ export default StyleSheet.create({
     backgroundColor: colors.primaryBalck,
   },
   inputStyle: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.primaryBalck,
   },
   inputsContainer: {
     flex: 1,

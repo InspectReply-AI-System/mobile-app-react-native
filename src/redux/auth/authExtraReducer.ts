@@ -5,6 +5,7 @@ import ROUTES from '@inspectreplyai/routes/routes';
 import { AuthState } from './AuthSlice';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
+import { AuthModel } from '@inspectreplyai/models/authModel';
 
 export const authExtraReducer = (
   builder: ActionReducerMapBuilder<AuthState>,
@@ -22,6 +23,7 @@ export const authExtraReducer = (
       state.user.lastName = customer?.last_name || '';
       state.user.email = customer?.email || '';
       state.user.userId = customer?._id || '';
+      state.user.profilePhoto = customer?.profilePhoto || '';
       state.loading = false;
       setTimeout(() => {
         reset(ROUTES.BOTTOMTAB);
@@ -48,6 +50,7 @@ export const authExtraReducer = (
       state.user.lastName = customer?.last_name || '';
       state.user.email = customer?.email || '';
       state.user.userId = customer?._id || '';
+
       state.loading = false;
       setTimeout(() => {
         reset(ROUTES.BOTTOMTAB);
@@ -73,9 +76,14 @@ export const authExtraReducer = (
       state.user.email = customer?.email || '';
       state.user.userId = customer?._id || '';
       state.user.base_url = customer?.base_url || '';
+      state.user.profilePhoto = customer?.profilePhoto || '';
       state.loading = false;
     })
     .addCase(getProfile.rejected, (state: AuthState, action) => {
+      if (action.payload == 'Invalid token') {
+        setAuthorizationToken('');
+        state.user = new AuthModel();
+      }
       state.loading = false;
       state.error = action.payload
         ? (action.payload as string)

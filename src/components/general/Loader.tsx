@@ -4,6 +4,6 @@ import { ActivityIndicator, ActivityIndicatorProps } from 'react-native';
 
 interface Props extends ActivityIndicatorProps {}
 
-export default function Loader(props: Props) {
-  return <ActivityIndicator size={'small'} color={colors.white} {...props} />;
+export default function Loader({ size = 'small', ...props }: Props) {
+  return <ActivityIndicator size={size} color={colors.white} {...props} />;
 }

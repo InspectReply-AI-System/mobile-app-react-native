@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { SCREEN_WIDTH } from '@inspectreplyai/utils/Dimensions';
 
 export const styles = StyleSheet.create({
   businessName: {
     marginTop: vh(10),
+    fontFamily: fonts.MEDIUM,
   },
   card: {
     backgroundColor: colors.black27282B,
@@ -15,7 +16,10 @@ export const styles = StyleSheet.create({
     borderColor: colors.primaryBlue,
     borderWidth: 1,
     width: SCREEN_WIDTH / 2.32,
-    marginHorizontal: vw(6),
+    marginRight: vw(9),
+  },
+  cardTextStyle: {
+    marginVertical: vh(4),
   },
   contact: {
     marginBottom: vh(5),
@@ -34,6 +38,11 @@ export const styles = StyleSheet.create({
   email: {
     marginBottom: vh(5),
   },
+  emptyListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   floatingBtnStyle: { zIndex: 1 },
   headerView: {
     flex: 1,
@@ -46,6 +55,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: normalize(6),
+  },
+  loaderStyle: {
+    zIndex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   phone: {
     marginBottom: vh(5),
@@ -60,6 +74,6 @@ export const styles = StyleSheet.create({
     marginVertical: vh(8),
   },
   sectionHeader: {
-    marginVertical: vh(10),
+    marginVertical: vh(16),
   },
 });

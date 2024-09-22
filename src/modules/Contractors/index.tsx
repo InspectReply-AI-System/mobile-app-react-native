@@ -23,9 +23,11 @@ import { BusinessCardProps, SectionData } from './ContractorDetails/@types';
 import { useDebounce, useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomLoader from '@inspectreplyai/components/loader/customLoader';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const BusinessCard = ({ details }: { details: BusinessCardProps }) => {
   const address = `${details.city_name || ''} ${details.state_name || ''} ${details.zip_code || ''}`;
+
   return (
     <Touchable
       style={styles.card}
@@ -33,7 +35,14 @@ const BusinessCard = ({ details }: { details: BusinessCardProps }) => {
         navigate(ROUTES.CONTRACTORSDETAILS, { isNew: false, id: details._id })
       }>
       <Column style={styles.imageBox}>
-        <LocalImage source={Images.appIcon} style={styles.profileImageStyle} />
+        <LocalImage
+          source={
+            details?.profilePhoto
+              ? { uri: `${Config.BASE_URL}/${details?.profilePhoto}` }
+              : Images.appIcon
+          }
+          style={styles.profileImageStyle}
+        />
       </Column>
       <Text style={[typography.body, styles.businessName]}>
         {details.company_name || ''}

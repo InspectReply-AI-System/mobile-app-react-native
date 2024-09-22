@@ -51,6 +51,7 @@ interface SelectCity {
 }
 
 export interface BusinessCardProps {
+  profilePhoto: string | undefined;
   city_name: string;
   state_name: string;
   zip_code: string;

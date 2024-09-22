@@ -1,7 +1,7 @@
 import Column from '@inspectreplyai/components/general/Column';
 import Row from '@inspectreplyai/components/general/Row';
 import { colors, typography } from '@inspectreplyai/themes';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { View, Text, TextInput, TextInputProps } from 'react-native';
 
 import { SvgProps } from 'react-native-svg';
@@ -15,39 +15,36 @@ interface CustomTextInputProps extends TextInputProps {
   isEdit?: boolean;
 }
 
-const CustomProfileInput: React.FC<CustomTextInputProps> = ({
-  label,
-  icon: Icon,
-  isError,
-  touched,
-  isEdit,
-  ...textInputProps
-}) => {
-  return (
-    <Column style={styles.container}>
-      <Text style={[typography.h7, styles.label]}>{label}</Text>
-      <Row
-        style={[
-          styles.inputContainer,
-          isError && touched ? styles.errorBorder : null,
-        ]}>
-        <TextInput
+const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
+  ({ label, icon: Icon, isError, touched, isEdit, ...textInputProps }, ref) => {
+    return (
+      <Column style={styles.container}>
+        <Text style={[typography.h7, styles.label]}>{label}</Text>
+        <Row
           style={[
-            typography.body,
-            styles.input,
-            { color: isEdit ? colors.white : colors.grey },
-          ]}
-          {...textInputProps}
-        />
-        {Icon && (
-          <View style={styles.iconContainer}>
-            <Icon />
-          </View>
-        )}
-      </Row>
-      {isError && touched && <Text style={styles.errorText}>{isError}</Text>}
-    </Column>
-  );
-};
-
+            styles.inputContainer,
+            isError && touched ? styles.errorBorder : null,
+          ]}>
+          <TextInput
+            ref={ref}
+            style={[
+              typography.body,
+              styles.input,
+              { color: isEdit ? colors.white : colors.grey },
+            ]}
+            selectionColor={colors.white}
+            {...textInputProps}
+          />
+          {Icon && (
+            <View style={styles.iconContainer}>
+              <Icon />
+            </View>
+          )}
+        </Row>
+        {isError && touched && <Text style={styles.errorText}>{isError}</Text>}
+      </Column>
+    );
+  },
+);
+CustomProfileInput.displayName = 'CustomProfileInput';
 export default CustomProfileInput;

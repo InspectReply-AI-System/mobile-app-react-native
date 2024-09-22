@@ -5,6 +5,7 @@ import {
   getContractorslist,
   getStatesData,
 } from '@inspectreplyai/network/contractorAPis';
+import { CommonFunctions } from '@inspectreplyai/utils';
 const sliceName = 'contractor';
 
 export const getStates = createAsyncThunk(
@@ -35,11 +36,28 @@ export const getCategory = createAsyncThunk(
 
 export const getContractors = createAsyncThunk(
   `${sliceName}/contractors`,
-  async (payload: { page: number; limit: number }, thunkAPI) => {
+  async (
+    payload: {
+      success(): unknown;
+      page?: number;
+      limit?: number;
+      search?: string;
+    },
+    thunkAPI,
+  ) => {
+    let params = {
+      ...(payload.page && { page: payload.page }),
+      ...(payload.limit && { limit: payload.limit }),
+      ...(payload.search && { search: payload.search }),
+    };
     try {
-      const response = await getContractorslist(payload);
-      return response.data;
+      const response = await getContractorslist(params);
+      payload?.success();
+      return CommonFunctions.convertDataAccodingToFlatList(
+        response.data.contractors,
+      );
     } catch (error) {
+      payload?.success();
       return thunkAPI.rejectWithValue(error);
     }
   },

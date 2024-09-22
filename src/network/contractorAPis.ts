@@ -1,4 +1,3 @@
-import { toFormData } from 'axios';
 import { endpoints } from './endpoints';
 import { getApiCall, postApiCall } from './networkMethods';
 import { setContentType } from './networkServices';
@@ -15,12 +14,26 @@ const updateContractorProfile = async (params: { email: string }) => {
 };
 
 const contractorProfilePhoto = async (params: {
-  profilePhoto: string;
+  profileDetails: {
+    path?: string;
+    name?: string;
+    type?: string;
+    mime?: string;
+    filename?: string;
+  };
   contractor_id: string;
 }) => {
-  const data = toFormData(params);
+  let data = new FormData();
+
+  data.append('profilePhoto', {
+    uri: params?.profileDetails?.path,
+    type: 'image/jpeg',
+    name: 'profile-photo.jpg',
+  });
+
+  data.append('contractor_id', params?.contractor_id);
   setContentType('multipart/form-data');
-  return await postApiCall(endpoints.auth.updateProfilePhoto, data);
+  return await postApiCall(endpoints.contractors.contractorProfilePhoto, data);
 };
 
 const getStatesData = async () => {
@@ -47,6 +60,10 @@ const getContractorProfile = async (payload: { contractor_id: string }) => {
   return await getApiCall(url);
 };
 
+const deleteContractor = async (payload: { contractor_id: string }) => {
+  return await postApiCall(endpoints.contractors.deleteContractor, payload);
+};
+
 export {
   getCitiesData,
   getStatesData,
@@ -56,4 +73,5 @@ export {
   getContractorslist,
   getContractorProfile,
   updateContractorProfile,
+  deleteContractor,
 };

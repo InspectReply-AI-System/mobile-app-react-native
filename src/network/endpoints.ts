@@ -14,8 +14,10 @@ export const endpoints = {
     getStates: '/api/states',
     getCategories: '/api/categories',
     getCities: '/api/cities',
-    contractors: '/api/contractors',
+    contractors: '/api/contractors/category-group',
     contractorProfile: '/api/contractor',
     updateContractorProfile: '/api/contractor/update-profile',
+    deleteContractor: '/api/contractor/delete',
+    contractorProfilePhoto: 'api/contractor/profile-photo',
   },
 };

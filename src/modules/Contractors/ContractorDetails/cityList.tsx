@@ -8,11 +8,7 @@ import { getCitiesData } from '@inspectreplyai/network/contractorAPis';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import Indicator from '@inspectreplyai/components/general/Indicator';
-
-interface CityListProps {
-  sateData: { name: string; _id: string; abbreviation: string };
-  onSelectCity: (city: { name: string; _id: string }) => void;
-}
+import { CityListProps, States } from './@types';
 
 const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
   const [state, updateState] = useSimpleReducer({
@@ -52,7 +48,7 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
     );
   };
 
-  const renderCity = ({ item }: { item: { name: string; _id: string } }) => {
+  const renderCity = ({ item }: States) => {
     return (
       <Touchable onPress={() => onSelectCity(item)}>
         <Text style={styles.item}>{item.name}</Text>

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 
 export const styles = StyleSheet.create({
@@ -22,13 +22,16 @@ export const styles = StyleSheet.create({
   input: {
     color: colors.grey,
     width: '100%',
+    fontSize: normalize(14),
+    fontFamily: fonts.REGULAR,
+    paddingVertical: vh(14),
   },
   inputContainer: {
     alignItems: 'center',
     backgroundColor: colors.black27282B,
     borderRadius: normalize(4),
     paddingHorizontal: vw(16),
-    paddingVertical: vh(14),
+
     marginTop: vh(8),
     justifyContent: 'space-between',
   },

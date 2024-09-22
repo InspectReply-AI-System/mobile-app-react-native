@@ -18,6 +18,7 @@ const colors = {
   purpleBlue: '#497AFC',
   blue: 'blue',
   grey313C42: '#313C42',
+  black1E1E1E: '#1E1E1E',
 };
 
 export default colors;

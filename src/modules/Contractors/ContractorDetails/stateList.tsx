@@ -24,7 +24,9 @@ const StateList: React.FC<StateListProps> = ({ onSelectState }) => {
   const { states, loading } = useAppSelector((store) => store.contractorSlice);
 
   useEffect(() => {
-    dispatch(getStates());
+    if (states?.length <= 0) {
+      dispatch(getStates());
+    }
   }, []);
 
   const listEmpty = () => {

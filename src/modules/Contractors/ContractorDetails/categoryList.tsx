@@ -10,10 +10,7 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { getCategory } from '@inspectreplyai/redux/contractor/action';
 import Indicator from '@inspectreplyai/components/general/Indicator';
-
-interface CategoryListProps {
-  onSelectCategory: (category_name: string, _id: string) => void;
-}
+import { Categories, CategoryListProps } from './@types';
 
 const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
   const dispatch = useAppDispatch();
@@ -22,20 +19,18 @@ const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
   );
 
   useEffect(() => {
-    dispatch(getCategory());
-  }, [dispatch]);
+    if (category?.length <= 0) {
+      dispatch(getCategory());
+    }
+  }, []);
 
-  const renderCategory = useCallback(
-    ({ item }: { item: { category_name: string; _id: string } }) => {
-      return (
-        <Touchable
-          onPress={() => onSelectCategory(item.category_name, item._id)}>
-          <Text style={styles.item}>{item?.category_name || ''}</Text>
-        </Touchable>
-      );
-    },
-    [],
-  );
+  const renderCategory = useCallback(({ item }: Categories) => {
+    return (
+      <Touchable onPress={() => onSelectCategory(item)}>
+        <Text style={styles.item}>{item?.category_name || ''}</Text>
+      </Touchable>
+    );
+  }, []);
   const listEmpty = () => {
     return (
       <Column style={styles.centeredContainer}>

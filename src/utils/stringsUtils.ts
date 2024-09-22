@@ -131,4 +131,11 @@ export const CommonStrings = {
   phoneNumberRequired: 'Phone number is required',
   addressRequired: 'Address is required',
   zipRequired: 'ZIP code is required',
+  changePassword: 'Change Password',
+  oldPassword: 'Old Password',
+  newPassword: 'New Password',
+  confirmChanges: 'Confirm Changes',
+  passwordCannotBeSame:
+    'Old and new password cannot be same. \nPlease choose a unique password.',
+  requirements: '  Requirements:',
 };

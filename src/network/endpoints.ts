@@ -8,6 +8,8 @@ export const endpoints = {
     getUserProfile: '/api/customer/',
     updateUserProfile: '/api/customer/update-profile/',
     updateProfilePhoto: 'api/customer/profile-photo',
+    deleteUser: 'api/customer/delete',
+    changePassword: 'api/customer/change-password',
   },
   contractors: {
     register: '/api/contractor/register',

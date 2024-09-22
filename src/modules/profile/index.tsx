@@ -6,16 +6,12 @@ import {
   CommonStrings,
   normalize,
 } from '@inspectreplyai/utils';
-import CustomInput from '@inspectreplyai/components/textInputs/customInput';
-import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
+import { useSimpleReducer } from '@inspectreplyai/hooks';
 import {
   emailValidation,
   fullNameValidation,
-  passwordValidation,
 } from '@inspectreplyai/utils/validatorsUtils';
-import eye from '@inspectreplyai/assets/svg/eye.svg';
 import Device from '@inspectreplyai/utils/Device';
-import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import { ActivityIndicator, Alert, Text } from 'react-native';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -32,15 +28,20 @@ import {
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
 import {
+  deleteUser,
   setProfileImage,
   updateProfile,
 } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { StoreActions } from '@inspectreplyai/utils/Enums';
-import { reset } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
+import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
+import { typography } from '@inspectreplyai/themes';
+import Svg from '@inspectreplyai/components/general/Svg';
+import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
 
 const Profile = () => {
   const [state, updateState] = useSimpleReducer({
@@ -59,12 +60,9 @@ const Profile = () => {
   const {
     name,
     email,
-    password,
     nameError,
     emailError,
     profileImage,
-    passwordError,
-    secureText,
     isModalVisible,
     isPreviewEnable,
     isEditableEnable,
@@ -72,7 +70,6 @@ const Profile = () => {
 
   const dispatch = useAppDispatch();
 
-  const { setRef, focusOnElement } = useRefs();
   const { user, loading } = useAppSelector(
     (store: RootState) => store.AuthSlice,
   );
@@ -82,7 +79,7 @@ const Profile = () => {
       name: `${user?.firstName} ${user?.lastName}`,
       email: user?.email,
       password: '',
-      profileImage: { path: user?.profilePhoto },
+      profileImage: { path: user?.base_url },
     });
   }, []);
 
@@ -106,18 +103,6 @@ const Profile = () => {
     validateAndUpdateState('email', email, emailValidation);
   };
 
-  const onEnterPassword = (password: string) => {
-    const passwordError = passwordValidation(password.trim()).errorMsg;
-    updateState({
-      password,
-      passwordError,
-    });
-  };
-
-  const onPressEye = () => {
-    updateState({ secureText: !secureText });
-  };
-
   const onPressDeleteProfile = () => {
     updateState({ isModalVisible: true });
   };
@@ -127,7 +112,11 @@ const Profile = () => {
   };
 
   const onPressEdit = () => {
-    updateState({ isEditableEnable: !isEditableEnable });
+    if (!isEditableEnable) {
+      updateState({ isEditableEnable: !isEditableEnable });
+    } else {
+      onPressSave();
+    }
   };
 
   const onPressTerms = () => {};
@@ -165,12 +154,12 @@ const Profile = () => {
   };
 
   const onPressProfile = () => {
-    if (profileImage?.path) {
+    if (profileImage?.path && !isEditableEnable) {
       updateState({ isPreviewEnable: true });
-    } else {
-      if (isEditableEnable) {
-        handleImagePicker();
-      }
+    } else if (!profileImage?.path && !isEditableEnable) {
+      handleImagePicker();
+    } else if (isEditableEnable) {
+      handleImagePicker();
     }
   };
 
@@ -184,7 +173,7 @@ const Profile = () => {
       status: 1,
     };
     const profilePayload = {
-      profilePhoto: profileImage?.path,
+      base_url: profileImage?.path,
       cust_id: user?.userId,
     };
     dispatch(setProfileImage({ profilePayload, customerId: user?.userId }));
@@ -207,12 +196,38 @@ const Profile = () => {
     reset(ROUTES.AUTHNAVIGATOR);
   };
 
+  const onPressDeleteUser = () => {
+    dispatch(
+      deleteUser({
+        cust_id: user?.userId,
+        successCallBack: (response) => {
+          if (response) {
+            dispatch({ type: StoreActions.RESET_STORE });
+            updateState({ isModalVisible: false });
+            setTimeout(() => {
+              reset(ROUTES.AUTHNAVIGATOR);
+            }, 500);
+          }
+        },
+        errorCallBack: (error) => {
+          showErrorToast(error);
+        },
+      }),
+    );
+  };
+
+  const onPressPassword = () => {
+    navigate(ROUTES.PASSWORDSCREEN);
+  };
+
   return (
     <Column style={styles.container}>
       <CustomHeader
-        rightIcon={Icons.edit}
+        rightIcon={!isEditableEnable && Icons.edit}
+        rightLabel={isEditableEnable && CommonStrings.save}
         title={CommonStrings.myProfile}
         onRightPress={onPressEdit}
+        onPressRightLabel={onPressEdit}
         customRightIconStyle={styles.headerIconStyle}
       />
       <Touchable
@@ -227,6 +242,7 @@ const Profile = () => {
           }
           style={styles.imageStyle}
         />
+        <ImageWrapper source={Icons.plusIcon} style={styles.plusIconStyle} />
       </Touchable>
 
       <ImageView
@@ -272,13 +288,14 @@ const Profile = () => {
             </Text>
           </Column>
           <PrimaryButton
+            loading={loading}
             title={CommonStrings.confirm}
-            onPress={() => {}}
+            onPress={onPressDeleteUser}
             containerStyle={styles.confirmButtonView}
           />
           <PrimaryButton
             title={CommonStrings.cancel}
-            onPress={() => {}}
+            onPress={onPressCross}
             containerStyle={styles.cancelButtonView}
           />
         </Column>
@@ -286,60 +303,32 @@ const Profile = () => {
 
       <Column style={styles.inputsContainer}>
         <ScrollContainer showsVerticalScrollIndicator={false}>
-          <CustomInput
-            label={CommonStrings.name}
-            placeholder={CommonStrings.name}
-            ref={setRef(CommonStrings.name)}
-            onSubmitEditing={() => {
-              focusOnElement('Email');
-            }}
-            autoFocus
+          <CustomProfileInput
             value={name}
             maxLength={300}
             isError={nameError}
-            returnKeyType='next'
+            isEdit={isEditableEnable}
+            label={CommonStrings.name}
             onChangeText={onEnterName}
             editable={isEditableEnable}
             onBlur={() => onEnterName(name)}
+            inputCustomStyle={styles.inputStyle}
           />
-          <CustomInput
-            label={CommonStrings.email}
-            ref={setRef(CommonStrings.email)}
-            placeholder={CommonStrings.emailExample}
-            keyboardType='email-address'
-            onSubmitEditing={() => {
-              focusOnElement(CommonStrings.password);
-            }}
+          <CustomProfileInput
             value={email}
             maxLength={320}
-            returnKeyType='next'
-            autoCapitalize='none'
             isError={emailError}
+            isEdit={isEditableEnable}
+            label={CommonStrings.email}
+            editable={isEditableEnable}
             onChangeText={onEnterEmail}
-            editable={isEditableEnable}
             onBlur={() => onEnterEmail(email)}
+            inputCustomStyle={styles.inputStyle}
           />
-          <CustomInput
-            maxLength={25}
-            RightIcon={eye}
-            value={password}
-            returnKeyType='done'
-            isError={passwordError}
-            onSubmitEditing={() => {}}
-            secureTextEntry={secureText}
-            keyboardType='ascii-capable'
-            onRightIconPress={onPressEye}
-            onChangeText={onEnterPassword}
-            label={CommonStrings.password}
-            editable={isEditableEnable}
-            placeholder={CommonStrings.password}
-            ref={setRef(CommonStrings.password)}
-            onBlur={() => onEnterPassword(password)}
-            returnKeyLabel={isIOS ? 'done' : 'submit'}
-          />
-          {isEditableEnable && (
-            <PrimaryButton title={CommonStrings.save} onPress={onPressSave} />
-          )}
+          <Touchable style={styles.changePassword} onPress={onPressPassword}>
+            <Text style={typography.body}>{CommonStrings.changePassword}</Text>
+            <Svg Component={DownArrow} imageStyle={styles.arrowStyle} />
+          </Touchable>
           <Touchable
             style={{ marginTop: normalize(36) }}
             onPress={onPressLogout}>

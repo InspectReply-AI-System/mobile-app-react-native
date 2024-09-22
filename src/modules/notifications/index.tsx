@@ -1,8 +1,8 @@
 import React from 'react';
 import ReadNoti from './readNoti';
 import UnreadNoti from './unreadNoti';
-import { StyleSheet } from 'react-native';
-import { colors, fonts } from '@inspectreplyai/themes';
+import { StyleSheet, Text } from 'react-native';
+import { colors, fonts, typography } from '@inspectreplyai/themes';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
@@ -15,7 +15,7 @@ const Notifications = () => {
 
   return (
     <Column style={styles.container}>
-      <CustomHeader
+      {/* <CustomHeader
         title={CommonStrings.notifications}
         titleCustomStyle={{ fontFamily: fonts.REGULAR }}
       />
@@ -25,7 +25,8 @@ const Notifications = () => {
         )}>
         <Tab.Screen name={ROUTES.UNREAD} component={UnreadNoti} />
         <Tab.Screen name={ROUTES.READ} component={ReadNoti} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
+      <Text style={typography.h5}>Notifications</Text>
     </Column>
   );
 };
@@ -37,5 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: normalize(16),
     backgroundColor: colors.primaryBalck,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

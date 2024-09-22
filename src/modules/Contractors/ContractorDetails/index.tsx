@@ -392,6 +392,7 @@ const ContractorDetails = () => {
               rightIcon={!editMode && <Edit />}
               rightLabel={editMode && CommonStrings.save}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
+              onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
             />
 

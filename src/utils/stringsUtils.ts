@@ -158,4 +158,5 @@ export const CommonStrings = {
   passwordCannotBeSame:
     'Old and new password cannot be same. \nPlease choose a unique password.',
   requirements: '  Requirements:',
+  newContractor: 'Add a Contractor',
 };

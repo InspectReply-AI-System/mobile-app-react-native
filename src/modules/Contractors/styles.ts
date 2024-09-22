@@ -68,6 +68,7 @@ export const styles = StyleSheet.create({
     height: vh(69),
     width: vw(84),
     resizeMode: 'contain',
+    borderRadius: normalize(10),
   },
   row: {
     justifyContent: 'space-between',

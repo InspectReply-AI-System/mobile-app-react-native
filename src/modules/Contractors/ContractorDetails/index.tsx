@@ -47,11 +47,12 @@ import {
   StateSelect,
 } from './@types';
 import { getStates } from '@inspectreplyai/redux/contractor/action';
-import { Images } from '@inspectreplyai/themes/appImages';
+import { Icons, Images } from '@inspectreplyai/themes/appImages';
 import { BlurView } from '@react-native-community/blur';
 import CustomLoader from '@inspectreplyai/components/loader/customLoader';
 import { useRefs } from '@inspectreplyai/hooks';
 import { setContentType } from '@inspectreplyai/network/networkServices';
+import ImageWrapper from '@inspectreplyai/components/general/Image';
 
 const ContractorDetails = () => {
   const [editMode, setEditMode] = useState(false);
@@ -384,9 +385,12 @@ const ContractorDetails = () => {
         }) => (
           <>
             <CustomHeader
-              title={profileData.contractorName}
+              title={
+                isNew ? CommonStrings.newContractor : profileData.contractorName
+              }
               leftIcon={<BackIcon />}
-              rightIcon={!editMode ? <Edit /> : <Save />}
+              rightIcon={!editMode && <Edit />}
+              rightLabel={editMode && CommonStrings.save}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
             />
@@ -398,13 +402,17 @@ const ContractorDetails = () => {
                 disabled={!editMode}
                 style={styles.profileImageView}
                 onPress={handleImagePicker}>
-                <Image
+                <ImageWrapper
                   source={
-                    profileImage.path
-                      ? { uri: profileImage.path }
+                    profileImage?.path
+                      ? { uri: profileImage?.path }
                       : Images.dummyProfile
                   }
                   style={styles.profileImage}
+                />
+                <ImageWrapper
+                  source={Icons.plusIcon}
+                  style={styles.plusIconStyle}
                 />
               </Touchable>
 

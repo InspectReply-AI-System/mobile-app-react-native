@@ -117,6 +117,13 @@ export const styles = StyleSheet.create({
   },
   modalView: { margin: 0, justifyContent: 'center', alignItems: 'center' },
 
+  plusIconStyle: {
+    height: normalize(30),
+    width: normalize(30),
+    position: 'absolute',
+    bottom: normalize(-18),
+    right: normalize(-5),
+  },
   profileImage: {
     height: '100%',
     width: '100%',

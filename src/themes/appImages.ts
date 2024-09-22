@@ -22,6 +22,8 @@ export const Icons = {
   cross: require(`${fixedPath}/icons/cross.png`),
   edit: require(`${fixedPath}/icons/edit.png`),
   bin: require(`${fixedPath}/icons/bin.png`),
+  save: require(`${fixedPath}/icons/save.png`),
+  plusIcon: require(`${fixedPath}/icons/plusIcon.png`),
 };
 
 export const Images = {

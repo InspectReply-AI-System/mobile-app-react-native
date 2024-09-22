@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  deleteUserPayload,
   getProfilePayload,
   LoginUserPayload,
   RegisterUserPayload,
@@ -7,6 +8,7 @@ import {
   updateProfilePayload,
 } from './@types';
 import {
+  deleteUserProfile,
   getUserProfile,
   registerWithEmail,
   signInWithEmail,
@@ -81,10 +83,25 @@ export const setProfileImage = createAsyncThunk(
       if (response?.data) {
         setContentType(null);
         thunkAPI.dispatch(getProfile({ customerId: args.customerId }));
-        showSuccessToast(response?.data?.message);
       }
       return response.data;
     } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteUser = createAsyncThunk(
+  `${sliceName}/deleteUser`,
+  async (args: deleteUserPayload, thunkAPI) => {
+    try {
+      const response = await deleteUserProfile({ cust_id: args?.cust_id });
+      if (response?.data) {
+        args?.successCallBack(response?.data);
+      }
+      return response.data;
+    } catch (error) {
+      args?.errorCallBack(error);
       return thunkAPI.rejectWithValue(error);
     }
   },

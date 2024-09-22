@@ -151,4 +151,11 @@ export const CommonStrings = {
   addressOne: 'address1',
   addressTwo: 'address2',
   web: 'website',
+  changePassword: 'Change Password',
+  oldPassword: 'Old Password',
+  newPassword: 'New Password',
+  confirmChanges: 'Confirm Changes',
+  passwordCannotBeSame:
+    'Old and new password cannot be same. \nPlease choose a unique password.',
+  requirements: '  Requirements:',
 };

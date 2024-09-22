@@ -17,6 +17,8 @@ export const styles = StyleSheet.create({
   rightContainer: {
     flex: 0.2,
     alignItems: 'flex-end',
+    minHeight: normalize(35),
+    justifyContent: 'center',
   },
   title: {
     color: colors.white,

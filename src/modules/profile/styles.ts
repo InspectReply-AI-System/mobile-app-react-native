@@ -4,6 +4,11 @@ import { SCREEN_HEIGHT, SMALL_DEVICE } from '@inspectreplyai/utils/Dimensions';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  arrowStyle: {
+    height: 20,
+    width: 20,
+    transform: [{ rotate: '-90deg' }],
+  },
   blurView: {
     top: 0,
     left: 0,
@@ -12,11 +17,21 @@ export default StyleSheet.create({
     position: 'absolute',
   },
   cancelButtonView: {
-    height: normalize(44),
     borderWidth: 1,
+    height: normalize(44),
     marginTop: normalize(12),
     borderColor: colors.white,
     backgroundColor: colors.primaryBalck,
+  },
+  changePassword: {
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: normalize(48),
+    marginTop: normalize(24),
+    borderColor: colors.white,
+    justifyContent: 'space-between',
+    paddingHorizontal: normalize(16),
   },
   confirmButtonView: {
     height: normalize(44),
@@ -43,7 +58,6 @@ export default StyleSheet.create({
     fontFamily: fonts.MEDIUM,
     textDecorationLine: 'underline',
     alignSelf: 'center',
-    paddingBottom: normalize(70),
   },
   headerIconStyle: {
     width: normalize(34),
@@ -65,6 +79,9 @@ export default StyleSheet.create({
     width: normalize(110),
     height: normalize(110),
     borderRadius: normalize(100),
+    backgroundColor: colors.grey313C42,
+  },
+  inputStyle: {
     backgroundColor: colors.black,
   },
   inputsContainer: {
@@ -108,6 +125,13 @@ export default StyleSheet.create({
   modalInfo: {
     height: normalize(48),
     width: normalize(48),
+  },
+  plusIconStyle: {
+    height: normalize(30),
+    width: normalize(30),
+    position: 'absolute',
+    bottom: normalize(2),
+    right: normalize(10),
   },
   privacyText: {
     fontSize: 16,

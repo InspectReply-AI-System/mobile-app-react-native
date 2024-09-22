@@ -19,6 +19,7 @@ const ROUTES = {
   UNREAD: 'Unread',
   READ: 'Read',
   CONTRACTORSDETAILS: 'contractorDetails',
+  PASSWORDSCREEN: 'password',
 };
 
 export default ROUTES;

@@ -48,7 +48,7 @@ const updateUserProfile = async (params: {
 };
 
 const updateProfilePhoto = async (params: {
-  profilePhoto: string;
+  base_url: string;
   cust_id: string;
 }) => {
   const data = toFormData(params);
@@ -56,11 +56,25 @@ const updateProfilePhoto = async (params: {
   return await postApiCall(endpoints.auth.updateProfilePhoto, data);
 };
 
+const deleteUserProfile = async (params: { cust_id: string }) => {
+  return await postApiCall(endpoints.auth.deleteUser, params);
+};
+
+const changeUserPassword = async (params: {
+  cust_id: string;
+  oldPassword: string;
+  newPassword: string;
+}) => {
+  return await postApiCall(endpoints.auth.changePassword, params);
+};
+
 export {
   getUserProfile,
   signInWithEmail,
   registerWithEmail,
+  deleteUserProfile,
   updateProfilePhoto,
+  changeUserPassword,
   setNewPassword,
   resetPassword,
   verifyOtp,

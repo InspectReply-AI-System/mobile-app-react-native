@@ -2,7 +2,7 @@ import Column from '@inspectreplyai/components/general/Column';
 import Row from '@inspectreplyai/components/general/Row';
 import { colors, typography } from '@inspectreplyai/themes';
 import React, { forwardRef } from 'react';
-import { View, Text, TextInput, TextInputProps } from 'react-native';
+import { View, Text, TextInput, TextInputProps, ViewStyle } from 'react-native';
 
 import { SvgProps } from 'react-native-svg';
 import { styles } from './styles';
@@ -13,6 +13,7 @@ interface CustomTextInputProps extends TextInputProps {
   isError?: string | string[] | any | undefined;
   touched?: boolean;
   isEdit?: boolean;
+  inputCustomStyle?: ViewStyle;
 }
 
 const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(

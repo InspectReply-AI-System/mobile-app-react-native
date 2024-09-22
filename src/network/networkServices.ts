@@ -50,7 +50,7 @@ $http.interceptors.response.use(
 const handleApiError = (errorMessage: string) => {
   console.log('handleApiError', errorMessage);
   if (errorMessage === '401') {
-    // navigationRef.current?.navigate(ROUTES.AUTHNAVIGATOR);
+    /* empty */
   }
 };
 

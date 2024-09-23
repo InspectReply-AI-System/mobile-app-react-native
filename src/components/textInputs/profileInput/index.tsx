@@ -2,10 +2,11 @@ import Column from '@inspectreplyai/components/general/Column';
 import Row from '@inspectreplyai/components/general/Row';
 import { colors, typography } from '@inspectreplyai/themes';
 import React, { forwardRef } from 'react';
-import { View, Text, TextInput, TextInputProps, ViewStyle } from 'react-native';
+import { Text, TextInput, TextInputProps, ViewStyle } from 'react-native';
 
 import { SvgProps } from 'react-native-svg';
 import { styles } from './styles';
+import Touchable from '@inspectreplyai/components/general/Touchable';
 
 interface CustomTextInputProps extends TextInputProps {
   label: string;
@@ -14,6 +15,7 @@ interface CustomTextInputProps extends TextInputProps {
   touched?: boolean;
   isEdit?: boolean;
   inputCustomStyle?: ViewStyle;
+  onPressRightIcon?: () => void;
 }
 
 const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
@@ -25,6 +27,7 @@ const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
       touched,
       isEdit,
       inputCustomStyle,
+      onPressRightIcon,
       ...textInputProps
     },
     ref,
@@ -49,9 +52,9 @@ const CustomProfileInput = forwardRef<TextInput, CustomTextInputProps>(
             {...textInputProps}
           />
           {Icon && (
-            <View style={styles.iconContainer}>
+            <Touchable onPress={onPressRightIcon} style={styles.iconContainer}>
               <Icon />
-            </View>
+            </Touchable>
           )}
         </Row>
         {isError && touched && <Text style={styles.errorText}>{isError}</Text>}

@@ -7,7 +7,7 @@ import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
-import { Icons, Images } from '@inspectreplyai/themes/appImages';
+import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
 import { passwordValidation } from '@inspectreplyai/utils/validatorsUtils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
@@ -32,9 +32,17 @@ const SetPassword = () => {
     passwordError: '',
     confirmPasswordError: '',
     loading: false,
+    showPassword: false,
+    showConfirmPassword: false,
   });
-  const { password, confirmPassword, passwordError, confirmPasswordError } =
-    state;
+  const {
+    password,
+    confirmPassword,
+    passwordError,
+    confirmPasswordError,
+    showPassword,
+    showConfirmPassword,
+  } = state;
 
   const onEnterPassword = (password: string) => {
     const passwordError = passwordValidation(password.trim());
@@ -116,6 +124,9 @@ const SetPassword = () => {
           value={password}
           isError={passwordError}
           onBlur={() => onEnterPassword(password)}
+          RightIcon={!showPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          secureTextEntry={!showPassword}
+          onRightIconPress={() => updateState({ showPassword: !showPassword })}
         />
         <CustomInput
           label={CommonStrings.confirmPassword}
@@ -130,6 +141,11 @@ const SetPassword = () => {
           onSubmitEditing={onPressContinue}
           value={confirmPassword}
           isError={confirmPasswordError}
+          RightIcon={!showConfirmPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          secureTextEntry={!showConfirmPassword}
+          onRightIconPress={() =>
+            updateState({ showConfirmPassword: !showConfirmPassword })
+          }
         />
 
         <PrimaryButton

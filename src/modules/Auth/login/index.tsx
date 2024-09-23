@@ -33,9 +33,17 @@ const Login = () => {
     emailError: '',
     password: '',
     passwordError: '',
+    showPassword: false,
   });
 
-  const { currentStep, email, emailError, password, passwordError } = state;
+  const {
+    currentStep,
+    email,
+    emailError,
+    password,
+    passwordError,
+    showPassword,
+  } = state;
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state: RootState) => state.AuthSlice);
 
@@ -157,6 +165,7 @@ const Login = () => {
             autoCapitalize='none'
             onChangeText={onChangeEmail}
             keyboardType='email-address'
+            secureTextEntry={false}
             placeholder={CommonStrings.email}
             onBlur={() => onChangeEmail(email)}
             onSubmitEditing={onPressNext}
@@ -175,6 +184,11 @@ const Login = () => {
             label={CommonStrings.password}
             placeholder={CommonStrings.password}
             onSubmitEditing={onPressNext}
+            RightIcon={!showPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+            secureTextEntry={!showPassword}
+            onRightIconPress={() =>
+              updateState({ showPassword: !showPassword })
+            }
           />
         )}
         <PrimaryButton

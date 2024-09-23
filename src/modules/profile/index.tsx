@@ -166,7 +166,6 @@ const Profile = () => {
       handleImagePicker();
     }
   };
-
   const onPressSave = () => {
     const getName = CommonFunctions.getFirstAndLastName(name);
     const payload = {
@@ -190,7 +189,7 @@ const Profile = () => {
         payload,
         customerId: user?.userId,
         successCallBack: () => {
-          if (profilePayload?.uri) {
+          if (profilePayload?.profilePhoto?.uri || profileImage?.path) {
             dispatch(
               setProfileImage({ profilePayload, customerId: user?.userId }),
             );

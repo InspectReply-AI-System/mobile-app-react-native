@@ -47,6 +47,8 @@ const SignUp = () => {
     emailError: '',
     passwordError: '',
     confirmPasswordError: '',
+    showPassword: false,
+    showConfirmPassword: false,
   });
   const {
     firstName,
@@ -59,6 +61,8 @@ const SignUp = () => {
     emailError,
     passwordError,
     confirmPasswordError,
+    showPassword,
+    showConfirmPassword,
   } = state;
 
   const dispatch = useAppDispatch();
@@ -243,6 +247,10 @@ const SignUp = () => {
           onBlur={() => onEnterPassword(password)}
           value={password}
           isError={passwordError}
+          textContentType='oneTimeCode'
+          RightIcon={!showPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          secureTextEntry={!showPassword}
+          onRightIconPress={() => updateState({ showPassword: !showPassword })}
         />
         <CustomInput
           label={CommonStrings.confirmPassword}
@@ -252,11 +260,17 @@ const SignUp = () => {
           returnKeyType={'done'}
           maxLength={25}
           keyboardType='ascii-capable'
+          textContentType='oneTimeCode'
           onChangeText={onEnterConfirmPassword}
           onBlur={() => onEnterConfirmPassword(confirmPassword)}
           onSubmitEditing={onPressContinue}
           value={confirmPassword}
           isError={confirmPasswordError}
+          secureTextEntry={!showConfirmPassword}
+          RightIcon={!showConfirmPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          onRightIconPress={() =>
+            updateState({ showConfirmPassword: !showConfirmPassword })
+          }
         />
         <Row style={styles.checkBoxView}>
           <Touchable onPress={onPressCheckButton}>

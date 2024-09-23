@@ -16,12 +16,10 @@ export const styles = StyleSheet.create({
     marginTop: vh(4),
     fontSize: normalize(12),
   },
-  iconContainer: {
-    marginLeft: 10,
-  },
+  iconContainer: {},
   input: {
     color: colors.grey,
-    width: '100%',
+    width: '90%',
     fontSize: normalize(14),
     fontFamily: fonts.REGULAR,
     paddingVertical: vh(14),

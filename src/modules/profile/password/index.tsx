@@ -16,6 +16,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from '@inspectreplyai/components/toast';
+import { SvgIcon } from '@inspectreplyai/themes/appImages';
 
 const Password = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -25,6 +26,8 @@ const Password = () => {
     newPassword: '',
     oldPasswordError: '',
     newPasswordError: '',
+    showOldPassowrd: false,
+    showNewPassword: false,
   });
   const { user } = useAppSelector((store: RootState) => store.AuthSlice);
 
@@ -34,6 +37,8 @@ const Password = () => {
     newPasswordError,
     newPassword,
     isLoading,
+    showOldPassowrd,
+    showNewPassword,
   } = state;
 
   const onChangeOldPassword = (_password: string) => {
@@ -116,6 +121,11 @@ const Password = () => {
           onSubmitEditing={() => {
             focusOnElement(CommonStrings.newPassword);
           }}
+          secureTextEntry={!showOldPassowrd}
+          icon={!showOldPassowrd ? SvgIcon.Eye : SvgIcon.CloseEye}
+          onPressRightIcon={() =>
+            updateState({ showOldPassowrd: !showOldPassowrd })
+          }
         />
         <CustomProfileInput
           maxLength={25}
@@ -128,6 +138,11 @@ const Password = () => {
           inputCustomStyle={styles.inputStyle}
           ref={setRef(CommonStrings.newPassword)}
           onBlur={() => onChangeNewPassword(newPassword)}
+          icon={!showNewPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          secureTextEntry={!showNewPassword}
+          onPressRightIcon={() =>
+            updateState({ showNewPassword: !showNewPassword })
+          }
         />
         {newPassword?.length > 0 && <PasswordValidation value={newPassword} />}
         <PrimaryButton

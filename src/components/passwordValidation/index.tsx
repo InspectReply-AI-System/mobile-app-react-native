@@ -16,11 +16,13 @@ const PasswordValidation = (props: { value: string }) => {
     return (
       <Column>
         <Row style={styles.renderSubContainer}>
-          {item.checked ? (
-            <Svg Component={check} style={styles.imageStyle} />
-          ) : (
-            <Column style={styles.uncheckedView} />
-          )}
+          <Column>
+            {item.checked ? (
+              <Svg Component={check} style={styles.imageStyle} />
+            ) : (
+              <Column style={styles.uncheckedView} />
+            )}
+          </Column>
           <Text
             style={[
               styles.textStyle,
@@ -41,6 +43,7 @@ const PasswordValidation = (props: { value: string }) => {
         {CommonStrings.requirements}
       </Text>
       <FlatList
+        scrollEnabled={false}
         renderItem={renderItem}
         data={PasswordValidationData(value)}
         contentContainerStyle={styles.contentContainer}

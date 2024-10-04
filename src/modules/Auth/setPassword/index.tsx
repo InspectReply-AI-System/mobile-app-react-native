@@ -20,6 +20,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from '@inspectreplyai/components/toast';
+import PasswordValidation from '@inspectreplyai/components/passwordValidation';
 
 const SetPassword = () => {
   const params: any = useRoute()?.params;
@@ -45,7 +46,10 @@ const SetPassword = () => {
   } = state;
 
   const onEnterPassword = (password: string) => {
-    const passwordError = passwordValidation(password.trim());
+    const passwordError = passwordValidation(
+      password.trim(),
+      CommonStrings.passwordMeetsCriteria,
+    );
     let confirmPasswordError = '';
     if (
       confirmPassword.length > 0 &&
@@ -56,7 +60,7 @@ const SetPassword = () => {
       confirmPasswordError = '';
     }
     updateState({
-      password,
+      password: password.trim(),
       passwordError: passwordError.errorMsg,
       confirmPasswordError,
     });
@@ -71,7 +75,7 @@ const SetPassword = () => {
       confirmPasswordError = validationError.errorMsg;
     }
     updateState({
-      confirmPassword,
+      confirmPassword: confirmPassword.trim(),
       confirmPasswordError,
     });
   };
@@ -147,7 +151,7 @@ const SetPassword = () => {
             updateState({ showConfirmPassword: !showConfirmPassword })
           }
         />
-
+        <PasswordValidation value={password} />
         <PrimaryButton
           disabled={!isContinueButtonEnabled()}
           title={CommonStrings.Continue}

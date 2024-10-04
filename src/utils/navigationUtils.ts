@@ -2,6 +2,7 @@ import {
   CommonActions,
   NavigationAction,
   NavigationState,
+  StackActions,
 } from '@react-navigation/native';
 import { createRef } from 'react';
 
@@ -55,4 +56,8 @@ export function dispatch(
   action: NavigationAction | ((state: NavigationState) => NavigationAction),
 ): void {
   navigationRef.current?.dispatch(action);
+}
+
+export function popScreen(): void {
+  navigationRef.current?.dispatch(StackActions.pop(1));
 }

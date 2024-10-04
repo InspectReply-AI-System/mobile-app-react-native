@@ -71,7 +71,7 @@ const Login = () => {
   ) => {
     const error = validationFn(value.trim(), errormessage).errorMsg;
     updateState({
-      [field]: value,
+      [field]: value.trim(),
       [`${field}Error`]: error,
     });
   };
@@ -99,6 +99,8 @@ const Login = () => {
   };
 
   const onPressNext = () => {
+    onChangeEmail(email);
+    onEnterPassword(password);
     if (currentStep === 1 && email && !emailError) {
       updateState({
         currentStep: 2,
@@ -110,9 +112,9 @@ const Login = () => {
 
   const isNextDisabled = () => {
     if (currentStep === 1) {
-      return email && !emailError;
+      return email;
     } else {
-      return password && !passwordError;
+      return password;
     }
   };
 

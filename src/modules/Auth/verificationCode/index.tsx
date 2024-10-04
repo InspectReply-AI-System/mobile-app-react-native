@@ -6,7 +6,7 @@ import { CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, popScreen } from '@inspectreplyai/utils/navigationUtils';
 import { Icons, Images } from '@inspectreplyai/themes/appImages';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
@@ -36,7 +36,7 @@ const VerifyCode = () => {
   const onVerificationCode = (verificationCode: string) => {
     const error = verificationCodeValidation(verificationCode);
     updateState({
-      verificationCode,
+      verificationCode: verificationCode.trim(),
       verificationCodeError: error.errorMsg,
     });
   };
@@ -49,7 +49,7 @@ const VerifyCode = () => {
     if (!isContinueButtonEnabled()) return;
 
     updateState({ loading: true });
-    let body = {
+    const body = {
       email: params?.email,
       otp: verificationCode,
     };
@@ -57,6 +57,7 @@ const VerifyCode = () => {
       const result = await verifyOtp(body);
       updateState({ loading: false });
       showSuccessToast(result?.data?.msg);
+      popScreen();
       navigate(ROUTES.SETPASSWORD, body);
     } catch (error) {
       showErrorToast(error);

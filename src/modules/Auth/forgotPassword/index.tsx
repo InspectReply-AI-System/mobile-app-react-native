@@ -33,8 +33,8 @@ const ForgotPassword = () => {
     validationFn: (input: string, error: string) => { errorMsg: string },
   ) => {
     const error = validationFn(
-      value.trim(),
-      value.trim().length == 0
+      value,
+      value.length == 0
         ? CommonStrings.pleaseEnterYourEmailToResetPassword
         : CommonStrings.pleaseCheckYourEntryMustBeValidEmail,
     ).errorMsg;
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
   };
 
   const onEnterEmail = (email: string) => {
-    validateAndUpdateState('email', email, emailValidation);
+    validateAndUpdateState('email', email.trim(), emailValidation);
   };
 
   const isContinueButtonEnabled = () => {
@@ -53,6 +53,7 @@ const ForgotPassword = () => {
   };
 
   const onPressContinue = async () => {
+    onEnterEmail(email);
     if (!isContinueButtonEnabled()) return;
     try {
       updateState({ loading: true });
@@ -95,7 +96,7 @@ const ForgotPassword = () => {
           />
 
           <PrimaryButton
-            disabled={!isContinueButtonEnabled()}
+            disabled={!email}
             title={CommonStrings.Continue}
             onPress={onPressContinue}
             loading={state.loading}

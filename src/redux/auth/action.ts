@@ -17,6 +17,7 @@ import {
 } from '@inspectreplyai/network/authApis';
 import { showSuccessToast } from '@inspectreplyai/components/toast';
 import { setContentType } from '@inspectreplyai/network/networkServices';
+import { SET_CONFIG_DATA } from '../config/ConfigSlice';
 const sliceName = 'auth';
 
 export const loginUser = createAsyncThunk(
@@ -25,6 +26,7 @@ export const loginUser = createAsyncThunk(
   async (payload: LoginUserPayload, thunkAPI) => {
     try {
       const response = await signInWithEmail(payload);
+      thunkAPI.dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -37,6 +39,7 @@ export const registerUser = createAsyncThunk(
   async (payload: RegisterUserPayload, thunkAPI) => {
     try {
       const response = await registerWithEmail(payload);
+      thunkAPI.dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

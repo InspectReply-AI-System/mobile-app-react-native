@@ -1,3 +1,4 @@
+import { CommonStrings } from '@inspectreplyai/utils';
 import {
   checklength,
   checkLowerCase,
@@ -11,24 +12,24 @@ const PasswordValidationData = (value: string) => {
       id: 1,
       value: 'length',
       checked: checklength(value),
-      label: 'At least 12 characters',
+      label: CommonStrings.alLeast8Characters,
     },
     {
       id: 2,
       value: 'uppercase',
-      label: 'Uppercase letter',
+      label: CommonStrings.uppercaseLetter,
       checked: checkUpperCase(value),
     },
     {
       id: 3,
       value: 'lowercase',
-      label: 'Lowercase letter',
+      label: CommonStrings.lowerCaseLetter,
       checked: checkLowerCase(value),
     },
     {
       id: 4,
       value: 'numeric',
-      label: 'Number',
+      label: CommonStrings.number,
       checked: checkNumeric(value),
     },
   ];

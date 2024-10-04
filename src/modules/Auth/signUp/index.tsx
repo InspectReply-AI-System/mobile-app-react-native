@@ -96,7 +96,7 @@ const SignUp = () => {
   };
 
   const onEnterEmail = (email: string) => {
-    validateAndUpdateState('email', email, emailValidation);
+    validateAndUpdateState('email', email.trim(), emailValidation);
   };
 
   const onEnterPassword = (password: string) => {
@@ -113,7 +113,7 @@ const SignUp = () => {
     }
 
     updateState({
-      password,
+      password: password.trim(),
       passwordError,
       confirmPasswordError,
     });
@@ -131,7 +131,7 @@ const SignUp = () => {
       confirmPasswordError = validationError;
     }
     updateState({
-      confirmPassword,
+      confirmPassword: confirmPassword.trim(),
       confirmPasswordError,
     });
   };
@@ -157,6 +157,11 @@ const SignUp = () => {
       showErrorToast(CommonStrings.acceptTermsAndConditions);
       return;
     }
+    onEnterName(firstName);
+    onEnterLastName(lastName);
+    onEnterEmail(email);
+    onEnterPassword(password);
+    onEnterConfirmPassword(confirmPassword);
     if (isContinueButtonEnabled()) {
       dispatch(
         registerUser({
@@ -292,7 +297,9 @@ const SignUp = () => {
           </Text>
         </Row>
         <PrimaryButton
-          disabled={!isContinueButtonEnabled()}
+          disabled={
+            !(firstName && lastName && email && password && confirmPassword)
+          }
           title={CommonStrings.Continue}
           onPress={onPressContinue}
           loading={loading}

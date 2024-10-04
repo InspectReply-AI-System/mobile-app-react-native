@@ -1,8 +1,8 @@
 export const CommonStrings = {
   pleaseEnterOtp: 'Please enter the OTP',
   pleaseEnterEmail: '*Please enter an email',
-  pleaseEnterFirstName: '*Please enter an first name',
-  pleaseEnterLastName: '*Please enter an last name',
+  pleaseEnterFirstName: '*Please enter a first name',
+  pleaseEnterLastName: '*Please enter a last name',
 
   pleaseEnterPassword: '*Please enter your password to continue',
   pleaseEnterValidEmail: '*Please enter a valid email address',
@@ -16,7 +16,7 @@ export const CommonStrings = {
   pleaseEnterUserNameEmail: 'Please enter your username or email',
   pleaseEnterYourPassword: '*Please enter your password to continue',
   pleaseEnterYourEmail: '*Please enter your email to continue',
-  pleaseCheckYourEntry: 'Please check your entry and try again',
+  pleaseCheckYourEntry: '*Please check your entry and try again',
   pleaseCheckYourEmailAndPassword:
     '*Please check your email and password, then try again',
   pleaseEnterYourEmailToResetPassword:
@@ -47,7 +47,7 @@ export const CommonStrings = {
   registerHere: 'Register here! ',
   resetPassword: 'Reset Password',
   verifyCode: 'Verification code',
-  enterVerificationCode: 'Enter verification Code',
+  enterVerificationCode: 'Verification Code',
   resendCode: 'Resend Code',
   checkEmailForVerification:
     'Please check your email for the verification code',
@@ -159,4 +159,10 @@ export const CommonStrings = {
     'Old and new password cannot be same. \nPlease choose a unique password.',
   requirements: '  Requirements:',
   newContractor: 'Add a Contractor',
+  passwordMeetsCriteria:
+    '*Please make sure the password meets all of the criteria below',
+  alLeast8Characters: 'At least 8 characters',
+  uppercaseLetter: 'Uppercase letter',
+  lowerCaseLetter: 'Lowercase letter',
+  number: 'Number',
 };

@@ -18,10 +18,10 @@ export default StyleSheet.create({
     marginLeft: normalize(8),
   },
   uncheckedView: {
-    borderWidth: 1,
-    width: normalize(24),
-    height: normalize(24),
+    borderWidth: 2.5,
+    width: normalize(22),
+    height: normalize(22),
     borderColor: colors.red,
-    borderRadius: normalize(14),
+    borderRadius: normalize(15),
   },
 });

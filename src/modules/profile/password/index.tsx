@@ -10,7 +10,7 @@ import { useRefs, useSimpleReducer } from '@inspectreplyai/hooks';
 import { changeUserPassword } from '@inspectreplyai/network/authApis';
 import { passwordValidation } from '@inspectreplyai/utils/validatorsUtils';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import PasswordValidation from '@inspectreplyai/modules/Auth/passwordValidation';
+import PasswordValidation from '@inspectreplyai/components/passwordValidation';
 import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
 import {
   showErrorToast,

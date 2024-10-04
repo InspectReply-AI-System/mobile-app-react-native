@@ -3,10 +3,10 @@ import { vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  buttonContainer: { marginTop: vh(120) },
+  buttonContainer: { marginTop: '40%' },
   container: {
     flex: 1,
-    paddingTop: vh(125),
+    marginTop: vh(125),
     backgroundColor: colors.primaryBalck,
   },
   description: { textAlign: 'center', marginTop: vh(16) },
@@ -24,5 +24,5 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: vh(24),
   },
-  welcomeHeading: { textAlign: 'center' },
+  welcomeHeading: { textAlign: 'center', marginTop: vh(44) },
 });

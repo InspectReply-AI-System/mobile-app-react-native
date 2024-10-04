@@ -12,7 +12,7 @@ const PasswordValidationData = (value: string) => {
       id: 1,
       value: 'length',
       checked: checklength(value),
-      label: CommonStrings.alLeast8Characters,
+      label: CommonStrings.atLeast8Characters,
     },
     {
       id: 2,

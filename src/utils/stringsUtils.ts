@@ -161,7 +161,7 @@ export const CommonStrings = {
   newContractor: 'Add a Contractor',
   passwordMeetsCriteria:
     '*Please make sure the password meets all of the criteria below',
-  alLeast8Characters: 'At least 8 characters',
+  atLeast8Characters: 'At least 8 characters',
   uppercaseLetter: 'Uppercase letter',
   lowerCaseLetter: 'Lowercase letter',
   number: 'Number',

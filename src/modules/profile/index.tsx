@@ -174,6 +174,9 @@ const Profile = () => {
     }
   };
   const onPressSave = () => {
+    if (nameError || emailError) {
+      return;
+    }
     const getName = CommonFunctions.getFirstAndLastName(name);
     const payload = {
       cust_id: user?.userId,

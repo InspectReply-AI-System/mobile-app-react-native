@@ -22,16 +22,18 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
   const getCities = async () => {
     updateState({ loader: true });
     try {
-      let params = {
+      const params = {
         state_id: sateData._id,
         state_code: sateData.abbreviation,
       };
       const result = await getCitiesData(params);
 
       // Sort the cities alphabetically by name
-      const sortedCities = result.data.slice().sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
+      const sortedCities = result?.data
+        ?.slice()
+        ?.sort((a: { name: string }, b: { name: any }) => {
+          return a?.name?.localeCompare(b?.name);
+        });
 
       updateState({ city: sortedCities, loader: false });
     } catch (error: any) {

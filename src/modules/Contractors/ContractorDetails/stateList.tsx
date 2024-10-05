@@ -32,8 +32,8 @@ const StateList: React.FC<StateListProps> = ({ onSelectState }) => {
 
   // Sort the states alphabetically by name
   const sortedStates = states
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name));
+    ?.slice()
+    ?.sort((a, b) => a?.name?.localeCompare(b?.name));
 
   const listEmpty = () => {
     return (

@@ -14,16 +14,16 @@ export const validationSchema = Yup.object().shape({
   address1: Yup.string().required(CommonStrings.addressRequired),
   city: Yup.object({
     _id: Yup.string().required('city id is missing'),
-    name: Yup.string().required('city name is missing'),
-  }).required('Please enter a city'),
+    name: Yup.string().required('*Please enter a city'),
+  }).required('*Please enter a city'),
   state: Yup.object({
     _id: Yup.string().required('state id is missing'),
-    name: Yup.string().required('Please enter a state'),
-  }).required('State is required'),
+    name: Yup.string().required('*Please enter a state'),
+  }).required('*Please enter a state'),
   zip: Yup.string().required(CommonStrings.zipRequired),
   category: Yup.object({
-    category_name: Yup.string().required('Category name is missing'),
+    category_name: Yup.string().required('*Please enter a category'),
     _id: Yup.string().required('Category id is missing'),
-  }).required('Please enter a category'),
+  }).required('*Please enter a category'),
   website: Yup.string(),
 });

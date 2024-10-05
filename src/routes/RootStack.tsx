@@ -11,6 +11,7 @@ import Password from '@inspectreplyai/modules/profile/password';
 import { AppState } from 'react-native';
 import { useAppDispatch } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
+import { isIOS } from '@inspectreplyai/utils/platform';
 
 const RootStack = createNativeStackNavigator();
 
@@ -19,8 +20,14 @@ const RootNavigator = () => {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (nextAppState == 'background') {
-        dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+      if (isIOS) {
+        if (nextAppState == 'background') {
+          dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+        }
+      } else {
+        if (nextAppState == 'inactive' || nextAppState == 'background') {
+          dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+        }
       }
     });
 

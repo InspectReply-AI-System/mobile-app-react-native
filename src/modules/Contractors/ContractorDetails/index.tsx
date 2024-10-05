@@ -238,7 +238,7 @@ const ContractorDetails = () => {
   };
 
   const submitForm = async (formData: any) => {
-    let params = {
+    const params = {
       customer: user?.userId,
       contractor_name: formData.contractorName,
       company_name: formData.company,
@@ -271,7 +271,7 @@ const ContractorDetails = () => {
           }
           setContentType(null);
           setLoader(false);
-          goBack();
+          setEditMode(false);
         } catch (error: any) {
           showErrorToast(error);
           setLoader(false);
@@ -287,7 +287,7 @@ const ContractorDetails = () => {
             });
           }
           setContentType(null);
-          goBack();
+          setEditMode(false);
           setLoader(false);
         } catch (error: any) {
           showErrorToast(error);

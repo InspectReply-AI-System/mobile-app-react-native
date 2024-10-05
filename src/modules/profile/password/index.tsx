@@ -28,6 +28,7 @@ const Password = () => {
     newPasswordError: '',
     showOldPassowrd: false,
     showNewPassword: false,
+    selectedfield: 1,
   });
   const { user } = useAppSelector((store: RootState) => store.AuthSlice);
 
@@ -39,19 +40,26 @@ const Password = () => {
     isLoading,
     showOldPassowrd,
     showNewPassword,
+    selectedfield,
   } = state;
 
   const onChangeOldPassword = (_password: string) => {
-    const passwordError = passwordValidation(_password.trim()).errorMsg;
+    const passwordError = passwordValidation(
+      _password.trim(),
+      CommonStrings.passwordMeetsCriteria,
+    ).errorMsg;
     updateState({
-      oldPassword: _password,
+      oldPassword: _password.trim(),
       oldPasswordError: passwordError,
     });
   };
   const onChangeNewPassword = (_password: string) => {
-    const passwordError = passwordValidation(_password.trim()).errorMsg;
+    const passwordError = passwordValidation(
+      _password.trim(),
+      CommonStrings.passwordMeetsCriteria,
+    ).errorMsg;
     updateState({
-      newPassword: _password,
+      newPassword: _password.trim(),
       newPasswordError: passwordError,
     });
   };
@@ -116,11 +124,15 @@ const Password = () => {
           label={CommonStrings.oldPassword}
           onChangeText={onChangeOldPassword}
           inputCustomStyle={styles.inputStyle}
+          onFocus={() => {
+            updateState({ selectedfield: 2 });
+          }}
           ref={setRef(CommonStrings.oldPassword)}
           onBlur={() => onChangeOldPassword(oldPassword)}
           onSubmitEditing={() => {
             focusOnElement(CommonStrings.newPassword);
           }}
+          touched
           secureTextEntry={!showOldPassowrd}
           icon={!showOldPassowrd ? SvgIcon.Eye : SvgIcon.CloseEye}
           onPressRightIcon={() =>
@@ -135,16 +147,22 @@ const Password = () => {
           label={CommonStrings.newPassword}
           onSubmitEditing={onPressDoneButton}
           onChangeText={onChangeNewPassword}
+          onFocus={() => {
+            updateState({ selectedfield: 1 });
+          }}
           inputCustomStyle={styles.inputStyle}
           ref={setRef(CommonStrings.newPassword)}
           onBlur={() => onChangeNewPassword(newPassword)}
           icon={!showNewPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          touched
           secureTextEntry={!showNewPassword}
           onPressRightIcon={() =>
             updateState({ showNewPassword: !showNewPassword })
           }
         />
-        {newPassword?.length > 0 && <PasswordValidation value={newPassword} />}
+        <PasswordValidation
+          value={selectedfield == 1 ? newPassword : oldPassword}
+        />
         <PrimaryButton
           loading={isLoading}
           onPress={onPressConfirm}

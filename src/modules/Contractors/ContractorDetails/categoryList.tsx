@@ -26,8 +26,8 @@ const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
   }, []);
 
   // Sort categories alphabetically by category_name
-  const sortedCategory = category?.slice().sort((a, b) => {
-    return a.category_name.localeCompare(b.category_name);
+  const sortedCategory = category?.slice()?.sort((a, b) => {
+    return a?.category_name?.localeCompare(b?.category_name);
   });
 
   const renderCategory = useCallback(({ item }: Categories) => {

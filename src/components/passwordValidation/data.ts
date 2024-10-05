@@ -14,17 +14,18 @@ const PasswordValidationData = (value: string) => {
       checked: checklength(value),
       label: CommonStrings.atLeast8Characters,
     },
+
     {
       id: 2,
-      value: 'uppercase',
-      label: CommonStrings.uppercaseLetter,
-      checked: checkUpperCase(value),
-    },
-    {
-      id: 3,
       value: 'lowercase',
       label: CommonStrings.lowerCaseLetter,
       checked: checkLowerCase(value),
+    },
+    {
+      id: 3,
+      value: 'uppercase',
+      label: CommonStrings.uppercaseLetter,
+      checked: checkUpperCase(value),
     },
     {
       id: 4,

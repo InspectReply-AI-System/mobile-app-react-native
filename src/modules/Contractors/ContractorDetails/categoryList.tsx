@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect } from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
-import { colors, typography } from '@inspectreplyai/themes';
-import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import Column from '@inspectreplyai/components/general/Column';
+
 import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
-import { getCategory } from '@inspectreplyai/redux/contractor/action';
-import Indicator from '@inspectreplyai/components/general/Indicator';
 import { Categories, CategoryListProps } from './@types';
+import { colors, typography } from '@inspectreplyai/themes';
+import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
+import Column from '@inspectreplyai/components/general/Column';
+import Indicator from '@inspectreplyai/components/general/Indicator';
+import Touchable from '@inspectreplyai/components/general/Touchable';
+import { getCategory } from '@inspectreplyai/redux/contractor/action';
 
 const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,11 @@ const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
     }
   }, []);
 
+  // Sort categories alphabetically by category_name
+  const sortedCategory = category?.slice()?.sort((a, b) => {
+    return a?.category_name?.localeCompare(b?.category_name);
+  });
+
   const renderCategory = useCallback(({ item }: Categories) => {
     return (
       <Touchable onPress={() => onSelectCategory(item)}>
@@ -31,6 +37,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
       </Touchable>
     );
   }, []);
+
   const listEmpty = () => {
     return (
       <Column style={styles.centeredContainer}>
@@ -47,14 +54,14 @@ const CategoryList: React.FC<CategoryListProps> = ({ onSelectCategory }) => {
     <Column style={styles.mainContainer}>
       <Text style={styles.header}>{CommonStrings.selectCategory}</Text>
       <FlatList
-        data={category}
+        data={sortedCategory}
         ListEmptyComponent={listEmpty}
         renderItem={renderCategory}
         keyExtractor={(item: { category_name: string; _id: string }) =>
           item?._id
         }
         contentContainerStyle={
-          category.length === 0 ? styles.flex : styles.contentStyle
+          sortedCategory?.length === 0 ? styles.flex : styles.contentStyle
         }
       />
     </Column>

@@ -20,6 +20,7 @@ const ROUTES = {
   READ: 'Read',
   CONTRACTORSDETAILS: 'contractorDetails',
   PASSWORDSCREEN: 'password',
+  PROFILENAVIGATOR: 'profileNavigator',
 };
 
 export default ROUTES;

@@ -2,28 +2,27 @@ import React, { useCallback } from 'react';
 import { Text, SectionList, FlatList, RefreshControl } from 'react-native';
 
 import { styles } from './styles';
-import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonStrings } from '@inspectreplyai/utils';
-import { Images } from '@inspectreplyai/themes/appImages';
-import Search from '@inspectreplyai/assets/svg/search.svg';
-import { colors, typography } from '@inspectreplyai/themes';
-import CustomHeader from '@inspectreplyai/components/header';
-import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import LocalImage from '@inspectreplyai/components/general/LocalImage';
-import FloatingButton from '@inspectreplyai/components/floatingButton';
-import CustomInput from '@inspectreplyai/components/textInputs/customInput';
+import Config from 'react-native-config';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
-import { getContractors } from '@inspectreplyai/redux/contractor/action';
-import { BusinessCardProps, SectionData } from './ContractorDetails/@types';
-import { useDebounce, useSimpleReducer } from '@inspectreplyai/hooks';
-import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import ROUTES from '@inspectreplyai/routes/routes';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { useFocusEffect } from '@react-navigation/native';
-import Config from 'react-native-config';
+import { colors, typography } from '@inspectreplyai/themes';
+import CustomHeader from '@inspectreplyai/components/header';
+import Column from '@inspectreplyai/components/general/Column';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { Images, SvgIcon } from '@inspectreplyai/themes/appImages';
+import Touchable from '@inspectreplyai/components/general/Touchable';
+import { useDebounce, useSimpleReducer } from '@inspectreplyai/hooks';
+import LocalImage from '@inspectreplyai/components/general/LocalImage';
+import FloatingButton from '@inspectreplyai/components/floatingButton';
+import { getContractors } from '@inspectreplyai/redux/contractor/action';
+import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import CustomInput from '@inspectreplyai/components/textInputs/customInput';
+import { BusinessCardProps, SectionData } from './ContractorDetails/@types';
 
 const BusinessCard = ({ details }: { details: BusinessCardProps }) => {
   const address = `${details.city_name || ''} ${details.state_name || ''} ${details.zip_code || ''}`;
@@ -97,9 +96,9 @@ const Contractors = () => {
           horizontal
           data={data}
           keyExtractor={(item) => item?._id}
+          showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 16 }}
           renderItem={({ item }) => <BusinessCard details={item} />}
-          showsHorizontalScrollIndicator={false}
         />
       </Column>
     );
@@ -132,11 +131,11 @@ const Contractors = () => {
       <CustomHeader title={CommonStrings.contractors} />
       <CustomInput
         value={search}
-        onChangeText={(text) => updateState({ search: text })}
-        RightIcon={Search}
+        RightIcon={SvgIcon.Search}
         placeholder={CommonStrings.search}
-        customStyle={styles.customTextStyle}
         placeholderTextColor={colors.white}
+        customStyle={styles.customTextStyle}
+        onChangeText={(text) => updateState({ search: text })}
       />
       <SectionList
         refreshControl={
@@ -145,14 +144,14 @@ const Contractors = () => {
             onRefresh={() => updateState({ refresh: !refresh })}
           />
         }
-        contentContainerStyle={contractors.length <= 0 ? { flex: 1 } : {}}
-        showsVerticalScrollIndicator={false}
         sections={contractors}
-        keyExtractor={(item) => item?._id}
-        renderSectionHeader={renderSectionHeader}
         renderItem={renderItemInColumns}
+        keyExtractor={(item) => item?._id}
         stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={EmptyListComponent}
+        renderSectionHeader={renderSectionHeader}
+        contentContainerStyle={contractors?.length <= 0 ? { flex: 1 } : {}}
       />
     </Column>
   );

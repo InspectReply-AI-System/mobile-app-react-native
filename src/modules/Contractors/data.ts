@@ -12,19 +12,18 @@ export const validationSchema = Yup.object().shape({
     .matches(/^\d{10,}$/, CommonStrings.phoneNumberMustBe)
     .required(CommonStrings.phoneNumberRequired),
   address1: Yup.string().required(CommonStrings.addressRequired),
-  address2: Yup.string().required(CommonStrings.addressRequired),
   city: Yup.object({
     _id: Yup.string().required('city id is missing'),
-    name: Yup.string().required('city name is missing'),
-  }).required('City is required'),
+    name: Yup.string().required('*Please enter a city'),
+  }).required('*Please enter a city'),
   state: Yup.object({
     _id: Yup.string().required('state id is missing'),
-    name: Yup.string().required('state name is missing'),
-  }).required('State is required'),
+    name: Yup.string().required('*Please enter a state'),
+  }).required('*Please enter a state'),
   zip: Yup.string().required(CommonStrings.zipRequired),
   category: Yup.object({
-    category_name: Yup.string().required('Category name is missing'),
+    category_name: Yup.string().required('*Please enter a category'),
     _id: Yup.string().required('Category id is missing'),
-  }).required('Category is required'),
+  }).required('*Please enter a category'),
   website: Yup.string(),
 });

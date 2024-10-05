@@ -16,7 +16,7 @@ export const requestPermissions = async (
 ) => {
   try {
     const Permission = isIOS ? PermissionIOS : PermissionAndroid;
-    let result = await check(Permission);
+    const result = await check(Permission);
     if (result !== RESULTS.GRANTED) {
       const resp = await request(Permission);
       if (resp === RESULTS.BLOCKED) {
@@ -40,7 +40,7 @@ export const requestPermissions = async (
       } else if (resp === RESULTS.GRANTED || resp === RESULTS.LIMITED) {
         return true;
       } else {
-        throw new Error(CommonStrings.permissionNotGranted);
+        return false;
       }
     }
     return true;
@@ -49,7 +49,7 @@ export const requestPermissions = async (
   }
 };
 
-const CurrentVersion = parseInt(`${Platform.constants.Release}`, 10);
+const CurrentVersion = parseInt(`${Platform?.constants?.Release}`, 10);
 
 export const permissionComponent = {
   Camera: (cb: any, err: any) => {
@@ -59,13 +59,14 @@ export const permissionComponent = {
         : [PERMISSIONS.ANDROID.CAMERA],
     )
       .then((res: any) => {
-        let result =
+        const result =
           Platform.OS === 'android'
             ? res[PERMISSIONS.ANDROID.CAMERA]
             : res[PERMISSIONS.IOS.CAMERA];
         let status = true;
         switch (result) {
           case RESULTS.UNAVAILABLE:
+            status = false;
             break;
           case RESULTS.DENIED:
             status = false;
@@ -100,7 +101,7 @@ export const permissionComponent = {
           ],
     )
       .then((res: any) => {
-        let result =
+        const result =
           Platform.OS === 'android'
             ? CurrentVersion <= 12
               ? res[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE]

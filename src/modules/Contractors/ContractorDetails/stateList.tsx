@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
-import { colors, typography } from '@inspectreplyai/themes';
-import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import Column from '@inspectreplyai/components/general/Column';
+
 import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
+import { colors, typography } from '@inspectreplyai/themes';
+import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
+import Column from '@inspectreplyai/components/general/Column';
 import { getStates } from '@inspectreplyai/redux/contractor/action';
+import Touchable from '@inspectreplyai/components/general/Touchable';
 import Indicator from '@inspectreplyai/components/general/Indicator';
 
 interface StateListProps {
@@ -29,6 +30,11 @@ const StateList: React.FC<StateListProps> = ({ onSelectState }) => {
     }
   }, []);
 
+  // Sort the states alphabetically by name
+  const sortedStates = states
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   const listEmpty = () => {
     return (
       <Column style={styles.centeredContainer}>
@@ -45,7 +51,7 @@ const StateList: React.FC<StateListProps> = ({ onSelectState }) => {
     <Column style={styles.mainContainer}>
       <Text style={styles.header}>{CommonStrings.selectState}</Text>
       <FlatList
-        data={states}
+        data={sortedStates}
         keyExtractor={(item) => item?._id}
         renderItem={({ item }) => (
           <Touchable onPress={() => onSelectState(item)}>

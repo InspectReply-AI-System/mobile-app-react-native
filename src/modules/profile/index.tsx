@@ -100,7 +100,14 @@ const Profile = () => {
   };
 
   const onEnterEmail = (email: string) => {
-    validateAndUpdateState('email', email, emailValidation);
+    validateAndUpdateState('email', email, () =>
+      emailValidation(
+        email,
+        email?.length === 0
+          ? CommonStrings.pleaseEnterAnEmail
+          : CommonStrings.pleaseEnterValidEmail,
+      ),
+    );
   };
 
   const onPressDeleteProfile = () => {
@@ -197,6 +204,7 @@ const Profile = () => {
           updateState({ isEditableEnable: false });
         },
         errorCallBack: (error) => {
+          console.log('errorr', error);
           showErrorToast(error);
         },
       }),
@@ -254,7 +262,9 @@ const Profile = () => {
           }
           style={styles.imageStyle}
         />
-        <ImageWrapper source={Icons.plusIcon} style={styles.plusIconStyle} />
+        {isEditableEnable && (
+          <ImageWrapper source={Icons.plusIcon} style={styles.plusIconStyle} />
+        )}
       </Touchable>
 
       <ImageView
@@ -317,6 +327,7 @@ const Profile = () => {
         <ScrollContainer showsVerticalScrollIndicator={false}>
           <CustomProfileInput
             value={name}
+            touched={true}
             maxLength={300}
             isError={nameError}
             isEdit={isEditableEnable}
@@ -328,6 +339,7 @@ const Profile = () => {
           />
           <CustomProfileInput
             value={email}
+            touched={true}
             maxLength={320}
             isError={emailError}
             isEdit={isEditableEnable}
@@ -344,7 +356,7 @@ const Profile = () => {
           </Touchable>
           <Column style={{ marginHorizontal: normalize(90) }}>
             <Touchable
-              style={{ marginTop: normalize(36) }}
+              style={{ marginTop: normalize(45) }}
               onPress={onPressLogout}>
               <Text style={styles.logoutText}>{CommonStrings.logout}</Text>
             </Touchable>
@@ -361,7 +373,7 @@ const Profile = () => {
                 style={styles.privacyText}>{`v${Device.getVersion()}`}</Text>
             </Row>
             <Touchable
-              style={{ marginTop: normalize(36) }}
+              style={{ marginTop: normalize(10) }}
               onPress={onPressDeleteProfile}>
               <Text style={styles.deleteText}>
                 {CommonStrings.deleteProfile}

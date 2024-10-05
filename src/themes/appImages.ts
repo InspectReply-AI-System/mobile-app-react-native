@@ -12,6 +12,10 @@ import Erorr from '@inspectreplyai/assets/svg/error.svg';
 import Info from '@inspectreplyai/assets/svg/info.svg';
 import Eye from '@inspectreplyai/assets/svg/eye.svg';
 import CloseEye from '@inspectreplyai/assets/svg/closeEye.svg';
+import Edit from '@inspectreplyai/assets/svg/edit.svg';
+import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
+import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
+import Search from '@inspectreplyai/assets/svg/search.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -50,4 +54,8 @@ export const SvgIcon = {
   Info,
   Eye,
   CloseEye,
+  Edit,
+  BackIcon,
+  DownArrow,
+  Search,
 };

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
+
+import { CityListProps, States } from './@types';
+import { useSimpleReducer } from '@inspectreplyai/hooks';
 import { colors, typography } from '@inspectreplyai/themes';
 import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
-import Touchable from '@inspectreplyai/components/general/Touchable';
 import Column from '@inspectreplyai/components/general/Column';
-import { getCitiesData } from '@inspectreplyai/network/contractorAPis';
-import { useSimpleReducer } from '@inspectreplyai/hooks';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import Indicator from '@inspectreplyai/components/general/Indicator';
-import { CityListProps, States } from './@types';
+import Touchable from '@inspectreplyai/components/general/Touchable';
+import { getCitiesData } from '@inspectreplyai/network/contractorAPis';
 
 const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
   const [state, updateState] = useSimpleReducer({
@@ -17,6 +18,7 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
   });
 
   const { city, loader } = state;
+
   const getCities = async () => {
     updateState({ loader: true });
     try {
@@ -26,12 +28,18 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
       };
       const result = await getCitiesData(params);
 
-      updateState({ city: result.data, loader: false });
+      // Sort the cities alphabetically by name
+      const sortedCities = result.data.slice().sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+
+      updateState({ city: sortedCities, loader: false });
     } catch (error: any) {
       updateState({ loader: false });
       showErrorToast(error);
     }
   };
+
   useEffect(() => {
     getCities();
   }, []);
@@ -55,6 +63,7 @@ const CityList: React.FC<CityListProps> = ({ sateData, onSelectCity }) => {
       </Touchable>
     );
   };
+
   return (
     <Column style={styles.mainContainer}>
       <Text style={styles.header}>{CommonStrings.selectCity}</Text>

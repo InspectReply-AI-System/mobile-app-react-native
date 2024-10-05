@@ -1,30 +1,20 @@
+import { Alert, Text } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Image, Alert, Text } from 'react-native';
-import Modal from 'react-native-modal';
-import { Formik, FormikProps } from 'formik';
-import { colors, typography } from '@inspectreplyai/themes';
-import { CommonFunctions, CommonStrings, vh } from '@inspectreplyai/utils';
-import Edit from '@inspectreplyai/assets/svg/edit.svg';
-import Save from '@inspectreplyai/assets/svg/saveEdit.svg';
-import CustomHeader from '@inspectreplyai/components/header';
-import Column from '@inspectreplyai/components/general/Column';
-import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
-import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
-import Row from '@inspectreplyai/components/general/Row';
+
 import { styles } from './styles';
-import { validationSchema } from '../data';
-import RNBottomSheet from '@inspectreplyai/components/rnBottomSheet';
+import CityList from './cityList';
+import StateList from './stateList';
+import Modal from 'react-native-modal';
 import CategoryList from './categoryList';
+import { validationSchema } from '../data';
+import { Formik, FormikProps } from 'formik';
 import {
-  contractorProfilePhoto,
-  deleteContractor,
-  getContractorProfile,
-  registerContractor,
-  updateContractorProfile,
-} from '@inspectreplyai/network/contractorAPis';
+  bottomSheetProps,
+  FormValues,
+  RouteParams,
+  SelectCity,
+  StateSelect,
+} from './@types';
 import {
   showErrorToast,
   showSuccessToast,
@@ -33,37 +23,43 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
-import { goBack } from '@inspectreplyai/utils/navigationUtils';
-import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import StateList from './stateList';
-import CityList from './cityList';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
-  bottomSheetProps,
-  FormValues,
-  RouteParams,
-  SelectCity,
-  StateSelect,
-} from './@types';
-import { getStates } from '@inspectreplyai/redux/contractor/action';
-import { Icons, Images } from '@inspectreplyai/themes/appImages';
-import { BlurView } from '@react-native-community/blur';
-import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+  contractorProfilePhoto,
+  deleteContractor,
+  getContractorProfile,
+  registerContractor,
+  updateContractorProfile,
+} from '@inspectreplyai/network/contractorAPis';
 import { useRefs } from '@inspectreplyai/hooks';
-import { setContentType } from '@inspectreplyai/network/networkServices';
+import { BlurView } from '@react-native-community/blur';
+import Row from '@inspectreplyai/components/general/Row';
+import { colors, typography } from '@inspectreplyai/themes';
+import CustomHeader from '@inspectreplyai/components/header';
+import Column from '@inspectreplyai/components/general/Column';
+import { goBack } from '@inspectreplyai/utils/navigationUtils';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
+import { getStates } from '@inspectreplyai/redux/contractor/action';
+import RNBottomSheet from '@inspectreplyai/components/rnBottomSheet';
+import Touchable from '@inspectreplyai/components/general/Touchable';
+import { setContentType } from '@inspectreplyai/network/networkServices';
+import { Icons, Images, SvgIcon } from '@inspectreplyai/themes/appImages';
+import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import { CommonFunctions, CommonStrings, vh } from '@inspectreplyai/utils';
+import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
+import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
 
 const ContractorDetails = () => {
+  const dispatch = useAppDispatch();
+  const [loader, setLoader] = useState(false);
+  const { setRef, focusOnElement } = useRefs();
   const [editMode, setEditMode] = useState(false);
   const [profileImage, setProfileImage] = useState({});
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loader, setLoader] = useState(false);
-  const dispatch = useAppDispatch();
-  const { states } = useAppSelector((store) => store.contractorSlice);
-  const { setRef, focusOnElement } = useRefs();
-
   const formRef = useRef<FormikProps<FormValues>>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { states } = useAppSelector((store) => store.contractorSlice);
 
   const [profileData, setProfileData] = useState({
     contractorName: '',
@@ -388,8 +384,8 @@ const ContractorDetails = () => {
               title={
                 isNew ? CommonStrings.newContractor : profileData.contractorName
               }
-              leftIcon={<BackIcon />}
-              rightIcon={!editMode && <Edit />}
+              leftIcon={<SvgIcon.BackIcon />}
+              rightIcon={!editMode && <SvgIcon.Edit />}
               rightLabel={editMode && CommonStrings.save}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
@@ -411,10 +407,12 @@ const ContractorDetails = () => {
                   }
                   style={styles.profileImage}
                 />
-                <ImageWrapper
-                  source={Icons.plusIcon}
-                  style={styles.plusIconStyle}
-                />
+                {editMode && (
+                  <ImageWrapper
+                    source={Icons.plusIcon}
+                    style={styles.plusIconStyle}
+                  />
+                )}
               </Touchable>
 
               <CustomProfileInput
@@ -432,7 +430,7 @@ const ContractorDetails = () => {
                 }}
               />
               <CustomProfileInput
-                label={CommonStrings.company}
+                label={CommonStrings.companyName}
                 value={values.company}
                 onChangeText={handleChange(CommonStrings.company.toLowerCase())}
                 onBlur={handleBlur(CommonStrings.company.toLowerCase())}
@@ -518,7 +516,7 @@ const ContractorDetails = () => {
                           Boolean(touched.state) && { borderColor: colors.red },
                       ]}>
                       <Text style={typography.body}>{values?.state?.name}</Text>
-                      <DownArrow />
+                      <SvgIcon.DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
@@ -546,7 +544,7 @@ const ContractorDetails = () => {
                           Boolean(touched.city) && { borderColor: colors.red },
                       ]}>
                       <Text style={typography.body}>{values.city?.name}</Text>
-                      <DownArrow />
+                      <SvgIcon.DownArrow />
                     </Row>
                   </Touchable>
                 ) : (
@@ -570,6 +568,7 @@ const ContractorDetails = () => {
                 isEdit={editMode}
                 isError={errors.zip}
                 touched={Boolean(touched.zip)}
+                keyboardType='phone-pad'
               />
 
               <Column style={styles.categoryContainer}>
@@ -589,7 +588,7 @@ const ContractorDetails = () => {
                       <Text style={typography.body}>
                         {values?.category?.category_name}
                       </Text>
-                      <DownArrow />
+                      <SvgIcon.DownArrow />
                     </Row>
                   </Touchable>
                 ) : (

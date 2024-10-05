@@ -43,7 +43,7 @@ export default StyleSheet.create({
   },
   deleteDesc: {
     fontSize: 14,
-    fontFamily: fonts.ITALIC,
+    fontFamily: fonts.REGULAR,
     color: colors.white,
     marginTop: normalize(5),
   },
@@ -152,6 +152,6 @@ export default StyleSheet.create({
   termsView: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: normalize(20),
+    marginTop: normalize(62),
   },
 });

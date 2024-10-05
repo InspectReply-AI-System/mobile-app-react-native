@@ -3,7 +3,7 @@ export const CommonStrings = {
   pleaseEnterEmail: '*Please enter an email',
   pleaseEnterFirstName: '*Please enter a first name',
   pleaseEnterLastName: '*Please enter a last name',
-
+  pleaseEnterAnEmail: '*Please enter an email address',
   pleaseEnterPassword: '*Please enter your password to continue',
   pleaseEnterValidEmail: '*Please enter a valid email address',
   pleaseEnterValidFirstName: '*Please enter a valid first name',
@@ -91,7 +91,7 @@ export const CommonStrings = {
   Error: 'Error',
   Success: 'Success',
   myProfile: 'My Profile',
-  deleteProfile: 'Delete profile',
+  deleteProfile: 'Delete Profile',
   deleteProfileDesc: 'Are you sure you want to delete your profile?',
   deleteContractorText:
     'Are you sure you want to delete your preferred contractor?',
@@ -102,7 +102,7 @@ export const CommonStrings = {
   terms: 'Terms',
   privacy: 'Privacy',
   notifications: 'Notifications',
-  pleaseEnterName: 'Please enter an name',
+  pleaseEnterName: '*Please enter your name',
   imageIsTooBig: 'Image is too big. Max file size is upto 5 MB.',
   cameraAccessDenied: 'Access Denied Camera',
   galleryAccessDenied: 'Access Denied Gallery',

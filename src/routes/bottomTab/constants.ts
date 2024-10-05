@@ -3,7 +3,7 @@ import ROUTES from '../routes';
 import Reports from '@inspectreplyai/modules/reports';
 import Contractors from '@inspectreplyai/modules/Contractors';
 import Notifications from '@inspectreplyai/modules/notifications';
-import Profile from '@inspectreplyai/modules/profile';
+import ProfileNavigator from '../profileNavigator';
 
 export const bottomTabs = [
   {
@@ -27,8 +27,8 @@ export const bottomTabs = [
   },
   {
     icon: Icons.profile,
-    name: ROUTES.PROFILE,
+    name: ROUTES.PROFILENAVIGATOR,
     label: 'Profile',
-    component: Profile,
+    component: ProfileNavigator,
   },
 ];

@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: vw(16),
   },
   mainContainer: {
-    backgroundColor: colors.red,
     flex: 1,
   },
 });

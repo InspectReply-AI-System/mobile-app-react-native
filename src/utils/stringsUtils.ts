@@ -140,7 +140,7 @@ export const CommonStrings = {
   noCategoryAdded: 'No Category Added',
   noStates: 'No States Added',
   noCity: 'No City Added',
-  search: 'search',
+  search: 'Search',
   noContractorFound: 'No Contractor Found',
   selectCityFirst: '*Please select state first',
   selectImageSource: 'Select Image Source',
@@ -166,4 +166,6 @@ export const CommonStrings = {
   uppercaseLetter: 'Uppercase letter',
   lowerCaseLetter: 'Lowercase letter',
   number: 'Number',
+  setNewPassword: 'Set New Password',
+  searchContractor: 'Search contractors',
 };

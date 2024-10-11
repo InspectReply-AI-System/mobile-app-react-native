@@ -1,10 +1,11 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   contentContainer: {
     paddingVertical: normalize(11),
+    marginLeft: normalize(8),
   },
   imageStyle: {
     width: normalize(24),
@@ -16,12 +17,15 @@ export default StyleSheet.create({
   },
   textStyle: {
     marginLeft: normalize(8),
+    color: colors.white,
+    fontSize: normalize(16),
+    fontFamily: fonts.REGULAR,
   },
   uncheckedView: {
     borderWidth: 2.5,
     width: normalize(22),
     height: normalize(22),
-    borderColor: colors.red,
+    borderColor: colors.white,
     borderRadius: normalize(15),
   },
 });

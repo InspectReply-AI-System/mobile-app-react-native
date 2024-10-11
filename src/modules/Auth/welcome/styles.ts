@@ -3,7 +3,7 @@ import { vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  buttonContainer: { marginTop: '40%' },
+  buttonContainer: { marginTop: 'auto' },
   container: {
     flex: 1,
     marginTop: vh(125),
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   imageStyle: {
     alignSelf: 'center',
   },
-  innerContainer: { paddingHorizontal: vw(16), marginTop: vh(44) },
+  innerContainer: { paddingHorizontal: vw(16), marginTop: vh(44), flex: 1 },
   signIntext: {
     textDecorationLine: 'underline',
     textAlign: 'center',

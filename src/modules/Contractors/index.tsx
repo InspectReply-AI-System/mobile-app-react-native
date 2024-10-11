@@ -132,7 +132,7 @@ const Contractors = () => {
       <CustomInput
         value={search}
         RightIcon={SvgIcon.Search}
-        placeholder={CommonStrings.search}
+        placeholder={CommonStrings.searchContractor}
         placeholderTextColor={colors.white}
         customStyle={styles.customTextStyle}
         onChangeText={(text) => updateState({ search: text })}

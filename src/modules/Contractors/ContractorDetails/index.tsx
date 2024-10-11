@@ -128,7 +128,9 @@ const ContractorDetails = () => {
       });
       if (contractor?.profilePhoto) {
         setProfileImage({
-          path: `${contractor.base_url}${contractor?.profilePhoto}` || '',
+          path: contractor?.profilePhoto
+            ? `${contractor.base_url}${contractor?.profilePhoto}`
+            : '',
         });
       }
     } catch (error) {
@@ -179,6 +181,12 @@ const ContractorDetails = () => {
       _id: state?._id,
       abbreviation: state?.abbreviation,
     });
+    formRef?.current?.setFieldValue('city', {
+      name: '',
+      _id: '',
+    });
+    formRef?.current?.setFieldValue('zip', '');
+
     if (bottomSheetRef1.current) {
       bottomSheetRef1.current.closeSheet();
     }
@@ -198,6 +206,8 @@ const ContractorDetails = () => {
       name: city?.name,
       _id: city?._id,
     });
+    formRef?.current?.setFieldValue('zip', '');
+
     if (bottomSheetRef2.current) {
       bottomSheetRef2.current.closeSheet();
     }

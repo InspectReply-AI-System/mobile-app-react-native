@@ -1,4 +1,4 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   title: {
     color: colors.white,
     fontSize: normalize(24),
-    fontWeight: 'bold',
+    fontFamily: fonts.REGULAR,
   },
   titleContainer: {
     flex: 0.6,

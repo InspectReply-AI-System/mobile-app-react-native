@@ -79,7 +79,11 @@ const Profile = () => {
       name: `${user?.firstName} ${user?.lastName}`,
       email: user?.email,
       password: '',
-      profileImage: { path: `${user?.base_url}${user?.profilePhoto}` },
+      profileImage: {
+        path: user?.profilePhoto
+          ? `${user?.base_url}${user?.profilePhoto}`
+          : '',
+      },
     });
   }, []);
 

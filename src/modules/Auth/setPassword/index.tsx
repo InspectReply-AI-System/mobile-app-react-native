@@ -21,12 +21,13 @@ import {
   showSuccessToast,
 } from '@inspectreplyai/components/toast';
 import PasswordValidation from '@inspectreplyai/components/passwordValidation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const SetPassword = () => {
   const params: any = useRoute()?.params;
 
   const { setRef, focusOnElement } = useRefs();
-
+  const inset = useSafeAreaInsets();
   const [state, updateState] = useSimpleReducer({
     password: '',
     confirmPassword: '',
@@ -105,7 +106,10 @@ const SetPassword = () => {
   };
   return (
     <Column style={styles.container}>
-      <CustomHeader leftIcon={Icons.backIcon} title='Set New Password' />
+      <CustomHeader
+        leftIcon={Icons.backIcon}
+        title={CommonStrings.setNewPassword}
+      />
       <ScrollContainer
         keyboardDismissMode='interactive'
         keyboardShouldPersistTaps='always'
@@ -115,9 +119,9 @@ const SetPassword = () => {
         <ImageWrapper source={Images.appIcon} style={styles.imageStyle} />
 
         <CustomInput
-          label={CommonStrings.password}
-          placeholder={CommonStrings.password}
-          ref={setRef(CommonStrings.password)}
+          label={CommonStrings.newPassword}
+          placeholder={CommonStrings.newPassword}
+          ref={setRef(CommonStrings.newPassword)}
           onSubmitEditing={() => {
             focusOnElement(CommonStrings.confirmPassword);
           }}
@@ -152,11 +156,14 @@ const SetPassword = () => {
           }
         />
         <PasswordValidation value={password} />
-        <PrimaryButton
-          disabled={!isContinueButtonEnabled()}
-          title={CommonStrings.Continue}
-          onPress={onPressContinue}
-        />
+        <Column
+          style={[styles.buttonContainer, { marginBottom: inset.bottom }]}>
+          <PrimaryButton
+            disabled={!isContinueButtonEnabled()}
+            title={CommonStrings.Continue}
+            onPress={onPressContinue}
+          />
+        </Column>
       </ScrollContainer>
     </Column>
   );

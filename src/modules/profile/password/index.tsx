@@ -17,6 +17,7 @@ import {
   showSuccessToast,
 } from '@inspectreplyai/components/toast';
 import { SvgIcon } from '@inspectreplyai/themes/appImages';
+import { colors } from '@inspectreplyai/themes';
 
 const Password = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -121,7 +122,9 @@ const Password = () => {
           value={oldPassword}
           returnKeyType='next'
           isError={oldPasswordError}
+          placeholderTextColor={colors.grey6F6F70}
           label={CommonStrings.oldPassword}
+          placeholder={CommonStrings.oldPassword}
           onChangeText={onChangeOldPassword}
           inputCustomStyle={styles.inputStyle}
           onFocus={() => {
@@ -144,6 +147,8 @@ const Password = () => {
           value={newPassword}
           returnKeyType='done'
           isError={newPasswordError}
+          placeholderTextColor={colors.grey6F6F70}
+          placeholder={CommonStrings.newPassword}
           label={CommonStrings.newPassword}
           onSubmitEditing={onPressDoneButton}
           onChangeText={onChangeNewPassword}

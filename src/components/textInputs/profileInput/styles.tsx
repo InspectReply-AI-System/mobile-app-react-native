@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
+import { isIOS } from '@inspectreplyai/utils/platform';
 
 export const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ export const styles = StyleSheet.create({
     width: '90%',
     fontSize: normalize(14),
     fontFamily: fonts.REGULAR,
-    paddingVertical: vh(14),
+    paddingVertical: isIOS ? vh(14) : vh(10),
   },
   inputContainer: {
     alignItems: 'center',

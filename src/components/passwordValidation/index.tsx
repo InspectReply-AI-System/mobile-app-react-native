@@ -5,7 +5,7 @@ import { PasswordValidationData } from './data';
 import Row from '@inspectreplyai/components/general/Row';
 import Svg from '@inspectreplyai/components/general/Svg';
 import check from '@inspectreplyai/assets/svg/check.svg';
-import { colors, typography } from '@inspectreplyai/themes';
+import { fonts, typography } from '@inspectreplyai/themes';
 import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
 
@@ -23,15 +23,7 @@ const PasswordValidation = (props: { value: string }) => {
               <Column style={styles.uncheckedView} />
             )}
           </Column>
-          <Text
-            style={[
-              styles.textStyle,
-              {
-                color: item.checked ? colors.white : colors.red,
-              },
-            ]}>
-            {item.label}
-          </Text>
+          <Text style={styles.textStyle}>{item.label}</Text>
         </Row>
       </Column>
     );
@@ -39,7 +31,11 @@ const PasswordValidation = (props: { value: string }) => {
 
   return (
     <Column>
-      <Text style={[typography.h5, { marginTop: normalize(27) }]}>
+      <Text
+        style={[
+          typography.h5,
+          { marginTop: normalize(27), fontFamily: fonts.MEDIUM },
+        ]}>
         {CommonStrings.requirements}
       </Text>
       <FlatList

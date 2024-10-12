@@ -9,7 +9,7 @@ import {
 } from '@inspectreplyai/utils/validatorsUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { typography } from '@inspectreplyai/themes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { isIOS } from '@inspectreplyai/utils/platform';
 import Row from '@inspectreplyai/components/general/Row';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -29,6 +29,7 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { registerUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
+import { showErrorToast } from '@inspectreplyai/components/toast';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -46,6 +47,8 @@ const SignUp = () => {
     emailError: '',
     passwordError: '',
     confirmPasswordError: '',
+    showPassword: false,
+    showConfirmPassword: false,
   });
   const {
     firstName,
@@ -58,6 +61,8 @@ const SignUp = () => {
     emailError,
     passwordError,
     confirmPasswordError,
+    showPassword,
+    showConfirmPassword,
   } = state;
 
   const dispatch = useAppDispatch();
@@ -91,7 +96,7 @@ const SignUp = () => {
   };
 
   const onEnterEmail = (email: string) => {
-    validateAndUpdateState('email', email, emailValidation);
+    validateAndUpdateState('email', email.trim(), emailValidation);
   };
 
   const onEnterPassword = (password: string) => {
@@ -108,7 +113,7 @@ const SignUp = () => {
     }
 
     updateState({
-      password,
+      password: password.trim(),
       passwordError,
       confirmPasswordError,
     });
@@ -126,7 +131,7 @@ const SignUp = () => {
       confirmPasswordError = validationError;
     }
     updateState({
-      confirmPassword,
+      confirmPassword: confirmPassword.trim(),
       confirmPasswordError,
     });
   };
@@ -149,9 +154,14 @@ const SignUp = () => {
 
   const onPressContinue = () => {
     if (!checked) {
-      CommonFunctions.showSnackbar(CommonStrings.acceptTermsAndConditions);
+      showErrorToast(CommonStrings.acceptTermsAndConditions);
       return;
     }
+    onEnterName(firstName);
+    onEnterLastName(lastName);
+    onEnterEmail(email);
+    onEnterPassword(password);
+    onEnterConfirmPassword(confirmPassword);
     if (isContinueButtonEnabled()) {
       dispatch(
         registerUser({
@@ -242,6 +252,10 @@ const SignUp = () => {
           onBlur={() => onEnterPassword(password)}
           value={password}
           isError={passwordError}
+          textContentType='oneTimeCode'
+          RightIcon={!showPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          secureTextEntry={!showPassword}
+          onRightIconPress={() => updateState({ showPassword: !showPassword })}
         />
         <CustomInput
           label={CommonStrings.confirmPassword}
@@ -251,11 +265,17 @@ const SignUp = () => {
           returnKeyType={'done'}
           maxLength={25}
           keyboardType='ascii-capable'
+          textContentType='oneTimeCode'
           onChangeText={onEnterConfirmPassword}
           onBlur={() => onEnterConfirmPassword(confirmPassword)}
           onSubmitEditing={onPressContinue}
           value={confirmPassword}
           isError={confirmPasswordError}
+          secureTextEntry={!showConfirmPassword}
+          RightIcon={!showConfirmPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+          onRightIconPress={() =>
+            updateState({ showConfirmPassword: !showConfirmPassword })
+          }
         />
         <Row style={styles.checkBoxView}>
           <Touchable onPress={onPressCheckButton}>
@@ -277,7 +297,9 @@ const SignUp = () => {
           </Text>
         </Row>
         <PrimaryButton
-          disabled={!isContinueButtonEnabled()}
+          disabled={
+            !(firstName && lastName && email && password && confirmPassword)
+          }
           title={CommonStrings.Continue}
           onPress={onPressContinue}
           loading={loading}

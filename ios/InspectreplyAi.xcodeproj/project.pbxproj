@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* InspectreplyAiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* InspectreplyAiTests.m */; };
+		018E33D12C94676E001A39F8 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D02C94676E001A39F8 /* Config.xcconfig */; };
+		018E33DE2C95B550001A39F8 /* Roboto Light Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D22C95B54F001A39F8 /* Roboto Light Italic.ttf */; };
+		018E33DF2C95B550001A39F8 /* Roboto Black Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D32C95B54F001A39F8 /* Roboto Black Italic.ttf */; };
+		018E33E02C95B550001A39F8 /* Roboto Bold Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D42C95B54F001A39F8 /* Roboto Bold Italic.ttf */; };
+		018E33E12C95B550001A39F8 /* Roboto Thin Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D52C95B54F001A39F8 /* Roboto Thin Italic.ttf */; };
+		018E33E22C95B550001A39F8 /* Roboto Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D62C95B54F001A39F8 /* Roboto Bold.ttf */; };
+		018E33E32C95B550001A39F8 /* Roboto Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D72C95B54F001A39F8 /* Roboto Medium.ttf */; };
+		018E33E42C95B550001A39F8 /* Roboto Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D82C95B54F001A39F8 /* Roboto Thin.ttf */; };
+		018E33E52C95B550001A39F8 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33D92C95B54F001A39F8 /* Roboto.ttf */; };
+		018E33E62C95B550001A39F8 /* Roboto Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33DA2C95B54F001A39F8 /* Roboto Black.ttf */; };
+		018E33E72C95B550001A39F8 /* Roboto Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33DB2C95B54F001A39F8 /* Roboto Italic.ttf */; };
+		018E33E82C95B550001A39F8 /* Roboto Medium Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33DC2C95B54F001A39F8 /* Roboto Medium Italic.ttf */; };
+		018E33E92C95B550001A39F8 /* Roboto Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 018E33DD2C95B550001A39F8 /* Roboto Light.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-InspectreplyAi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-InspectreplyAi.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -31,6 +44,19 @@
 		00E356EE1AD99517003FC87E /* InspectreplyAiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InspectreplyAiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* InspectreplyAiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InspectreplyAiTests.m; sourceTree = "<group>"; };
+		018E33D02C94676E001A39F8 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		018E33D22C95B54F001A39F8 /* Roboto Light Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Light Italic.ttf"; path = "../src/assets/fonts/Roboto Light Italic.ttf"; sourceTree = "<group>"; };
+		018E33D32C95B54F001A39F8 /* Roboto Black Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Black Italic.ttf"; path = "../src/assets/fonts/Roboto Black Italic.ttf"; sourceTree = "<group>"; };
+		018E33D42C95B54F001A39F8 /* Roboto Bold Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Bold Italic.ttf"; path = "../src/assets/fonts/Roboto Bold Italic.ttf"; sourceTree = "<group>"; };
+		018E33D52C95B54F001A39F8 /* Roboto Thin Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Thin Italic.ttf"; path = "../src/assets/fonts/Roboto Thin Italic.ttf"; sourceTree = "<group>"; };
+		018E33D62C95B54F001A39F8 /* Roboto Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Bold.ttf"; path = "../src/assets/fonts/Roboto Bold.ttf"; sourceTree = "<group>"; };
+		018E33D72C95B54F001A39F8 /* Roboto Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Medium.ttf"; path = "../src/assets/fonts/Roboto Medium.ttf"; sourceTree = "<group>"; };
+		018E33D82C95B54F001A39F8 /* Roboto Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Thin.ttf"; path = "../src/assets/fonts/Roboto Thin.ttf"; sourceTree = "<group>"; };
+		018E33D92C95B54F001A39F8 /* Roboto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Roboto.ttf; path = ../src/assets/fonts/Roboto.ttf; sourceTree = "<group>"; };
+		018E33DA2C95B54F001A39F8 /* Roboto Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Black.ttf"; path = "../src/assets/fonts/Roboto Black.ttf"; sourceTree = "<group>"; };
+		018E33DB2C95B54F001A39F8 /* Roboto Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Italic.ttf"; path = "../src/assets/fonts/Roboto Italic.ttf"; sourceTree = "<group>"; };
+		018E33DC2C95B54F001A39F8 /* Roboto Medium Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Medium Italic.ttf"; path = "../src/assets/fonts/Roboto Medium Italic.ttf"; sourceTree = "<group>"; };
+		018E33DD2C95B550001A39F8 /* Roboto Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto Light.ttf"; path = "../src/assets/fonts/Roboto Light.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* InspectreplyAi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InspectreplyAi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = InspectreplyAi/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = InspectreplyAi/AppDelegate.mm; sourceTree = "<group>"; };
@@ -46,7 +72,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InspectreplyAi/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-InspectreplyAi-InspectreplyAiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InspectreplyAi-InspectreplyAiTests.release.xcconfig"; path = "Target Support Files/Pods-InspectreplyAi-InspectreplyAiTests/Pods-InspectreplyAi-InspectreplyAiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F4DB99AC1344BE12477479E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = InspectreplyAi/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		F4DB99AC1344BE12477479E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = InspectreplyAi/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +147,19 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				018E33D32C95B54F001A39F8 /* Roboto Black Italic.ttf */,
+				018E33DA2C95B54F001A39F8 /* Roboto Black.ttf */,
+				018E33D42C95B54F001A39F8 /* Roboto Bold Italic.ttf */,
+				018E33D62C95B54F001A39F8 /* Roboto Bold.ttf */,
+				018E33DB2C95B54F001A39F8 /* Roboto Italic.ttf */,
+				018E33D22C95B54F001A39F8 /* Roboto Light Italic.ttf */,
+				018E33DD2C95B550001A39F8 /* Roboto Light.ttf */,
+				018E33DC2C95B54F001A39F8 /* Roboto Medium Italic.ttf */,
+				018E33D72C95B54F001A39F8 /* Roboto Medium.ttf */,
+				018E33D52C95B54F001A39F8 /* Roboto Thin Italic.ttf */,
+				018E33D82C95B54F001A39F8 /* Roboto Thin.ttf */,
+				018E33D92C95B54F001A39F8 /* Roboto.ttf */,
+				018E33D02C94676E001A39F8 /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* InspectreplyAi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* InspectreplyAiTests */,
@@ -246,6 +285,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018E33DE2C95B550001A39F8 /* Roboto Light Italic.ttf in Resources */,
+				018E33DF2C95B550001A39F8 /* Roboto Black Italic.ttf in Resources */,
+				018E33E02C95B550001A39F8 /* Roboto Bold Italic.ttf in Resources */,
+				018E33E12C95B550001A39F8 /* Roboto Thin Italic.ttf in Resources */,
+				018E33E22C95B550001A39F8 /* Roboto Bold.ttf in Resources */,
+				018E33E32C95B550001A39F8 /* Roboto Medium.ttf in Resources */,
+				018E33E42C95B550001A39F8 /* Roboto Thin.ttf in Resources */,
+				018E33E52C95B550001A39F8 /* Roboto.ttf in Resources */,
+				018E33E62C95B550001A39F8 /* Roboto Black.ttf in Resources */,
+				018E33E72C95B550001A39F8 /* Roboto Italic.ttf in Resources */,
+				018E33E82C95B550001A39F8 /* Roboto Medium Italic.ttf in Resources */,
+				018E33E92C95B550001A39F8 /* Roboto Light.ttf in Resources */,
+				018E33D12C94676E001A39F8 /* Config.xcconfig in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				595AE0DCBED451EEF4A48958 /* PrivacyInfo.xcprivacy in Resources */,
@@ -484,7 +536,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.inspectreplyai.dev;
 				PRODUCT_NAME = InspectreplyAi;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -510,7 +562,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.inspectreplyai.dev;
 				PRODUCT_NAME = InspectreplyAi;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -590,10 +642,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -665,10 +714,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

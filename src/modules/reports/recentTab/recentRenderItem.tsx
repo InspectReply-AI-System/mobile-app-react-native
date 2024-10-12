@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableHighlight } from 'react-native';
 import { styles } from './styles';
 import Column from '@inspectreplyai/components/general/Column';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -15,17 +15,24 @@ interface TooltipContentProps {
   isSelected: boolean;
 }
 
-const TooltipContent: React.FC<TooltipContentProps> = ({
-  onClose,
-  isSelected,
-}) => (
-  <Column style={[styles.tooltipContent, isSelected && styles.selectedTooltip]}>
-    <Touchable onPress={onClose}>
-      <Text style={[typography.h5, styles.tooltipOption]}>Edit Report</Text>
-    </Touchable>
-    <Touchable onPress={onClose}>
-      <Text style={[typography.h5, styles.tooltipOption]}>Share Report</Text>
-    </Touchable>
+const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
+  <Column style={styles.tooltipContent}>
+    <TouchableHighlight
+      onPress={onClose}
+      underlayColor={colors.primaryBlue}
+      style={styles.firstOption}>
+      <Text style={[typography.h5, styles.tooltipOption]}>
+        {CommonStrings.editReport}
+      </Text>
+    </TouchableHighlight>
+    <TouchableHighlight
+      onPress={onClose}
+      underlayColor={colors.primaryBlue}
+      style={styles.lastOption}>
+      <Text style={[typography.h5, styles.tooltipOption]}>
+        {CommonStrings.shareReport}
+      </Text>
+    </TouchableHighlight>
   </Column>
 );
 

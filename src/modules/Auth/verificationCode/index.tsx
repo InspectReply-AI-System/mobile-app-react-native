@@ -2,11 +2,11 @@ import React from 'react';
 
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import { navigate, popScreen } from '@inspectreplyai/utils/navigationUtils';
 import { Icons, Images } from '@inspectreplyai/themes/appImages';
 import ImageWrapper from '@inspectreplyai/components/general/Image';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
@@ -18,6 +18,10 @@ import TimerComponent from '@inspectreplyai/components/timerComponent';
 import { verificationCodeValidation } from '@inspectreplyai/utils/validatorsUtils';
 import { useRoute } from '@react-navigation/native';
 import { resetPassword, verifyOtp } from '@inspectreplyai/network/authApis';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
 
 const VerifyCode = () => {
   const params = useRoute().params;
@@ -32,7 +36,7 @@ const VerifyCode = () => {
   const onVerificationCode = (verificationCode: string) => {
     const error = verificationCodeValidation(verificationCode);
     updateState({
-      verificationCode,
+      verificationCode: verificationCode.trim(),
       verificationCodeError: error.errorMsg,
     });
   };
@@ -45,17 +49,18 @@ const VerifyCode = () => {
     if (!isContinueButtonEnabled()) return;
 
     updateState({ loading: true });
-    let body = {
+    const body = {
       email: params?.email,
       otp: verificationCode,
     };
     try {
       const result = await verifyOtp(body);
       updateState({ loading: false });
-      CommonFunctions.showSnackbar(result?.data?.msg);
+      showSuccessToast(result?.data?.msg);
+      popScreen();
       navigate(ROUTES.SETPASSWORD, body);
     } catch (error) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
       updateState({ loading: false });
     }
   };
@@ -65,10 +70,9 @@ const VerifyCode = () => {
       const result = await resetPassword({
         email: params?.email.toLowerCase(),
       });
-
-      CommonFunctions.showSnackbar(result?.data?.msg);
+      showSuccessToast(result?.data?.msg);
     } catch (error: any) {
-      CommonFunctions.showSnackbar(error);
+      showErrorToast(error);
     }
   };
 

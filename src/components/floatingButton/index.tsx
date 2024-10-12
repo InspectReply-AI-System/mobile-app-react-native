@@ -11,7 +11,10 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   customStyle = {},
   textColor = colors.white,
 }) => (
-  <Touchable style={[styles.container, customStyle]} onPress={onPress}>
+  <Touchable
+    activeOpacity={1}
+    style={[styles.container, customStyle]}
+    onPress={onPress}>
     <Text style={[styles.icon, { color: textColor }]}>{icon}</Text>
   </Touchable>
 );

@@ -1,4 +1,4 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, fonts } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
@@ -17,11 +17,13 @@ export const styles = StyleSheet.create({
   rightContainer: {
     flex: 0.2,
     alignItems: 'flex-end',
+    minHeight: normalize(35),
+    justifyContent: 'center',
   },
   title: {
     color: colors.white,
     fontSize: normalize(24),
-    fontWeight: 'bold',
+    fontFamily: fonts.REGULAR,
   },
   titleContainer: {
     flex: 0.6,

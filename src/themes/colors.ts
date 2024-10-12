@@ -11,6 +11,15 @@ const colors = {
   grey: '#A8A7AA',
   black27282B: '#27282B',
   transparent: 'transparent',
+  blueE8EDFB: '#E8EDFB',
+  greenE7F4EA: '#E7F4EA',
+  black3A3C3F: '#3A3C3F',
+  purple173EAD: '#173EAD',
+  purpleBlue: '#497AFC',
+  blue: 'blue',
+  grey313C42: '#313C42',
+  black1E1E1E: '#1E1E1E',
+  grey6F6F70: '#6F6F70',
 };
 
 export default colors;

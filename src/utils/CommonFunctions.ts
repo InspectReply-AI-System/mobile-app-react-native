@@ -164,6 +164,38 @@ const removeEmojis = (string: string) => {
   return string?.replace(regex, '');
 };
 
+function getFirstAndLastName(fullName: string) {
+  if (fullName) {
+    let [firstName = '', lastName = ''] = fullName.split(' ');
+    return { firstName, lastName };
+  } else {
+    return { firstName: fullName, lastName: '' };
+  }
+}
+
+function convertDataAccodingToFlatList(data: any[]) {
+  // const grouped = data?.reduce(
+  //   (acc: { [x: string]: any[] }, item: { category_name: any }) => {
+  //     const category = item?.category_name;
+  //     if (!acc[category]) {
+  //       acc[category] = [];
+  //     }
+  //     acc[category]?.push(item);
+  //     return acc;
+  //   },
+  //   {},
+  // );
+  // return Object.keys(grouped).map((key) => ({
+  //   title: key,
+  //   data: grouped[key],
+  // }));
+
+  return data.map((item) => ({
+    title: item._id,
+    data: item.contractors,
+  }));
+}
+
 export default {
   debounce,
   isNumeric,
@@ -176,6 +208,8 @@ export default {
   dismissKeyboard,
   isDeviceAndroid,
   getFormattedDate,
+  getFirstAndLastName,
   getAssetDataFromPath,
   addOpacityToHexColor,
+  convertDataAccodingToFlatList,
 };

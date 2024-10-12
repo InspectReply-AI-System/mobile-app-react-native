@@ -2,14 +2,13 @@ import RootReducer from './Reducer';
 import { MMKV } from 'react-native-mmkv';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, Storage } from 'redux-persist';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const create_Logger = require('redux-logger');
 const logger = create_Logger.createLogger();
 
 const storage = new MMKV();
 export const reduxStorage: Storage = {
-  setItem: (key, value) => {
+  setItem: (key: string, value: string | number | boolean | Uint8Array) => {
     storage.set(key, value);
     return Promise.resolve(true);
   },
@@ -17,7 +16,7 @@ export const reduxStorage: Storage = {
     const value = storage.getString(key);
     return Promise.resolve(value);
   },
-  removeItem: (key) => {
+  removeItem: (key: string) => {
     storage.delete(key);
     return Promise.resolve();
   },
@@ -41,5 +40,3 @@ export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof persistedReducer>;
-export const useTypedDispatch = () => useDispatch<AppDispatch>();
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

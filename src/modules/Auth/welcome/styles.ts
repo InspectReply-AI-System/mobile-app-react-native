@@ -3,10 +3,10 @@ import { vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  buttonContainer: { marginTop: vh(120) },
+  buttonContainer: { marginTop: 'auto' },
   container: {
     flex: 1,
-    paddingTop: vh(125),
+    marginTop: vh(125),
     backgroundColor: colors.primaryBalck,
   },
   description: { textAlign: 'center', marginTop: vh(16) },
@@ -18,11 +18,11 @@ export const styles = StyleSheet.create({
   imageStyle: {
     alignSelf: 'center',
   },
-  innerContainer: { paddingHorizontal: vw(16), marginTop: vh(44) },
+  innerContainer: { paddingHorizontal: vw(16), marginTop: vh(44), flex: 1 },
   signIntext: {
     textDecorationLine: 'underline',
     textAlign: 'center',
     marginTop: vh(24),
   },
-  welcomeHeading: { textAlign: 'center' },
+  welcomeHeading: { textAlign: 'center', marginTop: vh(44) },
 });

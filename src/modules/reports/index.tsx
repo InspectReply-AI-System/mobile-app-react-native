@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import SavedTab from './savedTab';
 import RecentTab from './recentTab';
 import SharedTab from './sharedTab';
-import { StyleSheet } from 'react-native';
-import { colors } from '@inspectreplyai/themes';
+import { StyleSheet, Text } from 'react-native';
+import { colors, typography } from '@inspectreplyai/themes';
 import Search from './../../assets/svg/search.svg';
 import { CustomTabBar } from './components/customTabBar';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { CommonStrings, normalize, vh } from '@inspectreplyai/utils';
+import { CommonStrings, normalize, vh, vw } from '@inspectreplyai/utils';
 import CustomInput from '@inspectreplyai/components/textInputs/customInput';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import UserGuide from '../userGuide';
 import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
-import UserGuide from '../userGuide';
+import { getProfile } from '@inspectreplyai/redux/auth/action';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,6 +26,7 @@ const Reports: React.FC = () => {
   const [step, setStep] = useState(1);
   const [search, setSearch] = useState('');
   const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
+  const { user } = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
     if (step < 3) {
@@ -35,6 +36,10 @@ const Reports: React.FC = () => {
       dispatch(SET_CONFIG_DATA({ firstOpen: false }));
     }
   };
+
+  useEffect(() => {
+    dispatch(getProfile({ customerId: user?.userId }));
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,7 +64,7 @@ const Reports: React.FC = () => {
           step={step}
         />
       )}
-      <CustomHeader title='Reports' />
+      {/* <CustomHeader title='Reports' />
       <CustomInput
         RightIcon={Search}
         placeholder={CommonStrings.searchReports}
@@ -72,7 +77,8 @@ const Reports: React.FC = () => {
         <Tab.Screen name='Recent' component={RecentTab} />
         <Tab.Screen name='Saved' component={SavedTab} />
         <Tab.Screen name='Shared' component={SharedTab} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
+      <Text style={typography.h5}>Reports</Text>
     </Column>
   );
 };
@@ -81,7 +87,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primaryBalck,
-    paddingHorizontal: 16,
+    paddingHorizontal: vw(16),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   customTextStyle: {
     borderRadius: normalize(24),

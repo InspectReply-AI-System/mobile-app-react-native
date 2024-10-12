@@ -5,6 +5,11 @@ import {
   emailRegex,
   nameRegex,
   verificationCode,
+  length_check,
+  upper_case,
+  lower_case,
+  _specialChar,
+  numeric_char,
 } from './Constant';
 import { InputFieldType } from './Enums';
 import { CommonStrings } from './stringsUtils';
@@ -92,6 +97,24 @@ const nameValidation = (name: string, type: InputFieldType) => {
   }
 };
 
+const fullNameValidation = (name: string) => {
+  if (name.length === 0) {
+    return {
+      error: true,
+      errorMsg: CommonStrings.pleaseEnterName,
+    };
+  } else if (!nameRegex.test(name)) {
+    return {
+      error: true,
+      errorMsg: CommonStrings.pleaseEnterName,
+    };
+  } else if (nameRegex.test(name)) {
+    return { error: false, errorMsg: '' };
+  } else {
+    return { error: false, errorMsg: '' };
+  }
+};
+
 const verificationCodeValidation = (code: string) => {
   if (code.length === 0) {
     return {
@@ -106,9 +129,34 @@ const verificationCodeValidation = (code: string) => {
     return { error: false, errorMsg: '' };
   }
 };
+
+const checklength = (char: string) => {
+  return length_check.test(char);
+};
+
+const checkUpperCase = (char: string) => {
+  return upper_case.test(char);
+};
+const checkLowerCase = (char: string) => {
+  return lower_case.test(char);
+};
+
+const checkSpecialChar = (char: string) => {
+  return _specialChar.test(char);
+};
+const checkNumeric = (char: string) => {
+  return numeric_char.test(char);
+};
+
 export {
+  checklength,
+  checkNumeric,
+  checkUpperCase,
+  checkLowerCase,
+  checkSpecialChar,
   emailValidation,
   passwordValidation,
+  fullNameValidation,
   mobileNumberValidation,
   userNameEmailValidation,
   nameValidation,

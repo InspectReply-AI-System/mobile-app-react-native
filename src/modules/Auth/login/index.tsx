@@ -33,9 +33,17 @@ const Login = () => {
     emailError: '',
     password: '',
     passwordError: '',
+    showPassword: false,
   });
 
-  const { currentStep, email, emailError, password, passwordError } = state;
+  const {
+    currentStep,
+    email,
+    emailError,
+    password,
+    passwordError,
+    showPassword,
+  } = state;
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state: RootState) => state.AuthSlice);
 
@@ -63,13 +71,21 @@ const Login = () => {
   ) => {
     const error = validationFn(value.trim(), errormessage).errorMsg;
     updateState({
-      [field]: value,
+      [field]: value.trim(),
       [`${field}Error`]: error,
     });
+    return error;
   };
 
   const onChangeEmail = (email: string) => {
-    validateAndUpdateState(
+    updateState({
+      email,
+      emailError: '',
+    });
+  };
+
+  const handleEmailValidation = () => {
+    return validateAndUpdateState(
       'email',
       email,
       emailValidation,
@@ -79,8 +95,8 @@ const Login = () => {
     );
   };
 
-  const onEnterPassword = (password: string) => {
-    validateAndUpdateState(
+  const handlePasswordValidation = () => {
+    return validateAndUpdateState(
       'password',
       password,
       passwordValidation,
@@ -90,21 +106,33 @@ const Login = () => {
     );
   };
 
+  const onEnterPassword = (password: string) => {
+    updateState({
+      password,
+      passwordError: '',
+    });
+  };
+
   const onPressNext = () => {
+    let emailError = '',
+      passwordError = '';
+
+    if (currentStep === 1) {
+      emailError = handleEmailValidation();
+    } else if (currentStep === 2) {
+      passwordError = handlePasswordValidation();
+    }
+
+    if (emailError || passwordError) {
+      return;
+    }
+
     if (currentStep === 1 && email && !emailError) {
       updateState({
         currentStep: 2,
       });
     } else if (currentStep === 2 && password && !passwordError) {
       dispatch(loginUser({ email: email?.toLowerCase(), password }));
-    }
-  };
-
-  const isNextDisabled = () => {
-    if (currentStep === 1) {
-      return email && !emailError;
-    } else {
-      return password && !passwordError;
     }
   };
 
@@ -157,29 +185,34 @@ const Login = () => {
             autoCapitalize='none'
             onChangeText={onChangeEmail}
             keyboardType='email-address'
+            secureTextEntry={false}
             placeholder={CommonStrings.email}
-            onBlur={() => onChangeEmail(email)}
+            onBlur={() => handleEmailValidation()}
             onSubmitEditing={onPressNext}
           />
         ) : (
           <CustomInput
+            key={`password-${showPassword}`}
             maxLength={25}
             value={password}
             isError={passwordError}
             autoFocus={true}
-            keyboardType='ascii-capable'
             returnKeyType={'done'}
             returnKeyLabel={isIOS ? 'done' : 'submit'}
             onChangeText={onEnterPassword}
-            onBlur={() => onEnterPassword(password)}
+            onBlur={() => handlePasswordValidation()}
             label={CommonStrings.password}
             placeholder={CommonStrings.password}
             onSubmitEditing={onPressNext}
+            RightIcon={!showPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+            secureTextEntry={!showPassword}
+            onRightIconPress={() =>
+              updateState({ showPassword: !showPassword })
+            }
           />
         )}
         <PrimaryButton
-          disabled={!isNextDisabled()}
-          title={currentStep == 1 ? CommonStrings.next : CommonStrings.Continue}
+          title={CommonStrings.Continue}
           onPress={onPressNext}
           loading={loading}
         />
@@ -204,4 +237,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default React.memo(Login);

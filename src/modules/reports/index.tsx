@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import SavedTab from './savedTab';
 import RecentTab from './recentTab';
 import SharedTab from './sharedTab';
-import { StyleSheet, Text } from 'react-native';
-import { colors, typography } from '@inspectreplyai/themes';
+import { StyleSheet } from 'react-native';
+import { colors } from '@inspectreplyai/themes';
 import Search from './../../assets/svg/search.svg';
 import { CustomTabBar } from './components/customTabBar';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -63,7 +63,7 @@ const Reports: React.FC = () => {
           step={step}
         />
       )}
-      {/* <CustomHeader title='Reports' />
+      <CustomHeader title='Reports' />
       <CustomInput
         RightIcon={Search}
         placeholder={CommonStrings.searchReports}
@@ -76,8 +76,7 @@ const Reports: React.FC = () => {
         <Tab.Screen name='Recent' component={RecentTab} />
         <Tab.Screen name='Saved' component={SavedTab} />
         <Tab.Screen name='Shared' component={SharedTab} />
-      </Tab.Navigator> */}
-      <Text style={typography.h5}>Reports</Text>
+      </Tab.Navigator>
     </Column>
   );
 };
@@ -87,8 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primaryBalck,
     paddingHorizontal: vw(16),
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   customTextStyle: {
     borderRadius: normalize(24),

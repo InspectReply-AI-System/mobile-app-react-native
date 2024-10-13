@@ -5,12 +5,14 @@ import { AuthModel, ActionType } from '@inspectreplyai/models/authModel';
 export interface AuthState {
   error: string;
   loading: boolean;
+  isSignUp: boolean;
   user: AuthModel;
 }
 
-let initialState: AuthState = {
+const initialState: AuthState = {
   error: '',
   loading: false,
+  isSignUp: false,
   user: new AuthModel(),
 };
 

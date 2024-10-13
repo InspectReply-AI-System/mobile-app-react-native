@@ -46,6 +46,7 @@ const VerifyCode = () => {
   };
 
   const onPressContinue = async () => {
+    onVerificationCode(verificationCode);
     if (!isContinueButtonEnabled()) return;
 
     updateState({ loading: true });
@@ -109,7 +110,6 @@ const VerifyCode = () => {
           <TimerComponent timer={60} onPressResend={onPressResendCode} />
           <PrimaryButton
             loading={loading}
-            disabled={!isContinueButtonEnabled()}
             title={CommonStrings.Continue}
             onPress={onPressContinue}
           />

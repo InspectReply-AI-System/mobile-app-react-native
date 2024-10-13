@@ -81,7 +81,7 @@ const ForgotPassword = () => {
         <Column style={styles.innerContainer}>
           <CustomInput
             label={CommonStrings.email}
-            placeholder={CommonStrings.emailExample}
+            placeholder={CommonStrings.email}
             keyboardType='email-address'
             autoFocus
             returnKeyType='done'
@@ -96,7 +96,6 @@ const ForgotPassword = () => {
           />
 
           <PrimaryButton
-            disabled={!email}
             title={CommonStrings.Continue}
             onPress={onPressContinue}
             loading={state.loading}

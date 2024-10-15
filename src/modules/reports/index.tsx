@@ -16,8 +16,8 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@inspectreplyai/hooks/reduxHooks';
-import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import { getProfile } from '@inspectreplyai/redux/auth/action';
+import { SET_DATA } from '@inspectreplyai/redux/auth/AuthSlice';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,15 +25,14 @@ const Reports: React.FC = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(false);
   const [step, setStep] = useState(1);
   const [search, setSearch] = useState('');
-  const { firstOpen } = useAppSelector((store) => store.ConfigSlice);
-  const { user } = useAppSelector((store) => store.AuthSlice);
+  const { user, isSignUp } = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
       setIsGuideVisible(false);
-      dispatch(SET_CONFIG_DATA({ firstOpen: false }));
+      dispatch(SET_DATA({ isSignUp: false }));
     }
   };
 
@@ -46,17 +45,17 @@ const Reports: React.FC = () => {
       setIsGuideVisible(true);
     }, 0);
     return () => {
-      dispatch(SET_CONFIG_DATA({ firstOpen: false }));
+      dispatch(SET_DATA({ isSignUp: false }));
     };
   }, []);
 
   const handleSkip = () => {
     setIsGuideVisible(false);
-    dispatch(SET_CONFIG_DATA({ firstOpen: false }));
+    dispatch(SET_DATA({ isSignUp: false }));
   };
   return (
     <Column style={styles.container}>
-      {firstOpen && (
+      {isSignUp && (
         <UserGuide
           isVisible={isGuideVisible}
           onClose={handleNextStep}

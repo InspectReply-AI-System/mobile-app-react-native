@@ -20,7 +20,7 @@ export const CommonStrings = {
   pleaseCheckYourEmailAndPassword:
     '*Please check your email and password, then try again',
   pleaseEnterYourEmailToResetPassword:
-    'Please enter your email address to reset your password',
+    '*Please enter your email address to reset your password',
   pleaseCheckYourEntryMustBeValidEmail:
     '*Please check your entry, it must be a valid email address',
   passwordsMustMatch: '*Passwords must match',
@@ -29,7 +29,7 @@ export const CommonStrings = {
     'Transform your home inspection experience with instant AI-powered insights, repair cost estimates, and local contractor recommendations at your fingertips.',
   getStarted: 'Get Started',
   signIn: 'Sign In',
-  signUp: 'Sign up',
+  signUp: 'Sign Up',
   firstName: 'First name',
   lastName: 'Last name',
   email: 'Email',
@@ -85,7 +85,8 @@ export const CommonStrings = {
   coachMarkText2: 'Click this to upload a report.',
   coachMarkText3: 'This is the Contractor Section. About this section.',
   gotIt: 'Got it',
-  acceptTermsAndConditions: 'Please accept terms and conditions',
+  acceptTermsAndConditions:
+    '*Terms and Conditions must be accepted to continue',
   editReport: 'Edit Report',
   shareReport: 'Share Report',
   Error: 'Error',

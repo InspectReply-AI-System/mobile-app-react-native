@@ -50,7 +50,7 @@ export const authExtraReducer = (
       state.user.lastName = customer?.last_name || '';
       state.user.email = customer?.email || '';
       state.user.userId = customer?._id || '';
-
+      state.isSignUp = true;
       state.loading = false;
       setTimeout(() => {
         reset(ROUTES.BOTTOMTAB);

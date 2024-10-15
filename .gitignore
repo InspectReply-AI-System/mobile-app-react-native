@@ -75,3 +75,9 @@ yarn-error.log
 
 # react-native-config codegen
 ios/tmp.xcconfig
+
+
+# Ignore environment files
+.env
+.env.production
+.env.staging

@@ -3,7 +3,7 @@ import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  errorText: { marginHorizontal: vw(16), color: colors.red },
+  errorText: { marginHorizontal: vw(16), width: '80%', color: colors.red },
 
   errorToastContainer: {
     width: '90%',

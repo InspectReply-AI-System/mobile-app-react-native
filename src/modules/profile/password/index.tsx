@@ -18,6 +18,7 @@ import {
 } from '@inspectreplyai/components/toast';
 import { SvgIcon } from '@inspectreplyai/themes/appImages';
 import { colors } from '@inspectreplyai/themes';
+import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
 
 const Password = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -116,64 +117,66 @@ const Password = () => {
         rightLabel={CommonStrings.cancel}
       />
       <Column style={styles.inputsContainer}>
-        <CustomProfileInput
-          maxLength={25}
-          autoFocus={true}
-          value={oldPassword}
-          returnKeyType='next'
-          isError={oldPasswordError}
-          placeholderTextColor={colors.grey6F6F70}
-          label={CommonStrings.oldPassword}
-          placeholder={CommonStrings.oldPassword}
-          onChangeText={onChangeOldPassword}
-          inputCustomStyle={styles.inputStyle}
-          onFocus={() => {
-            updateState({ selectedfield: 2 });
-          }}
-          ref={setRef(CommonStrings.oldPassword)}
-          onBlur={() => onChangeOldPassword(oldPassword)}
-          onSubmitEditing={() => {
-            focusOnElement(CommonStrings.newPassword);
-          }}
-          touched
-          secureTextEntry={!showOldPassowrd}
-          icon={!showOldPassowrd ? SvgIcon.Eye : SvgIcon.CloseEye}
-          onPressRightIcon={() =>
-            updateState({ showOldPassowrd: !showOldPassowrd })
-          }
-        />
-        <CustomProfileInput
-          maxLength={25}
-          value={newPassword}
-          returnKeyType='done'
-          isError={newPasswordError}
-          placeholderTextColor={colors.grey6F6F70}
-          placeholder={CommonStrings.newPassword}
-          label={CommonStrings.newPassword}
-          onSubmitEditing={onPressDoneButton}
-          onChangeText={onChangeNewPassword}
-          onFocus={() => {
-            updateState({ selectedfield: 1 });
-          }}
-          inputCustomStyle={styles.inputStyle}
-          ref={setRef(CommonStrings.newPassword)}
-          onBlur={() => onChangeNewPassword(newPassword)}
-          icon={!showNewPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
-          touched
-          secureTextEntry={!showNewPassword}
-          onPressRightIcon={() =>
-            updateState({ showNewPassword: !showNewPassword })
-          }
-        />
-        <PasswordValidation
-          value={selectedfield == 1 ? newPassword : oldPassword}
-        />
-        <PrimaryButton
-          loading={isLoading}
-          onPress={onPressConfirm}
-          disabled={!isContinueButtonEnabled()}
-          title={CommonStrings.confirmChanges}
-        />
+        <ScrollContainer showsVerticalScrollIndicator={false}>
+          <CustomProfileInput
+            maxLength={25}
+            autoFocus={true}
+            value={oldPassword}
+            returnKeyType='next'
+            isError={oldPasswordError}
+            placeholderTextColor={colors.grey6F6F70}
+            label={CommonStrings.oldPassword}
+            placeholder={CommonStrings.oldPassword}
+            onChangeText={onChangeOldPassword}
+            inputCustomStyle={styles.inputStyle}
+            onFocus={() => {
+              updateState({ selectedfield: 2 });
+            }}
+            ref={setRef(CommonStrings.oldPassword)}
+            onBlur={() => onChangeOldPassword(oldPassword)}
+            onSubmitEditing={() => {
+              focusOnElement(CommonStrings.newPassword);
+            }}
+            touched
+            secureTextEntry={!showOldPassowrd}
+            icon={!showOldPassowrd ? SvgIcon.Eye : SvgIcon.CloseEye}
+            onPressRightIcon={() =>
+              updateState({ showOldPassowrd: !showOldPassowrd })
+            }
+          />
+          <CustomProfileInput
+            maxLength={25}
+            value={newPassword}
+            returnKeyType='done'
+            isError={newPasswordError}
+            placeholderTextColor={colors.grey6F6F70}
+            placeholder={CommonStrings.newPassword}
+            label={CommonStrings.newPassword}
+            onSubmitEditing={onPressDoneButton}
+            onChangeText={onChangeNewPassword}
+            onFocus={() => {
+              updateState({ selectedfield: 1 });
+            }}
+            inputCustomStyle={styles.inputStyle}
+            ref={setRef(CommonStrings.newPassword)}
+            onBlur={() => onChangeNewPassword(newPassword)}
+            icon={!showNewPassword ? SvgIcon.Eye : SvgIcon.CloseEye}
+            touched
+            secureTextEntry={!showNewPassword}
+            onPressRightIcon={() =>
+              updateState({ showNewPassword: !showNewPassword })
+            }
+          />
+          <PasswordValidation
+            value={selectedfield == 1 ? newPassword : oldPassword}
+          />
+          <PrimaryButton
+            loading={isLoading}
+            onPress={onPressConfirm}
+            disabled={!isContinueButtonEnabled()}
+            title={CommonStrings.confirmChanges}
+          />
+        </ScrollContainer>
       </Column>
     </Column>
   );

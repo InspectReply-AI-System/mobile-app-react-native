@@ -21,5 +21,9 @@ export const endpoints = {
     updateContractorProfile: '/api/contractor/update-profile',
     deleteContractor: '/api/contractor/delete',
     contractorProfilePhoto: 'api/contractor/profile-photo',
+    preferredContractor: 'api/contractors-index',
+  },
+  reports: {
+    reports: '/api/reports/create',
   },
 };

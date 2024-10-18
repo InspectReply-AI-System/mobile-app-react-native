@@ -23,13 +23,13 @@ const contractorProfilePhoto = async (params: {
   };
   contractor_id: string;
 }) => {
-  let data = new FormData();
+  const data = new FormData();
 
   data.append('profilePhoto', {
     uri: params?.profileDetails?.path,
     type: 'image/jpeg',
     name: 'profile-photo.jpg',
-  });
+  } as any);
 
   data.append('contractor_id', params?.contractor_id);
   setContentType('multipart/form-data');
@@ -64,6 +64,10 @@ const deleteContractor = async (payload: { contractor_id: string }) => {
   return await postApiCall(endpoints.contractors.deleteContractor, payload);
 };
 
+const preferredContractor = async (payload: { cust_id: string }) => {
+  return await postApiCall(endpoints.contractors.preferredContractor, payload);
+};
+
 export {
   getCitiesData,
   getStatesData,
@@ -74,4 +78,5 @@ export {
   getContractorProfile,
   updateContractorProfile,
   deleteContractor,
+  preferredContractor,
 };

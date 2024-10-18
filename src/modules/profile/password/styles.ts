@@ -5,10 +5,10 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   inputStyle: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   inputsContainer: {
     flex: 1,

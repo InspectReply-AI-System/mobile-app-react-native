@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TouchableHighlight } from 'react-native';
-import { styles } from './styles';
+import { styles } from '../../recentTab/styles';
 import Column from '@inspectreplyai/components/general/Column';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import Tooltip from 'react-native-walkthrough-tooltip';
@@ -9,11 +9,7 @@ import Dot from '@inspectreplyai/assets/svg/dot.svg';
 import { CommonStrings } from '@inspectreplyai/utils';
 import Row from '@inspectreplyai/components/general/Row';
 import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
-
-interface TooltipContentProps {
-  onClose: () => void;
-  isSelected: boolean;
-}
+import { RepairItemProps, TooltipContentProps } from './@types';
 
 const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
   <Column style={styles.tooltipContent}>
@@ -22,7 +18,7 @@ const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
       underlayColor={colors.primaryBlue}
       style={styles.firstOption}>
       <Text style={[typography.h5, styles.tooltipOption]}>
-        {CommonStrings.editReport}
+        {CommonStrings.saveReport}
       </Text>
     </TouchableHighlight>
     <TouchableHighlight
@@ -36,17 +32,7 @@ const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
   </Column>
 );
 
-interface RepairItemProps {
-  item: {
-    id: string;
-    dateCreated: string;
-    address: string;
-    cost: string;
-    lastShared: string;
-  };
-}
-
-export const RepairItem: React.FC<RepairItemProps> = ({ item }) => {
+export const ReportsCard: React.FC<RepairItemProps> = ({ item }) => {
   const [tooltipVisibleId, setTooltipVisibleId] = useState<string | null>(null);
   const isSelected = tooltipVisibleId === item.id;
 

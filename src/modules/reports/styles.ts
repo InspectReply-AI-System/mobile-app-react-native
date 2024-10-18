@@ -6,19 +6,13 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primaryBlack,
-  },
-  emailVerificationText: {
-    marginVertical: vh(16),
-  },
-  imageStyle: {
-    height: vw(120),
-    width: vw(120),
-    alignSelf: 'center',
-    borderRadius: normalize(18),
-    marginTop: vh(17),
-  },
-  innerContainer: {
     paddingHorizontal: vw(16),
   },
-  scrollContainer: {},
+  customTextStyle: {
+    borderRadius: normalize(24),
+    marginBottom: vh(16),
+    backgroundColor: colors.black27282B,
+    height: normalize(40),
+    borderWidth: 0,
+  },
 });

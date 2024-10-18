@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     paddingHorizontal: vw(16),
     paddingTop: vh(32),
   },

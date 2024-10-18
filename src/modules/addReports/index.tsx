@@ -15,7 +15,9 @@ import Uncheck from '@inspectreplyai/assets/svg/checkBoxIcon.svg';
 import { styles } from './style';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import PdfName from '@inspectreplyai/assets/svg/pdfName.svg';
 import Cross from '@inspectreplyai/assets/svg/cross.svg';
 import { useSimpleReducer } from '@inspectreplyai/hooks';
@@ -41,12 +43,12 @@ const AddReports = () => {
 
   const selectDoc = async () => {
     try {
-      const doc = await DocumentPicker.pick({
+      const doc: DocumentPickerResponse[] = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
         allowMultiSelection: false,
       });
 
-      if (doc[0]?.size > 5000010) {
+      if (doc && doc.length > 0 && doc[0]?.size > 5000010) {
         showErrorToast(CommonStrings.largeFileSize);
         return;
       }

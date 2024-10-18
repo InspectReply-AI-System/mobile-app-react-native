@@ -6,7 +6,7 @@ import { colors, fonts, typography } from '@inspectreplyai/themes';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings, normalize } from '@inspectreplyai/utils';
-import { CustomTabBar } from '../../components/customTabBar';
+import { CustomTabBar } from '@inspectreplyai/components/customTabBar';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ROUTES from '@inspectreplyai/routes/routes';
 

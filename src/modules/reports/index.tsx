@@ -3,8 +3,8 @@ import SavedTab from './savedTab';
 import RecentTab from './recentTab';
 import SharedTab from './sharedTab';
 import { colors } from '@inspectreplyai/themes';
-import Search from './../../assets/svg/search.svg';
-import { CustomTabBar } from '../../components/customTabBar';
+import { SvgIcon } from '@inspectreplyai/themes/appImages';
+import { CustomTabBar } from '@inspectreplyai/components/customTabBar';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import { CommonStrings } from '@inspectreplyai/utils';
@@ -68,7 +68,7 @@ const Reports: React.FC = () => {
       )}
       <CustomHeader title={CommonStrings.reports} />
       <CustomInput
-        RightIcon={Search}
+        RightIcon={SvgIcon.Search}
         placeholder={CommonStrings.searchReports}
         customStyle={styles.customTextStyle}
         placeholderTextColor={colors.white}

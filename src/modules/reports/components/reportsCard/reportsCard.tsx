@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Text, TouchableHighlight } from 'react-native';
-import { styles } from '../../recentTab/styles';
-import Column from '@inspectreplyai/components/general/Column';
-import Touchable from '@inspectreplyai/components/general/Touchable';
-import Tooltip from 'react-native-walkthrough-tooltip';
-import { colors, typography } from '@inspectreplyai/themes';
+
+import { styles } from './styles';
 import Dot from '@inspectreplyai/assets/svg/dot.svg';
 import { CommonStrings } from '@inspectreplyai/utils';
+import Tooltip from 'react-native-walkthrough-tooltip';
 import Row from '@inspectreplyai/components/general/Row';
+import { colors, typography } from '@inspectreplyai/themes';
 import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
+import Column from '@inspectreplyai/components/general/Column';
 import { RepairItemProps, TooltipContentProps } from './@types';
+import Touchable from '@inspectreplyai/components/general/Touchable';
 
 const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
   <Column style={styles.tooltipContent}>

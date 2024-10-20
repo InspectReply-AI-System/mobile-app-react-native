@@ -11,6 +11,7 @@ import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import LocalImage from '@inspectreplyai/components/general/LocalImage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isIOS } from '@inspectreplyai/utils/platform';
 
 const Welcome = () => {
   const inset = useSafeAreaInsets();
@@ -35,7 +36,9 @@ const Welcome = () => {
           style={[
             styles.buttonContainer,
             {
-              marginBottom: vh(inset.bottom + 16),
+              marginBottom: isIOS
+                ? vh(inset.bottom + 16)
+                : vh(inset.bottom + 32),
             },
           ]}>
           <PrimaryButton

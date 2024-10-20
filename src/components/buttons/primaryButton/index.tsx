@@ -26,7 +26,9 @@ const PrimaryButton = (props: CustomButtonPropsType) => {
       onPress={onPress}
       disabled={disabled || loading}
       style={[
-        disabled ? styles.disableButtonStyle : styles.contentContainer,
+        disabled || loading
+          ? styles.disableButtonStyle
+          : styles.contentContainer,
         containerStyle,
       ]}
       {...rest}>

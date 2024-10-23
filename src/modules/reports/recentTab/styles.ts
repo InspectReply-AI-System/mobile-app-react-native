@@ -1,5 +1,5 @@
 import { colors } from '@inspectreplyai/themes';
-import { vh } from '@inspectreplyai/utils';
+import { normalize, vh } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -9,6 +9,13 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: vh(90),
+  },
+  customTextStyle: {
+    borderRadius: normalize(24),
+    marginBottom: vh(16),
+    backgroundColor: colors.black27282B,
+    height: normalize(40),
+    borderWidth: 0,
   },
   list: {
     flex: 1,

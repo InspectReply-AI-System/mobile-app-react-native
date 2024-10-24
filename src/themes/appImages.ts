@@ -16,6 +16,9 @@ import Edit from '@inspectreplyai/assets/svg/edit.svg';
 import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
 import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
 import Search from '@inspectreplyai/assets/svg/search.svg';
+import ReportIcon from '@inspectreplyai/assets/svg/reportIcon.svg';
+import Dollar from '@inspectreplyai/assets/svg/dollar.svg';
+import RightIcon from '@inspectreplyai/assets/svg/rightMark.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -58,4 +61,7 @@ export const SvgIcon = {
   BackIcon,
   DownArrow,
   Search,
+  ReportIcon,
+  Dollar,
+  RightIcon,
 };

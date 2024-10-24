@@ -9,6 +9,8 @@ import Dot from '@inspectreplyai/assets/svg/dot.svg';
 import { CommonStrings } from '@inspectreplyai/utils';
 import Row from '@inspectreplyai/components/general/Row';
 import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
 
 interface TooltipContentProps {
   onClose: () => void;
@@ -85,7 +87,10 @@ export const RepairItem: React.FC<RepairItemProps> = ({ item }) => {
         <Text style={[typography.body, styles.sharedText]}>
           {`${CommonStrings.lastShared} ${item.lastShared}`}
         </Text>
-        <Touchable>
+        <Touchable
+          onPress={() => {
+            navigate(ROUTES.REPORTSUMMARY);
+          }}>
           <Row>
             <Text style={[typography.body, styles.viewReportText]}>
               {CommonStrings.viewFullReport}

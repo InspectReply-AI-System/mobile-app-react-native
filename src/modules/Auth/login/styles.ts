@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     marginTop: normalize(24),
     marginBottom: normalize(32),
   },
-  container: { flex: 1, backgroundColor: colors.primaryBalck },
+  container: { flex: 1, backgroundColor: colors.primaryBlack },
   dontHaveAccount: {
     color: colors.primaryBlue,
   },

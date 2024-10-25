@@ -17,13 +17,19 @@ export const styles = StyleSheet.create({
     marginTop: vh(24),
   },
   generateButtonStyle: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     borderWidth: 1,
     borderColor: colors.primaryBlue,
   },
+  loaderStyle: {
+    zIndex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...StyleSheet.absoluteFillObject,
+  },
   mainContainer: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   noteText: {
     color: colors.grey,

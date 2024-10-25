@@ -1,11 +1,11 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { getProfile, loginUser, registerUser } from './action';
-import { reset } from '@inspectreplyai/utils/navigationUtils';
+import { AuthState } from './@types';
 import ROUTES from '@inspectreplyai/routes/routes';
-import { AuthState } from './AuthSlice';
+import { AuthModel } from '@inspectreplyai/models/authModel';
+import { reset } from '@inspectreplyai/utils/navigationUtils';
+import { getProfile, loginUser, registerUser } from './action';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
-import { AuthModel } from '@inspectreplyai/models/authModel';
 
 export const authExtraReducer = (
   builder: ActionReducerMapBuilder<AuthState>,

@@ -21,7 +21,7 @@ export default StyleSheet.create({
     height: normalize(44),
     marginTop: normalize(12),
     borderColor: colors.white,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   changePassword: {
     borderWidth: 1,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   deleteDesc: {
     fontSize: 14,
@@ -73,7 +73,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: normalize(100),
     top: SMALL_DEVICE ? '14%' : '16%',
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   imageStyle: {
     width: normalize(110),
@@ -82,7 +82,7 @@ export default StyleSheet.create({
     backgroundColor: colors.grey313C42,
   },
   inputStyle: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   inputsContainer: {
     flex: 1,

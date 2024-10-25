@@ -1,21 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ActionType } from '@inspectreplyai/models/authModel';
 import { contractorExtraReducer } from './contractorExtraReducer';
+import { ContractorState } from './@types';
 
-export interface ContractorState {
-  error: string;
-  loading: boolean;
-  states: Array<{
-    abbreviation: string;
-    capital: string;
-    name: string;
-    _id: string;
-  }>;
-  category: Array<{ _id: string; category_name: string }>;
-  contractors: [];
-}
-
-let initialState: ContractorState = {
+const initialState: ContractorState = {
   error: '',
   loading: false,
   states: [],

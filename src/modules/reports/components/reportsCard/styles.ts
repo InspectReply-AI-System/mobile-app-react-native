@@ -10,13 +10,7 @@ export const styles = StyleSheet.create({
   bgStyle: {
     marginTop: vh(-15),
   },
-  container: {
-    flex: 1,
-    backgroundColor: colors.primaryBalck,
-  },
-  contentContainer: {
-    paddingBottom: vh(90),
-  },
+
   costText: {
     color: colors.white,
     marginBottom: vh(8),
@@ -75,17 +69,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: normalize(12),
     borderBottomRightRadius: normalize(12),
   },
-  list: {
-    flex: 1,
-  },
-  moreOptions: {
-    color: colors.white,
-    fontSize: normalize(18),
-  },
-  optionStyle: {},
-  selectedTooltip: {
-    backgroundColor: colors.black27282B,
-  },
+
   sharedText: {
     color: colors.grey,
   },

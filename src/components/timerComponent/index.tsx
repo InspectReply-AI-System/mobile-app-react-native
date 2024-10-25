@@ -1,9 +1,9 @@
 import { CommonStrings } from '@inspectreplyai/utils';
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import { TimerPropsType } from './@types';
-import { colors, typography } from '@inspectreplyai/themes';
+import { styles } from './styles';
 
 function TimerComponent(props: TimerPropsType) {
   const { timer, onPressResend } = props;
@@ -46,15 +46,11 @@ function TimerComponent(props: TimerPropsType) {
   return (
     <>
       {counter !== 0 ? (
-        <Text
-          allowFontScaling={false}
-          style={[typography.h6, styles.timerStyle]}>{`${'00'}:${
+        <Text allowFontScaling={false} style={styles.timerStyle}>{`${'00'}:${
           counter > 9 ? counter : `0${counter}`
         }`}</Text>
       ) : (
-        <Text
-          style={[typography.h6, styles.resendtext]}
-          onPress={onPressResendCode}>
+        <Text style={styles.resendtext} onPress={onPressResendCode}>
           {CommonStrings.resendCode}
         </Text>
       )}
@@ -63,13 +59,3 @@ function TimerComponent(props: TimerPropsType) {
 }
 
 export default TimerComponent;
-
-const styles = StyleSheet.create({
-  resendtext: {
-    textDecorationLine: 'underline',
-    color: colors.primaryBlue,
-  },
-  timerStyle: {
-    color: colors.primaryBlue,
-  },
-});

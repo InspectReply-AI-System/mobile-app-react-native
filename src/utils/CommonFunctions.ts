@@ -64,14 +64,6 @@ const showSnackbar = (title: string, color?: string) => {
       numberOfLines: 3,
       textColor: colors.white,
       backgroundColor: color ? color : colors.primaryBlue,
-      // fontFamily: fontFamily.HelveticaBold,
-      // action: {
-      //   text: 'Close',
-      //   textColor: COLORS.WHITE,
-      //   onPress: () => {
-      //     Snackbar.dismiss();
-      //   },
-      // },
     });
   }
 };
@@ -100,7 +92,7 @@ const isDeviceAndroid = () => {
  * @param PermissionIOS IOS Permissions
  */
 
-function debounce<T extends (...args: any[]) => void>(
+function debounce<T extends (...args: unknown[]) => void>(
   func: T,
   wait: number = 500,
 ): (...args: Parameters<T>) => void {
@@ -166,7 +158,7 @@ const removeEmojis = (string: string) => {
 
 function getFirstAndLastName(fullName: string) {
   if (fullName) {
-    let [firstName = '', lastName = ''] = fullName.split(' ');
+    const [firstName = '', lastName = ''] = fullName.split(' ');
     return { firstName, lastName };
   } else {
     return { firstName: fullName, lastName: '' };
@@ -196,6 +188,18 @@ function convertDataAccodingToFlatList(data: any[]) {
   }));
 }
 
+const dateFormatter = (date = '', format: string = 'MM/DD/YYYY') => {
+  return moment(date).format(format);
+};
+
+const formatCurrency = (amount: number = 0) => {
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
 export default {
   debounce,
   isNumeric,
@@ -212,4 +216,6 @@ export default {
   getAssetDataFromPath,
   addOpacityToHexColor,
   convertDataAccodingToFlatList,
+  dateFormatter,
+  formatCurrency,
 };

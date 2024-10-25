@@ -11,7 +11,7 @@ const Navigator = () => {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: colors.primaryBalck,
+      background: colors.primaryBlack,
     },
   };
   return (

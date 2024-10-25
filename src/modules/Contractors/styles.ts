@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     paddingHorizontal: vw(14),
   },
   customTextStyle: {
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
   floatingBtnStyle: { zIndex: 1 },
   headerView: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   imageBox: {
     backgroundColor: colors.grey313C42,
@@ -73,8 +73,5 @@ export const styles = StyleSheet.create({
   row: {
     justifyContent: 'space-between',
     marginVertical: vh(8),
-  },
-  sectionHeader: {
-    marginVertical: vh(16),
   },
 });

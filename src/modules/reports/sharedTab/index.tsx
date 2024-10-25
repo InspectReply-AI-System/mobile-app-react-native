@@ -1,16 +1,11 @@
-// topTab/sharedTab/index.tsx
-
 import React from 'react';
-import { Text } from 'react-native';
-import { styles } from './styles';
-import Column from '@inspectreplyai/components/general/Column';
+import { ReportsTopTabs } from '@inspectreplyai/utils/Enums';
+import ReportList from '../components/reportList/reportList';
+import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 
 const SharedTab = () => {
-  return (
-    <Column style={styles.container}>
-      <Text>Shared Tab</Text>
-    </Column>
-  );
+  const { sharedReports } = useAppSelector((store) => store.reportsSlice);
+  return <ReportList repairs={sharedReports} tab={ReportsTopTabs.SHARED} />;
 };
 
 export default SharedTab;

@@ -55,7 +55,7 @@ const updateProfilePhoto = async (params: {
     uri: params?.profilePhoto?.uri,
     type: params?.profilePhoto?.type,
     name: params?.profilePhoto?.name,
-  });
+  } as any);
 
   data.append('cust_id', params?.cust_id);
   setContentType('multipart/form-data');

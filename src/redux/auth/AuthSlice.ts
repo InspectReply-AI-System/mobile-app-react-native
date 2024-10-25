@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authExtraReducer } from './authExtraReducer';
 import { AuthModel, ActionType } from '@inspectreplyai/models/authModel';
-
-export interface AuthState {
-  error: string;
-  loading: boolean;
-  isSignUp: boolean;
-  user: AuthModel;
-}
+import { AuthState } from './@types';
 
 const initialState: AuthState = {
   error: '',

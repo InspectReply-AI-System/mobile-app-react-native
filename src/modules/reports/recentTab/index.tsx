@@ -1,32 +1,12 @@
-import FloatingButton from '@inspectreplyai/components/floatingButton';
 import React from 'react';
-import { FlatList } from 'react-native';
-import { styles } from './styles';
-import { repairs } from '../components/recentTabCardData/data';
-import { EmptyListComponent, RepairItem } from './recentRenderItem';
-import Column from '@inspectreplyai/components/general/Column';
-import ROUTES from '@inspectreplyai/routes/routes';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
+
+import ReportList from '../components/reportList/reportList';
+import { ReportsTopTabs } from '@inspectreplyai/utils/Enums';
+import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 
 const RecentTab = () => {
-  return (
-    <Column style={styles.container}>
-      <FlatList
-        data={repairs}
-        renderItem={({ item }) => <RepairItem item={item} />}
-        keyExtractor={(item) => item.id}
-        style={styles.list}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={EmptyListComponent}
-        contentContainerStyle={styles.contentContainer}
-      />
-      <FloatingButton
-        onPress={() => {
-          navigate(ROUTES.ADDREPORTS);
-        }}
-      />
-    </Column>
-  );
+  const { recentReports } = useAppSelector((store) => store.reportsSlice);
+  return <ReportList repairs={recentReports} tab={ReportsTopTabs.RECENT} />;
 };
 
 export default RecentTab;

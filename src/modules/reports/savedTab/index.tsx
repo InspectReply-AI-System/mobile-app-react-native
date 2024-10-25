@@ -1,16 +1,12 @@
-// topTab/savedTab/index.tsx
-
-import Column from '@inspectreplyai/components/general/Column';
 import React from 'react';
-import { Text } from 'react-native';
-import { styles } from './styles';
+import ReportList from '../components/reportList/reportList';
+
+import { ReportsTopTabs } from '@inspectreplyai/utils/Enums';
+import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 
 const SavedTab = () => {
-  return (
-    <Column style={styles.container}>
-      <Text>Saved Tab</Text>
-    </Column>
-  );
+  const { savedReports } = useAppSelector((store) => store.reportsSlice);
+  return <ReportList repairs={savedReports} tab={ReportsTopTabs.SAVED} />;
 };
 
 export default SavedTab;

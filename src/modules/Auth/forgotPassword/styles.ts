@@ -5,7 +5,7 @@ import { normalize, vh, vw } from '@inspectreplyai/utils';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   description: {
     textAlign: 'center',

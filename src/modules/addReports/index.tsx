@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 
 import Column from '@inspectreplyai/components/general/Column';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -15,38 +15,88 @@ import Uncheck from '@inspectreplyai/assets/svg/checkBoxIcon.svg';
 import { styles } from './style';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker, {
+  DocumentPickerResponse,
+} from 'react-native-document-picker';
 import PdfName from '@inspectreplyai/assets/svg/pdfName.svg';
 import Cross from '@inspectreplyai/assets/svg/cross.svg';
+import { useSimpleReducer } from '@inspectreplyai/hooks';
+import { preferredContractor } from '@inspectreplyai/network/contractorAPis';
+import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
+import { showErrorToast } from '@inspectreplyai/components/toast';
+import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AddReports = () => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-
+  const { user } = useAppSelector((store) => store.AuthSlice);
+  const [state, updateState] = useSimpleReducer({
+    isChecked: false,
+    selectedPdf: null,
+    isPreferredContractor: false,
+    contractors: [],
+    loader: false,
+  });
+  const { isChecked, selectedPdf, isPreferredContractor, loader, contractors } =
+    state;
   const toggleCheckBox = () => {
-    setIsChecked(!isChecked);
+    updateState({ isChecked: !isChecked });
   };
 
   const selectDoc = async () => {
     try {
-      const doc = await DocumentPicker.pick({
+      const doc: DocumentPickerResponse[] = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf],
         allowMultiSelection: false,
       });
-      setSelectedPdf(doc[0]?.name || null);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled the upload', err);
-      } else {
-        console.log('Document picker error: ', err);
+
+      if (doc && doc.length > 0 && doc[0]?.size > 5000010) {
+        showErrorToast(CommonStrings.largeFileSize);
+        return;
       }
+      updateState({ selectedPdf: doc || null });
+    } catch (err) {
+      /* empty */
     }
   };
 
   const removePdf = () => {
-    setSelectedPdf(null);
+    updateState({ selectedPdf: null });
   };
 
+  const getPreferredContractor = async () => {
+    updateState({ loader: true });
+    try {
+      const response = await preferredContractor({
+        cust_id: user.userId,
+      });
+      updateState({
+        isPreferredContractor: response?.data?.length > 0 ? true : false,
+        contractors: response?.data || [],
+      });
+      updateState({ loader: false });
+    } catch (error: any) {
+      showErrorToast(error);
+      updateState({ loader: false });
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getPreferredContractor();
+    }, []),
+  );
+
+  const onPressGenerateReport = () => {
+    if (!selectedPdf) {
+      showErrorToast(CommonStrings.selectPdfFile);
+      return;
+    }
+    navigate(ROUTES.PROCESSREPORT, {
+      pdfDetails: selectedPdf,
+      contractors: contractors,
+      isChecked: isChecked,
+      isPreferredContractor: isPreferredContractor,
+    });
+  };
   return (
     <Column style={styles.mainContainer}>
       <CustomHeader title={CommonStrings.addReport} leftIcon={<BackIcon />} />
@@ -59,7 +109,7 @@ const AddReports = () => {
                 <Text
                   style={[typography.h5, styles.uploadPdfText]}
                   numberOfLines={1}>
-                  {selectedPdf}
+                  {selectedPdf[0]?.name}
                 </Text>
               </Row>
               <Touchable onPress={removePdf} hitSlop={5}>
@@ -85,7 +135,7 @@ const AddReports = () => {
         )}
       </Column>
       <Column style={styles.bottomContainer}>
-        {!isChecked && (
+        {isPreferredContractor ? (
           <>
             <Row style={styles.checkContainer}>
               <Touchable onPress={toggleCheckBox}>
@@ -99,13 +149,14 @@ const AddReports = () => {
               {CommonStrings.noteWhenSelected}
             </Text>
           </>
-        )}
-        {isChecked && (
+        ) : (
           <>
             <PrimaryButton
               containerStyle={styles.generateButtonStyle}
               title={CommonStrings.preferredContractor}
-              onPress={() => {}}
+              onPress={() => {
+                navigate(ROUTES.CONTRACTORSDETAILS, { isNew: true });
+              }}
             />
             <Text style={[typography.h6, styles.reportGenerateText]}>
               {CommonStrings.reportGenerated}
@@ -115,12 +166,10 @@ const AddReports = () => {
 
         <PrimaryButton
           title={CommonStrings.generateReport}
-          onPress={() => {
-            navigate(ROUTES.PROCESSREPORT);
-          }}
-          disabled={!selectedPdf}
+          onPress={onPressGenerateReport}
         />
       </Column>
+      {loader && <CustomLoader customContainerStyle={styles.loaderStyle} />}
     </Column>
   );
 };

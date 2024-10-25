@@ -2,14 +2,10 @@ import React, { useEffect, useState } from 'react';
 import SavedTab from './savedTab';
 import RecentTab from './recentTab';
 import SharedTab from './sharedTab';
-import { StyleSheet } from 'react-native';
-import { colors } from '@inspectreplyai/themes';
-import Search from './../../assets/svg/search.svg';
-import { CustomTabBar } from './components/customTabBar';
+import { CustomTabBar } from '@inspectreplyai/components/customTabBar';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
-import { CommonStrings, normalize, vh, vw } from '@inspectreplyai/utils';
-import CustomInput from '@inspectreplyai/components/textInputs/customInput';
+import { CommonStrings } from '@inspectreplyai/utils';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import UserGuide from '../userGuide';
 import {
@@ -18,13 +14,17 @@ import {
 } from '@inspectreplyai/hooks/reduxHooks';
 import { getProfile } from '@inspectreplyai/redux/auth/action';
 import { SET_DATA } from '@inspectreplyai/redux/auth/AuthSlice';
+import FloatingButton from '@inspectreplyai/components/floatingButton';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
+import { styles } from './styles';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Reports: React.FC = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(false);
   const [step, setStep] = useState(1);
-  const [search, setSearch] = useState('');
+
   const { user, isSignUp } = useAppSelector((store) => store.AuthSlice);
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
@@ -63,37 +63,20 @@ const Reports: React.FC = () => {
           step={step}
         />
       )}
-      <CustomHeader title='Reports' />
-      <CustomInput
-        RightIcon={Search}
-        placeholder={CommonStrings.searchReports}
-        customStyle={styles.customTextStyle}
-        placeholderTextColor={colors.white}
-        value={search}
-        onChangeText={(text) => setSearch(text)}
-      />
+      <CustomHeader title={CommonStrings.reports} />
+
       <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
-        <Tab.Screen name='Recent' component={RecentTab} />
-        <Tab.Screen name='Saved' component={SavedTab} />
-        <Tab.Screen name='Shared' component={SharedTab} />
+        <Tab.Screen name={CommonStrings.recent} component={RecentTab} />
+        <Tab.Screen name={CommonStrings.saved} component={SavedTab} />
+        <Tab.Screen name={CommonStrings.shared} component={SharedTab} />
       </Tab.Navigator>
+      <FloatingButton
+        onPress={() => {
+          navigate(ROUTES.ADDREPORTS);
+        }}
+      />
     </Column>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.primaryBalck,
-    paddingHorizontal: vw(16),
-  },
-  customTextStyle: {
-    borderRadius: normalize(24),
-    marginBottom: vh(16),
-    backgroundColor: colors.black27282B,
-    height: normalize(40),
-    borderWidth: 0,
-  },
-});
 
 export default Reports;

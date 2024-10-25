@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
 
     marginTop: normalize(12),
     borderColor: colors.white,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     borderRadius: 0,
   },
   categoryContainer: {
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     paddingHorizontal: 16,
   },
   deleteDesc: {

@@ -3,7 +3,7 @@ import { Text, TouchableHighlight } from 'react-native';
 
 import { styles } from './styles';
 import Dot from '@inspectreplyai/assets/svg/dot.svg';
-import { CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Row from '@inspectreplyai/components/general/Row';
 import { colors, typography } from '@inspectreplyai/themes';
@@ -11,11 +11,12 @@ import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
 import Column from '@inspectreplyai/components/general/Column';
 import { RepairItemProps, TooltipContentProps } from './@types';
 import Touchable from '@inspectreplyai/components/general/Touchable';
+import { ReportActions, ReportsTopTabs } from '@inspectreplyai/utils/Enums';
 
 const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
   <Column style={styles.tooltipContent}>
     <TouchableHighlight
-      onPress={onClose}
+      onPress={() => onClose(ReportActions.FAVORITE)}
       underlayColor={colors.primaryBlue}
       style={styles.firstOption}>
       <Text style={[typography.h5, styles.tooltipOption]}>
@@ -23,7 +24,7 @@ const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
       </Text>
     </TouchableHighlight>
     <TouchableHighlight
-      onPress={onClose}
+      onPress={() => onClose(ReportActions.SHARE)}
       underlayColor={colors.primaryBlue}
       style={styles.lastOption}>
       <Text style={[typography.h5, styles.tooltipOption]}>
@@ -33,21 +34,28 @@ const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
   </Column>
 );
 
-export const ReportsCard: React.FC<RepairItemProps> = ({ item }) => {
+export const ReportsCard: React.FC<RepairItemProps> = ({
+  item,
+  onTooltipAction,
+  tab,
+}) => {
   const [tooltipVisibleId, setTooltipVisibleId] = useState<string | null>(null);
-  const isSelected = tooltipVisibleId === item.id;
+  const isSelected = tooltipVisibleId === item._id;
 
   return (
     <Column style={styles.itemContainer}>
       <Row style={styles.itemHeader}>
         <Text style={[typography.body, styles.dateText]}>
-          {`${CommonStrings.dateCreated}${item?.dateCreated}`}
+          {`${CommonStrings.dateCreated}${CommonFunctions.dateFormatter(item?.createdAt)}`}
         </Text>
         <Tooltip
           isVisible={isSelected}
           content={
             <TooltipContent
-              onClose={() => setTooltipVisibleId(null)}
+              onClose={(type: ReportActions) => {
+                setTooltipVisibleId(null);
+                onTooltipAction(type, item._id);
+              }}
               isSelected={isSelected}
             />
           }
@@ -56,26 +64,30 @@ export const ReportsCard: React.FC<RepairItemProps> = ({ item }) => {
           contentStyle={styles.tooltipWrapper}
           backgroundColor={colors.transparent}
           backgroundStyle={styles.bgStyle}>
-          <Touchable
-            onPress={() => setTooltipVisibleId(isSelected ? null : item.id)}>
-            <Dot />
-          </Touchable>
+          {tab === ReportsTopTabs.RECENT && (
+            <Touchable
+              onPress={() =>
+                setTooltipVisibleId(isSelected ? null : item?._id)
+              }>
+              <Dot />
+            </Touchable>
+          )}
         </Tooltip>
       </Row>
       <Text style={[typography.h4, styles.addressText]} numberOfLines={2}>
         {item.address}
       </Text>
       <Text style={[typography.h5, styles.costText]}>
-        {`${CommonStrings.totalRepairCost} $${item.cost}`}
+        {`${CommonStrings.totalRepairCost} ${CommonFunctions.formatCurrency(item.estimated_price)}`}
       </Text>
       <Row style={styles.itemFooter}>
         <Text style={[typography.body, styles.sharedText]}>
-          {`${CommonStrings.lastShared} ${item.lastShared}`}
+          {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item.last_shared)}`}
         </Text>
         <Touchable>
           <Row>
             <Text style={[typography.body, styles.viewReportText]}>
-              {CommonStrings.viewFullReport}
+              {CommonStrings.purchaseFullReport}
             </Text>
             <Arrow />
           </Row>

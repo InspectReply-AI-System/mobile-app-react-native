@@ -25,5 +25,10 @@ export const endpoints = {
   },
   reports: {
     reports: '/api/reports/create',
+    recentReports: '/api/recent-reports',
+    favoriteReports: '/api/favorite-reports',
+    sharedReports: '/api/shared-reports',
+    addShareReports: '/api/share-report',
+    addFavoriteReports: '/api/add-fav-report',
   },
 };

@@ -1,7 +1,8 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { ContractorState } from './contractorSlice';
+
 import { getCategory, getContractors, getStates } from './action';
 import { showErrorToast } from '@inspectreplyai/components/toast';
+import { ContractorState } from './@types';
 
 export const contractorExtraReducer = (
   builder: ActionReducerMapBuilder<ContractorState>,

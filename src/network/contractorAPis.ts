@@ -51,7 +51,11 @@ const getCitiesData = async (payload: {
   return await postApiCall(endpoints.contractors.getCities, payload);
 };
 
-const getContractorslist = async (payload: { page: number; limit: number }) => {
+const getContractorslist = async (payload: {
+  page?: number;
+  limit?: number;
+  search?: string;
+}) => {
   return await getApiCall(endpoints.contractors.contractors, payload);
 };
 

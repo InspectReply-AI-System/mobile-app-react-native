@@ -178,4 +178,5 @@ export const CommonStrings = {
   recent: 'Recent',
   shared: 'Shared',
   saved: 'Saved',
+  purchaseFullReport: 'Purchase Full Report',
 };

@@ -45,7 +45,7 @@ export const getContractors = createAsyncThunk(
     },
     thunkAPI,
   ) => {
-    let params = {
+    const params = {
       ...(payload.page && { page: payload.page }),
       ...(payload.limit && { limit: payload.limit }),
       ...(payload.search && { search: payload.search }),

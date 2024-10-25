@@ -9,7 +9,7 @@ import { CommonStrings } from '@inspectreplyai/utils';
 import Loader from '@inspectreplyai/components/loader';
 import { goBack, reset } from '@inspectreplyai/utils/navigationUtils';
 import Column from '@inspectreplyai/components/general/Column';
-import { generateReport } from '@inspectreplyai/network/reports';
+import { generateReport } from '@inspectreplyai/network/reportsApi';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import { setContentType } from '@inspectreplyai/network/networkServices';

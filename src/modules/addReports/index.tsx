@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import Column from '@inspectreplyai/components/general/Column';
 import CustomHeader from '@inspectreplyai/components/header';
@@ -25,6 +25,7 @@ import { preferredContractor } from '@inspectreplyai/network/contractorAPis';
 import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AddReports = () => {
   const { user } = useAppSelector((store) => store.AuthSlice);
@@ -78,9 +79,11 @@ const AddReports = () => {
       updateState({ loader: false });
     }
   };
-  useEffect(() => {
-    getPreferredContractor();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getPreferredContractor();
+    }, []),
+  );
 
   const onPressGenerateReport = () => {
     if (!selectedPdf) {

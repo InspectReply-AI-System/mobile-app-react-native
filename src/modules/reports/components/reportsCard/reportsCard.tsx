@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 
 import { styles } from './styles';
+import ROUTES from '@inspectreplyai/routes/routes';
 import Dot from '@inspectreplyai/assets/svg/dot.svg';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Row from '@inspectreplyai/components/general/Row';
 import { colors, typography } from '@inspectreplyai/themes';
 import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
 import Column from '@inspectreplyai/components/general/Column';
 import { RepairItemProps, TooltipContentProps } from './@types';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import Touchable from '@inspectreplyai/components/general/Touchable';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { ReportActions, ReportsTopTabs } from '@inspectreplyai/utils/Enums';
 
 const TooltipContent: React.FC<TooltipContentProps> = ({ onClose }) => (
@@ -84,7 +86,10 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
         <Text style={[typography.body, styles.sharedText]}>
           {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item.last_shared)}`}
         </Text>
-        <Touchable>
+        <Touchable
+          onPress={() => {
+            navigate(ROUTES.REPORTSUMMARY);
+          }}>
           <Row>
             <Text style={[typography.body, styles.viewReportText]}>
               {CommonStrings.purchaseFullReport}

@@ -20,6 +20,8 @@ const ROUTES = {
   CONTRACTORSDETAILS: 'contractorDetails',
   PASSWORDSCREEN: 'password',
   PROFILENAVIGATOR: 'profileNavigator',
+  CHECKOUTSCREEN: 'checkout',
+  REPORTSUMMARY: 'reportSummary',
 };
 
 export default ROUTES;

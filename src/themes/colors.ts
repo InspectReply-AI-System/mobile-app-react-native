@@ -20,6 +20,11 @@ const colors = {
   grey313C42: '#313C42',
   black1E1E1E: '#1E1E1E',
   grey6F6F70: '#6F6F70',
+  yellow: '#FFC130',
+  green: '#92E546',
+  grey303238: '#303238',
+  blue465B85: '#465B85',
+  blue75BEF4: '#75BEF4',
 };
 
 export default colors;

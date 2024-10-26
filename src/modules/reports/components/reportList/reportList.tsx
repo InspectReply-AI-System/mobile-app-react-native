@@ -1,5 +1,5 @@
 import { Alert, FlatList, RefreshControl } from 'react-native';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import {
   useAppDispatch,
@@ -138,7 +138,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
     }
   };
 
-  const renderReportsCards = useCallback(({ item }: ReportListItemProps) => {
+  const renderReportsCards = ({ item }: ReportListItemProps) => {
     return (
       <ReportsCard
         item={item}
@@ -147,7 +147,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
         onPressFullReport={onPressFullReport}
       />
     );
-  }, []);
+  };
 
   const handleRefresh = () => {
     updateState({ refresh: true });

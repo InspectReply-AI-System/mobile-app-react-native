@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiConfig } from '../config';
+import { CommonStrings } from '@inspectreplyai/utils';
 
 const $http: AxiosInstance = axios.create({
   baseURL: apiConfig.BASE_URL,
@@ -42,7 +43,7 @@ $http.interceptors.response.use(
     return Promise.reject(
       error?.response?.data?.msg ||
         error?.response?.data?.message ||
-        'Something went wrong',
+        CommonStrings.someThingWentWrong,
     );
   },
 );

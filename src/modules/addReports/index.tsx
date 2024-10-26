@@ -4,7 +4,6 @@ import React, { useCallback } from 'react';
 import Column from '@inspectreplyai/components/general/Column';
 import CustomHeader from '@inspectreplyai/components/header';
 import { typography } from '@inspectreplyai/themes';
-import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
 import { CommonStrings } from '@inspectreplyai/utils';
 import Upload from '@inspectreplyai/assets/svg/Upload.svg';
 import Touchable from '@inspectreplyai/components/general/Touchable';
@@ -26,6 +25,9 @@ import { useAppSelector } from '@inspectreplyai/hooks/reduxHooks';
 import { showErrorToast } from '@inspectreplyai/components/toast';
 import CustomLoader from '@inspectreplyai/components/loader/customLoader';
 import { useFocusEffect } from '@react-navigation/native';
+import { Icons } from '@inspectreplyai/themes/appImages';
+import { generateReport } from '@inspectreplyai/network/reportsApi';
+import { setContentType } from '@inspectreplyai/network/networkServices';
 
 const AddReports = () => {
   const { user } = useAppSelector((store) => store.AuthSlice);
@@ -85,21 +87,42 @@ const AddReports = () => {
     }, []),
   );
 
+  const generateNewReport = async () => {
+    const pdfFile = selectedPdf[0];
+
+    if (!pdfFile || !user) {
+      return;
+    }
+    updateState({ loader: true });
+    try {
+      const result = await generateReport({
+        report_file: {
+          uri: pdfFile?.uri,
+          name: pdfFile?.name,
+          type: pdfFile.type,
+        },
+        customerId: user.userId,
+        ...(isChecked && { contractors: contractors || [] }),
+      });
+      setContentType(null);
+      updateState({ loader: false });
+      navigate(ROUTES.PROCESSREPORT, { report_id: result?.data?.report?.id });
+    } catch (error: any) {
+      setContentType(null);
+      updateState({ loader: false });
+      showErrorToast(error);
+    }
+  };
   const onPressGenerateReport = () => {
     if (!selectedPdf) {
       showErrorToast(CommonStrings.selectPdfFile);
       return;
     }
-    navigate(ROUTES.PROCESSREPORT, {
-      pdfDetails: selectedPdf,
-      contractors: contractors,
-      isChecked: isChecked,
-      isPreferredContractor: isPreferredContractor,
-    });
+    generateNewReport();
   };
   return (
     <Column style={styles.mainContainer}>
-      <CustomHeader title={CommonStrings.addReport} leftIcon={<BackIcon />} />
+      <CustomHeader title={CommonStrings.addReport} leftIcon={Icons.backIcon} />
       <Column style={styles.subContainer}>
         {selectedPdf ? (
           <Column>

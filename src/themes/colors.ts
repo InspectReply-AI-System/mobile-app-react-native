@@ -25,6 +25,8 @@ const colors = {
   grey303238: '#303238',
   blue465B85: '#465B85',
   blue75BEF4: '#75BEF4',
+  whiteFFFFFFA6: '#FFFFFFA6',
+  blue296FA973: '#296FA973',
 };
 
 export default colors;

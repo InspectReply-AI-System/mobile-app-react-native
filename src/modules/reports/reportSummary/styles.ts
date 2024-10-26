@@ -1,25 +1,34 @@
-import { colors } from '@inspectreplyai/themes';
+import { colors, typography } from '@inspectreplyai/themes';
 import { normalize, vh, vw } from '@inspectreplyai/utils';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  accessFullReportTxt: { marginTop: vh(12), alignSelf: 'center' },
+  accessFullReportTxt: {
+    ...typography.subBody1,
+    marginTop: vh(12),
+    alignSelf: 'center',
+  },
   cancelBtnStyle: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
     borderWidth: 1,
     borderColor: colors.primaryBlue,
   },
-  contractorTxt: { marginTop: vh(20), alignSelf: 'center' },
+  contractorTxt: { ...typography.h5, marginTop: vh(20), alignSelf: 'center' },
   dollarView: {
     position: 'absolute',
     bottom: vh(-32),
     alignSelf: 'center',
     zIndex: 1,
   },
-  estimatedTxt: { marginTop: vh(18), alignSelf: 'center' },
+  estimatedTxt: { ...typography.h5, marginTop: vh(18), alignSelf: 'center' },
+  iconStyle: { height: vh(64), width: vw(64) },
   mainView: { paddingHorizontal: vw(16) },
-  numberTxt: { alignSelf: 'center', marginTop: vh(40) },
-  purchasePrizeTxt: { alignSelf: 'center', marginTop: vh(62) },
+  numberTxt: { ...typography.h2, alignSelf: 'center', marginTop: vh(40) },
+  purchasePrizeTxt: {
+    ...typography.h2,
+    alignSelf: 'center',
+    marginTop: vh(62),
+  },
   reportSvgView: {
     position: 'absolute',
     top: vh(-32),

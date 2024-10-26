@@ -18,4 +18,5 @@ export interface RepairItemProps {
   };
   onTooltipAction: (type: ReportActions, reportId: string) => void;
   tab: ReportsTopTabs;
+  onPressFullReport: (id: string) => void;
 }

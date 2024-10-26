@@ -178,6 +178,9 @@ const SignUp = () => {
   const onPressSignIn = () => {
     navigate(ROUTES.LOGIN);
   };
+  const onPressTerms = () => {
+    navigate(ROUTES.WEBVIEW);
+  };
 
   return (
     <Column style={styles.container}>
@@ -285,13 +288,15 @@ const SignUp = () => {
               <SvgIcon.UnselectedCheckBox />
             )}
           </Touchable>
-          <Text style={[typography.body, styles.iAcceptText]}>
+          <Text
+            onPress={onPressTerms}
+            style={[typography.body, styles.iAcceptText]}>
             {CommonStrings.iaccept}
             <Text style={styles.underlineText}>
               {CommonStrings.termsAndConditions}
             </Text>
             &
-            <Text style={styles.underlineText}>
+            <Text onPress={onPressTerms} style={styles.underlineText}>
               {CommonStrings.privacyPolicy}
             </Text>
           </Text>

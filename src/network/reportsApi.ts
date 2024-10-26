@@ -61,10 +61,15 @@ const handleReportAction = async (
   return await postApiCall(endpoint, params);
 };
 
+const reportSummary = async (report_id: string) => {
+  return await postApiCall(endpoints.reports.reportSummary, { report_id });
+};
+
 export {
   generateReport,
   recentReports,
   favoriteReports,
   sharedReports,
   handleReportAction,
+  reportSummary,
 };

@@ -5,6 +5,7 @@ import {
 } from '@inspectreplyai/network/reportsApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { GetReportsPayload } from './@types';
+import { showErrorToast } from '@inspectreplyai/components/toast';
 
 const sliceName = 'reports';
 
@@ -14,7 +15,8 @@ const getRecentReport = createAsyncThunk(
     try {
       const response = await recentReports(payload);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -26,7 +28,8 @@ const getSharedReport = createAsyncThunk(
     try {
       const response = await sharedReports(payload);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -38,7 +41,8 @@ const getFavoriteReport = createAsyncThunk(
     try {
       const response = await favoriteReports(payload);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },

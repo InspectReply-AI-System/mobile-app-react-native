@@ -21,6 +21,7 @@ import ReportIcon from '@inspectreplyai/assets/svg/reportIcon.svg';
 import Dollar from '@inspectreplyai/assets/svg/dollar.svg';
 import RightIcon from '@inspectreplyai/assets/svg/rightMark.svg';
 import Wifi from '@inspectreplyai/assets/svg/wifi.svg';
+import Share from '@inspectreplyai/assets/svg/share.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -68,4 +69,5 @@ export const SvgIcon = {
   Dollar,
   RightIcon,
   Wifi,
+  Share,
 };

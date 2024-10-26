@@ -1,7 +1,6 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { ReportState } from './@types';
 import { getFavoriteReport, getRecentReport, getSharedReport } from './action';
-import { showErrorToast } from '@inspectreplyai/components/toast';
 
 export const extraReducer = (builder: ActionReducerMapBuilder<ReportState>) => {
   builder
@@ -15,10 +14,10 @@ export const extraReducer = (builder: ActionReducerMapBuilder<ReportState>) => {
     })
     .addCase(getRecentReport.rejected, (state: ReportState, action) => {
       state.loading = false;
+      state.recentReports = [];
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
   builder
     .addCase(getFavoriteReport.pending, (state: ReportState) => {
@@ -31,10 +30,10 @@ export const extraReducer = (builder: ActionReducerMapBuilder<ReportState>) => {
     })
     .addCase(getFavoriteReport.rejected, (state: ReportState, action) => {
       state.loading = false;
+      state.savedReports = [];
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 
   builder
@@ -48,9 +47,9 @@ export const extraReducer = (builder: ActionReducerMapBuilder<ReportState>) => {
     })
     .addCase(getSharedReport.rejected, (state: ReportState, action) => {
       state.loading = false;
+      state.sharedReports = [];
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 };

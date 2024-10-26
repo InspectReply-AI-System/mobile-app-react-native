@@ -22,6 +22,7 @@ const ROUTES = {
   PROFILENAVIGATOR: 'profileNavigator',
   CHECKOUTSCREEN: 'checkout',
   REPORTSUMMARY: 'reportSummary',
+  WEBVIEW: 'webView',
 };
 
 export default ROUTES;

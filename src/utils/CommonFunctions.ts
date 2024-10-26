@@ -1,4 +1,10 @@
-import { Platform, Keyboard, UIManager, LayoutAnimation } from 'react-native';
+import {
+  Platform,
+  Keyboard,
+  UIManager,
+  LayoutAnimation,
+  Share,
+} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { getUniqueId } from 'react-native-device-info';
 import moment from 'moment';
@@ -196,8 +202,30 @@ const formatCurrency = (amount: number = 0) => {
   return Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 0,
+    minimumFractionDigits: amount % 1 ? 2 : 0,
+    maximumFractionDigits: 2,
   }).format(amount);
+};
+
+const share = async ({
+  message,
+  onShare,
+}: {
+  message: string;
+  onShare: () => void;
+}) => {
+  const result = await Share.share({
+    message: message,
+  });
+  if (result.action === Share.sharedAction) {
+    if (result.activityType) {
+      onShare();
+    } else {
+      // shared
+    }
+  } else if (result.action === Share.dismissedAction) {
+    // dismissed
+  }
 };
 
 export default {
@@ -218,4 +246,5 @@ export default {
   convertDataAccodingToFlatList,
   dateFormatter,
   formatCurrency,
+  share,
 };

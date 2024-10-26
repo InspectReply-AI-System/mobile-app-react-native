@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: colors.black,
   },
+  buttonTitleStyle: { color: colors.whiteFFFFFFA6 },
   card: {
     borderRadius: normalize(24),
     marginVertical: vh(10),
@@ -55,6 +56,10 @@ export const styles = StyleSheet.create({
     paddingVertical: vh(32),
     paddingHorizontal: vw(24),
     marginTop: vh(24),
+  },
+  primaryButton: {
+    borderWidth: 0,
+    backgroundColor: colors.blue296FA973,
   },
   selectButton: {
     borderWidth: 1,

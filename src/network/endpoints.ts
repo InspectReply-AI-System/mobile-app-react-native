@@ -30,5 +30,9 @@ export const endpoints = {
     sharedReports: '/api/shared-reports',
     addShareReports: '/api/share-report',
     addFavoriteReports: '/api/add-fav-report',
+    reportSummary: '/api/report-summary',
+  },
+  webview: {
+    terms: 'https://www.inspectreply-ai.com/terms',
   },
 };

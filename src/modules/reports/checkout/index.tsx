@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 
 import { styles } from './styles';
 import Row from '@inspectreplyai/components/general/Row';
 import { CommonStrings, vh } from '@inspectreplyai/utils';
-import { SvgIcon } from '@inspectreplyai/themes/appImages';
+import { Icons, SvgIcon } from '@inspectreplyai/themes/appImages';
 import { colors, typography } from '@inspectreplyai/themes';
 import CustomHeader from '@inspectreplyai/components/header';
 import Column from '@inspectreplyai/components/general/Column';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
+import ScrollContainer from '@inspectreplyai/components/general/ScrollContainer';
+import { reset } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
 
 const CheckoutScreen = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -17,7 +20,7 @@ const CheckoutScreen = () => {
     'useCredit' | 'purchaseMore' | null
   >(null);
   const [isPrimaryButtonEnabled, setIsPrimaryButtonEnabled] = useState(false);
-
+  const accessFullReport = true;
   // Effect to enable the PrimaryButton if any selection is made
   useEffect(() => {
     if (selectedOption || selectedButton) {
@@ -52,6 +55,8 @@ const CheckoutScreen = () => {
       <FlatList
         bounces={false}
         data={includedItems}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <Row style={{ alignItems: 'center', marginTop: vh(8) }}>
@@ -176,15 +181,9 @@ const CheckoutScreen = () => {
 
   return (
     <>
-      <CustomHeader
-        title={CommonStrings.checkout}
-        leftIcon={<SvgIcon.BackIcon />}
-      />
-      <View style={styles.container}>
-        <FullReportData />
-
-        <PurchaseReportData />
-
+      <CustomHeader title={CommonStrings.checkout} leftIcon={Icons.backIcon} />
+      <ScrollContainer style={styles.container}>
+        {accessFullReport ? <FullReportData /> : <PurchaseReportData />}
         <Touchable
           style={[
             styles.card,
@@ -228,11 +227,19 @@ const CheckoutScreen = () => {
         <IncludedSection />
 
         <PrimaryButton
+          {...(!isPrimaryButtonEnabled
+            ? { titleStyle: styles.buttonTitleStyle }
+            : {})}
+          {...(!isPrimaryButtonEnabled
+            ? { containerStyle: styles.primaryButton }
+            : {})}
           title={CommonStrings.purchase}
           disabled={!isPrimaryButtonEnabled}
-          onPress={() => {}}
+          onPress={() => {
+            reset(ROUTES.BOTTOMTAB);
+          }}
         />
-      </View>
+      </ScrollContainer>
     </>
   );
 };

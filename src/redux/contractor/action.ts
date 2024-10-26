@@ -6,6 +6,7 @@ import {
   getStatesData,
 } from '@inspectreplyai/network/contractorAPis';
 import { CommonFunctions } from '@inspectreplyai/utils';
+import { showErrorToast } from '@inspectreplyai/components/toast';
 const sliceName = 'contractor';
 
 export const getStates = createAsyncThunk(
@@ -15,7 +16,8 @@ export const getStates = createAsyncThunk(
     try {
       const response = await getStatesData();
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -28,7 +30,8 @@ export const getCategory = createAsyncThunk(
     try {
       const response = await getCategoryData();
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -56,8 +59,9 @@ export const getContractors = createAsyncThunk(
       return CommonFunctions.convertDataAccodingToFlatList(
         response.data.contractors,
       );
-    } catch (error) {
+    } catch (error: any) {
       payload?.success();
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },

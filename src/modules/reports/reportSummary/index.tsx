@@ -1,61 +1,78 @@
 import { Text } from 'react-native';
 import React from 'react';
 import CustomHeader from '@inspectreplyai/components/header';
-import { SvgIcon } from '@inspectreplyai/themes/appImages';
+import { Icons, SvgIcon } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import { typography } from '@inspectreplyai/themes';
-import { CommonStrings } from '@inspectreplyai/utils';
-import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
+import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
+import Svg from '@inspectreplyai/components/general/Svg';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { ReportDetail, RouteParams } from './@types';
 
 const ReportSummary = () => {
+  const route = useRoute<RouteProp<{ params: RouteParams }, 'params'>>();
+  const paramData = route.params as RouteParams;
+
+  const reportSummary: ReportDetail = paramData?.reportDetail;
+
+  const onPressAccessFullReport = () => {
+    navigate(ROUTES.CHECKOUTSCREEN);
+  };
+
+  const onPressCancel = () => {
+    reset(ROUTES.BOTTOMTAB);
+  };
   return (
     <>
       <CustomHeader
         title={CommonStrings.reportSummary}
-        leftIcon={<SvgIcon.BackIcon />}
+        leftIcon={Icons.backIcon}
+        onLeftPress={onPressCancel}
       />
       <Column style={styles.mainView}>
         <Column style={styles.subView}>
           <Column style={styles.reportSvgView}>
-            <SvgIcon.ReportIcon />
+            <Svg Component={SvgIcon.ReportIcon} imageStyle={styles.iconStyle} />
           </Column>
           <Column style={styles.textView1}>
-            <Text style={[typography.h2, styles.numberTxt]}>{'06'}</Text>
-            <Text style={[typography.h5, styles.contractorTxt]}>
+            <Text style={styles.numberTxt}>
+              {reportSummary?.contractors?.length < 10
+                ? reportSummary?.contractors?.length == 0
+                  ? 0
+                  : '0' + reportSummary?.contractors?.length
+                : reportSummary?.contractors?.length}
+            </Text>
+            <Text style={styles.contractorTxt}>
               {CommonStrings.contractorRecommended}
             </Text>
-            <Text style={[typography.subBody1, styles.accessFullReportTxt]}>
+            <Text style={styles.accessFullReportTxt}>
               {CommonStrings.accessReport}
             </Text>
           </Column>
         </Column>
         <Column style={styles.subView1}>
           <Column style={styles.textView2}>
-            <Text style={[typography.h2, styles.purchasePrizeTxt]}>
-              {'$1,600'}
+            <Text style={styles.purchasePrizeTxt}>
+              {CommonFunctions.formatCurrency(reportSummary.estimated_price)}
             </Text>
-            <Text style={[typography.h5, styles.estimatedTxt]}>
+            <Text style={styles.estimatedTxt}>
               {CommonStrings.estimatedCost}
             </Text>
           </Column>
           <Column style={styles.dollarView}>
-            <SvgIcon.Dollar />
+            <Svg Component={SvgIcon.Dollar} imageStyle={styles.iconStyle} />
           </Column>
         </Column>
         <PrimaryButton
           title={CommonStrings.accessFullReport}
-          onPress={() => {
-            navigate(ROUTES.CHECKOUTSCREEN);
-          }}
+          onPress={onPressAccessFullReport}
         />
         <PrimaryButton
           title={CommonStrings.cancel}
-          onPress={() => {
-            goBack();
-          }}
+          onPress={onPressCancel}
           containerStyle={styles.cancelBtnStyle}
         />
       </Column>

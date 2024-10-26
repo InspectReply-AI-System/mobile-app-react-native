@@ -1,7 +1,5 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-
 import { getCategory, getContractors, getStates } from './action';
-import { showErrorToast } from '@inspectreplyai/components/toast';
 import { ContractorState } from './@types';
 
 export const contractorExtraReducer = (
@@ -22,7 +20,6 @@ export const contractorExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 
   builder
@@ -40,7 +37,6 @@ export const contractorExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 
   builder
@@ -58,6 +54,5 @@ export const contractorExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 };

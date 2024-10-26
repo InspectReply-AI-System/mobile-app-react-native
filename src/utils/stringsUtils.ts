@@ -193,4 +193,10 @@ export const CommonStrings = {
   shared: 'Shared',
   saved: 'Saved',
   purchaseFullReport: 'Purchase Full Report',
+  someThingWentWrong: 'Something went wrong',
+  searchRecent: 'Search recent',
+  searchSaved: 'Search saved',
+  searchShared: 'Search shared',
+  termsAndPrivacy: 'Terms of Service and Privacy Policy',
+  done: 'Done',
 };

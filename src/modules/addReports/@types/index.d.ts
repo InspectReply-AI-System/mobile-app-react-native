@@ -1,7 +1,5 @@
 interface ReportRouteParams {
-  pdfDetails: { uri: string; name: string; type: string }[];
-  isChecked?: boolean;
-  contractors?: any[];
+  report_id: string;
 }
 
 // Get params type based on route name (assuming your route name is 'ProcessReport')

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 
 import { styles } from './styles';
-import ROUTES from '@inspectreplyai/routes/routes';
 import Dot from '@inspectreplyai/assets/svg/dot.svg';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import Row from '@inspectreplyai/components/general/Row';
@@ -10,7 +9,6 @@ import { colors, typography } from '@inspectreplyai/themes';
 import Arrow from '@inspectreplyai/assets/svg/rightArrow.svg';
 import Column from '@inspectreplyai/components/general/Column';
 import { RepairItemProps, TooltipContentProps } from './@types';
-import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import Touchable from '@inspectreplyai/components/general/Touchable';
 import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
 import { ReportActions, ReportsTopTabs } from '@inspectreplyai/utils/Enums';
@@ -40,6 +38,7 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
   item,
   onTooltipAction,
   tab,
+  onPressFullReport,
 }) => {
   const [tooltipVisibleId, setTooltipVisibleId] = useState<string | null>(null);
   const isSelected = tooltipVisibleId === item._id;
@@ -86,10 +85,7 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
         <Text style={[typography.body, styles.sharedText]}>
           {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item.last_shared)}`}
         </Text>
-        <Touchable
-          onPress={() => {
-            navigate(ROUTES.REPORTSUMMARY);
-          }}>
+        <Touchable onPress={() => onPressFullReport(item._id)}>
           <Row>
             <Text style={[typography.body, styles.viewReportText]}>
               {CommonStrings.purchaseFullReport}
@@ -102,17 +98,19 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
   );
 };
 
-export const EmptyListComponent: React.FC = () => {
+export const EmptyListComponent = ({ loading }: { loading: boolean }) => {
   return (
     <Column style={styles.emptyContainer}>
-      <Column style={styles.emptyBox}>
-        <Text style={[typography.h5, styles.emptyTextTitle]}>
-          {CommonStrings.noReports}
-        </Text>
-        <Text style={[typography.h6, styles.emptyTextSubtitle]}>
-          {CommonStrings.emptyContent}
-        </Text>
-      </Column>
+      {!loading && (
+        <Column style={styles.emptyBox}>
+          <Text style={[typography.h5, styles.emptyTextTitle]}>
+            {CommonStrings.noReports}
+          </Text>
+          <Text style={[typography.h6, styles.emptyTextSubtitle]}>
+            {CommonStrings.emptyContent}
+          </Text>
+        </Column>
+      )}
     </Column>
   );
 };

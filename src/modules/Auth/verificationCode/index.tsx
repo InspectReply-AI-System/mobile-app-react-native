@@ -60,7 +60,7 @@ const VerifyCode = () => {
       showSuccessToast(result?.data?.msg);
       popScreen();
       navigate(ROUTES.SETPASSWORD, body);
-    } catch (error) {
+    } catch (error: any) {
       showErrorToast(error);
       updateState({ loading: false });
     }

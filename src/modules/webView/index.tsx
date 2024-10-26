@@ -44,7 +44,7 @@ const WebViewer: React.FC = () => {
           {title || CommonStrings.termsAndPrivacy}
         </Text>
         <Touchable onPress={handleGoBack} style={styles.doneButton}>
-          <Text>{CommonStrings.done}</Text>
+          <Text style={styles.done}>{CommonStrings.done}</Text>
         </Touchable>
       </Row>
       <WebView

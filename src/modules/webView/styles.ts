@@ -7,6 +7,11 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  done: {
+    color: colors.primaryBlue,
+    fontSize: normalize(14),
+    fontFamily: fonts.MEDIUM,
+  },
   doneButton: {
     backgroundColor: colors.white,
     alignItems: 'center',

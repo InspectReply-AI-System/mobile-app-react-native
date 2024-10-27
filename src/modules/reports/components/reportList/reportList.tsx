@@ -31,6 +31,7 @@ import { ReportListItemProps, ReportListProps } from './@types';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import CustomLoader from '@inspectreplyai/components/loader/customLoader';
+import { SCREEN_HEIGHT } from '@inspectreplyai/utils/Dimensions';
 
 const ReportList = ({ repairs, tab }: ReportListProps) => {
   const [state, updateState] = useSimpleReducer({
@@ -185,7 +186,14 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
         style={styles.list}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => <EmptyListComponent loading={loading} />}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[
+          styles.contentContainer,
+          {
+            ...(repairs?.length > 0
+              ? { minHeight: SCREEN_HEIGHT / 2 }
+              : { flex: 0.4 }),
+          },
+        ]}
       />
       {loading && <CustomLoader customContainerStyle={styles.loaderStyle} />}
     </Column>

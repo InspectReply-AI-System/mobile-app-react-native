@@ -86,7 +86,7 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
           {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item.last_shared)}`}
         </Text>
         <Touchable onPress={() => onPressFullReport(item._id)}>
-          <Row>
+          <Row style={{ alignItems: 'center' }}>
             <Text style={[typography.body, styles.viewReportText]}>
               {CommonStrings.purchaseFullReport}
             </Text>

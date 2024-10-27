@@ -56,7 +56,7 @@ const ReportSummary = () => {
         <Column style={styles.subView1}>
           <Column style={styles.textView2}>
             <Text style={styles.purchasePrizeTxt}>
-              {CommonFunctions.formatCurrency(reportSummary.estimated_price)}
+              {CommonFunctions.formatCurrency(reportSummary?.estimated_price)}
             </Text>
             <Text style={styles.estimatedTxt}>
               {CommonStrings.estimatedCost}

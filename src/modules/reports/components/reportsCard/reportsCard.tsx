@@ -76,16 +76,20 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
         </Tooltip>
       </Row>
       <Text style={[typography.h4, styles.addressText]} numberOfLines={2}>
-        {item.address}
+        {item?.address}
       </Text>
       <Text style={[typography.h5, styles.costText]}>
-        {`${CommonStrings.totalRepairCost} ${CommonFunctions.formatCurrency(item.estimated_price)}`}
+        {`${CommonStrings.totalRepairCost} ${CommonFunctions.formatCurrency(item?.estimated_price)}`}
       </Text>
       <Row style={styles.itemFooter}>
-        <Text style={[typography.body, styles.sharedText]}>
-          {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item.last_shared)}`}
-        </Text>
-        <Touchable onPress={() => onPressFullReport(item._id)}>
+        {item?.last_shared && (
+          <Text style={[typography.body, styles.sharedText]}>
+            {`${CommonStrings.lastShared} ${CommonFunctions.dateFormatter(item?.last_shared)}`}
+          </Text>
+        )}
+        <Touchable
+          onPress={() => onPressFullReport(item._id)}
+          style={styles.fullReportView}>
           <Row>
             <Text style={[typography.body, styles.viewReportText]}>
               {CommonStrings.purchaseFullReport}

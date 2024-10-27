@@ -89,6 +89,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
                 cust_id: user?.userId,
                 report_id: reportId,
               });
+              dispatch(getSharedReport({ cust_id: user?.userId }));
               updateState({ loading: false });
               showSuccessToast(result?.data?.message);
             } catch (error: any) {
@@ -118,6 +119,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
           report_id: reportId,
         });
         updateState({ loading: false });
+        dispatch(getFavoriteReport({ cust_id: user?.userId }));
         showSuccessToast(result?.data?.message);
       } catch (error: any) {
         updateState({ loading: false });
@@ -159,16 +161,24 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
       case ReportsTopTabs.RECENT:
         return CommonStrings.searchRecent;
       case ReportsTopTabs.SHARED:
-        return CommonStrings.searchSaved;
-      case ReportsTopTabs.SAVED:
         return CommonStrings.searchShared;
+      case ReportsTopTabs.SAVED:
+        return CommonStrings.searchSaved;
+    }
+  };
+
+  const onPressCancel = () => {
+    if (search.length > 0) {
+      updateState({ search: '' });
     }
   };
 
   return (
     <Column style={styles.container}>
       <CustomInput
-        RightIcon={SvgIcon.Search}
+        onRightIconPress={onPressCancel}
+        scrollEnabled={false}
+        RightIcon={search.length > 0 ? SvgIcon.Cross : SvgIcon.Search}
         placeholder={handlePlaceHolder()}
         customStyle={styles.customTextStyle}
         placeholderTextColor={colors.white}

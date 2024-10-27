@@ -20,7 +20,9 @@ export const validationSchema = Yup.object().shape({
     _id: Yup.string().required('state id is missing'),
     name: Yup.string().required('*Please enter a state'),
   }).required('*Please enter a state'),
-  zip: Yup.string().required(CommonStrings.zipRequired),
+  zip: Yup.string()
+    .matches(/^\d$/, CommonStrings.zipMustNumber)
+    .required(CommonStrings.zipRequired),
   category: Yup.object({
     category_name: Yup.string().required('*Please enter a category'),
     _id: Yup.string().required('Category id is missing'),

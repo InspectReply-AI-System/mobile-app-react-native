@@ -174,6 +174,10 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
     }
   };
 
+  const emptyList = () => {
+    return <EmptyListComponent loading={loading} />;
+  };
+
   return (
     <Column style={styles.container}>
       <CustomInput
@@ -195,7 +199,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
         keyExtractor={(item) => item._id}
         style={styles.list}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() => <EmptyListComponent loading={loading} />}
+        ListEmptyComponent={emptyList}
         contentContainerStyle={[
           styles.contentContainer,
           {

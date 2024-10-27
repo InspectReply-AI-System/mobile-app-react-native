@@ -221,7 +221,7 @@ const share = async ({
     if (result.activityType) {
       onShare();
     } else {
-      // shared
+      onShare();
     }
   } else if (result.action === Share.dismissedAction) {
     // dismissed

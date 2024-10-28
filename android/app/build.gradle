@@ -87,7 +87,7 @@ android {
         applicationId 'com.inspectreplyai.dev'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 3
         versionName '1.0'
         resValue 'string', 'build_config_package', 'com.inspectreplyai.dev'
         vectorDrawables.useSupportLibrary = true

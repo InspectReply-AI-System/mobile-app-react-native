@@ -23,12 +23,20 @@ const ProcessReport = () => {
       const result = await reportSummary(params.report_id);
       navigate(ROUTES.REPORTSUMMARY, { reportDetail: result.data.report });
     } catch (error: any) {
-      showErrorToast(error);
+      if (error !== 'Processing report.') showErrorToast(error);
     }
   };
 
   useEffect(() => {
+    const intervalId = setInterval(async () => {
+      await onPressFullReport();
+    }, 60000); // Retry every 1 minute
+
+    // Initial call
     onPressFullReport();
+
+    // Cleanup interval on component unmount or success
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

@@ -104,17 +104,21 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
 
 export const EmptyListComponent = ({ loading }: { loading: boolean }) => {
   return (
-    <Column style={styles.emptyContainer}>
-      {!loading && (
-        <Column style={styles.emptyBox}>
-          <Text style={[typography.h5, styles.emptyTextTitle]}>
-            {CommonStrings.noReports}
-          </Text>
-          <Text style={[typography.h6, styles.emptyTextSubtitle]}>
-            {CommonStrings.emptyContent}
-          </Text>
+    <>
+      {loading ? (
+        <Column style={styles.emptyContainer}>
+          <Column style={styles.emptyBox}>
+            <Text style={[typography.h5, styles.emptyTextTitle]}>
+              {CommonStrings.noReports}
+            </Text>
+            <Text style={[typography.h6, styles.emptyTextSubtitle]}>
+              {CommonStrings.emptyContent}
+            </Text>
+          </Column>
         </Column>
+      ) : (
+        <></>
       )}
-    </Column>
+    </>
   );
 };

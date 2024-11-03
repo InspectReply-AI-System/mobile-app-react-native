@@ -395,8 +395,8 @@ const ContractorDetails = () => {
                 isNew ? CommonStrings.newContractor : profileData.contractorName
               }
               leftIcon={<SvgIcon.BackIcon />}
-              rightIcon={!editMode && <SvgIcon.Edit />}
-              rightLabel={editMode && CommonStrings.save}
+              rightIcon={!editMode && !isNew && <SvgIcon.Edit />}
+              rightLabel={editMode && !isNew && CommonStrings.save}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
@@ -627,15 +627,23 @@ const ContractorDetails = () => {
                 touched={Boolean(touched.website)}
               />
             </KeyboardAwareScrollView>
-            {editMode && !isNew && (
-              <Column style={{ marginBottom: vh(66) }}>
+            <Column style={{ marginBottom: vh(66) }}>
+              {!isNew ? (
+                editMode && (
+                  <PrimaryButton
+                    title={CommonStrings.deleteContractor}
+                    onPress={handleModal}
+                    containerStyle={{ backgroundColor: colors.red }}
+                  />
+                )
+              ) : (
                 <PrimaryButton
-                  title={CommonStrings.deleteContractor}
-                  onPress={handleModal}
-                  containerStyle={{ backgroundColor: colors.red }}
+                  title={CommonStrings.addContractor}
+                  onPress={() => onPressEdit(validateForm, handleSubmit)}
+                  containerStyle={{ backgroundColor: colors.primaryBlue }}
                 />
-              </Column>
-            )}
+              )}
+            </Column>
             <RNBottomSheet ref={bottomSheetRef}>
               <CategoryList onSelectCategory={onSelectCategory} />
             </RNBottomSheet>

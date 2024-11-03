@@ -105,7 +105,7 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
 export const EmptyListComponent = ({ loading }: { loading: boolean }) => {
   return (
     <>
-      {loading ? (
+      {!loading ? (
         <Column style={styles.emptyContainer}>
           <Column style={styles.emptyBox}>
             <Text style={[typography.h5, styles.emptyTextTitle]}>

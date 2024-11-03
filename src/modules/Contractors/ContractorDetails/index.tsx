@@ -50,6 +50,7 @@ import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ContractorDetails = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ const ContractorDetails = () => {
   const formRef = useRef<FormikProps<FormValues>>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { states } = useAppSelector((store) => store.contractorSlice);
-
+  const inset = useSafeAreaInsets();
   const [profileData, setProfileData] = useState({
     contractorName: '',
     company: '',
@@ -394,9 +395,10 @@ const ContractorDetails = () => {
               title={
                 isNew ? CommonStrings.newContractor : profileData.contractorName
               }
+              titleCustomStyle={{ textAlign: 'center' }}
               leftIcon={<SvgIcon.BackIcon />}
               rightIcon={!editMode && !isNew && <SvgIcon.Edit />}
-              rightLabel={editMode && !isNew && CommonStrings.save}
+              rightLabel={editMode && !isNew ? CommonStrings.save : ''}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
@@ -627,7 +629,7 @@ const ContractorDetails = () => {
                 touched={Boolean(touched.website)}
               />
             </KeyboardAwareScrollView>
-            <Column style={{ marginBottom: vh(66) }}>
+            <Column style={{ marginBottom: vh(inset.bottom + 32) }}>
               {!isNew ? (
                 editMode && (
                   <PrimaryButton

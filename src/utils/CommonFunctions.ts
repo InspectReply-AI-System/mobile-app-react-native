@@ -188,9 +188,9 @@ function convertDataAccodingToFlatList(data: any[]) {
   //   data: grouped[key],
   // }));
 
-  return data.map((item) => ({
-    title: item._id,
-    data: item.contractors,
+  return data?.map((item) => ({
+    title: item?.categoryName,
+    data: item?.contractors,
   }));
 }
 

@@ -75,7 +75,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
   }, [debounceSearch]);
 
   const onEnterSearch = (text: string) => {
-    updateState({ search: text });
+    updateState({ search: text.trimStart() });
   };
 
   const onShare = async (reportId: string, actionType: ReportActions) => {

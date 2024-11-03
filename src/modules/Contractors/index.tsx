@@ -84,7 +84,7 @@ const Contractors = () => {
         placeholder={CommonStrings.searchContractor}
         placeholderTextColor={colors.white}
         customStyle={styles.customTextStyle}
-        onChangeText={(text) => updateState({ search: text })}
+        onChangeText={(text) => updateState({ search: text.trimStart() })}
       />
       <SectionList
         refreshControl={

@@ -125,6 +125,7 @@ export const CommonStrings = {
   zip: 'ZIP',
   website: 'Website (optional)',
   deleteContractor: 'Delete Contractor',
+  addContractor: 'Add Contractor',
   category: 'Category',
   logout: 'Logout',
   save: 'SAVE',

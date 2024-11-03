@@ -21,7 +21,7 @@ export const validationSchema = Yup.object().shape({
     name: Yup.string().required('*Please enter a state'),
   }).required('*Please enter a state'),
   zip: Yup.string()
-    .matches(/^\d$/, CommonStrings.zipMustNumber)
+    .matches(/^\d+$/, CommonStrings.zipMustNumber)
     .required(CommonStrings.zipRequired),
   category: Yup.object({
     category_name: Yup.string().required('*Please enter a category'),

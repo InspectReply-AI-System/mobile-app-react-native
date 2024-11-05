@@ -201,4 +201,6 @@ export const CommonStrings = {
   searchShared: 'Search shared',
   termsAndPrivacy: 'Terms of Service and Privacy Policy',
   done: 'Done',
+  reportGenerationInfo:
+    'We are working on your report, we will notify you as soon as it is ready',
 };

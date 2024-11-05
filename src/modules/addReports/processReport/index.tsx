@@ -9,7 +9,10 @@ import { useRoute } from '@react-navigation/native';
 import { CommonStrings } from '@inspectreplyai/utils';
 import Loader from '@inspectreplyai/components/loader';
 import Column from '@inspectreplyai/components/general/Column';
-import { showErrorToast } from '@inspectreplyai/components/toast';
+import {
+  showErrorToast,
+  showInfoToast,
+} from '@inspectreplyai/components/toast';
 import { reportSummary } from '@inspectreplyai/network/reportsApi';
 import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
@@ -53,6 +56,7 @@ const ProcessReport = () => {
           title='Ok'
           onPress={() => {
             reset(ROUTES.BOTTOMTAB);
+            showInfoToast(CommonStrings.reportGenerationInfo);
           }}
         />
       </Column>

@@ -92,7 +92,10 @@ const ContractorDetails = () => {
   const bottomSheetRef2 = useRef<bottomSheetProps>(null);
 
   const route = useRoute<RouteProp<RouteParams, 'params'>>();
-  const { isNew, id } = route.params ?? { isNew: false };
+  const { id } = route.params ?? { isNew: false };
+  const [isNewContractor, setIsNewContractor] = useState(
+    route.params?.isNew || false,
+  );
 
   const getContractorData = async () => {
     try {
@@ -140,7 +143,7 @@ const ContractorDetails = () => {
   };
 
   useEffect(() => {
-    if (isNew) {
+    if (isNewContractor) {
       setEditMode(true);
     } else {
       setLoader(true);
@@ -261,7 +264,7 @@ const ContractorDetails = () => {
       zip_code: formData.zip,
       category: formData.category?._id,
       website: formData.website,
-      ...(!isNew && {
+      ...(!isNewContractor && {
         contractor_id: profileData?.contractor_id,
         status: 1,
       }),
@@ -269,7 +272,7 @@ const ContractorDetails = () => {
     setLoader(true);
     setContentType(null);
     try {
-      if (isNew) {
+      if (isNewContractor) {
         const result = await registerContractor(params);
         showSuccessToast(result?.data?.message);
         try {
@@ -374,6 +377,7 @@ const ContractorDetails = () => {
           try {
             await submitForm(values);
             setEditMode(false);
+            setIsNewContractor(false);
           } catch (error) {
             // Optionally handle error
           } finally {
@@ -392,11 +396,13 @@ const ContractorDetails = () => {
           <>
             <CustomHeader
               title={
-                isNew ? CommonStrings.newContractor : profileData.contractorName
+                isNewContractor
+                  ? CommonStrings.newContractor
+                  : profileData.contractorName
               }
               leftIcon={<SvgIcon.BackIcon />}
-              rightIcon={!editMode && !isNew && <SvgIcon.Edit />}
-              rightLabel={editMode && !isNew && CommonStrings.save}
+              rightIcon={!editMode && !isNewContractor && <SvgIcon.Edit />}
+              rightLabel={editMode && !isNewContractor && CommonStrings.save}
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
@@ -628,7 +634,7 @@ const ContractorDetails = () => {
               />
             </KeyboardAwareScrollView>
             <Column style={{ marginBottom: vh(66) }}>
-              {!isNew ? (
+              {!isNewContractor ? (
                 editMode && (
                   <PrimaryButton
                     title={CommonStrings.deleteContractor}

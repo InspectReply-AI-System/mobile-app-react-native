@@ -275,6 +275,10 @@ const ContractorDetails = () => {
     try {
       if (isNewContractor) {
         const result = await registerContractor(params);
+        setProfileData({
+          ...profileData,
+          contractor_id: result?.data?.contractor?.id,
+        });
         showSuccessToast(result?.data?.message);
         try {
           if (profileImage?.path) {
@@ -404,7 +408,9 @@ const ContractorDetails = () => {
               titleCustomStyle={{ textAlign: 'center' }}
               leftIcon={<SvgIcon.BackIcon />}
               rightIcon={!editMode && !isNewContractor && <SvgIcon.Edit />}
-              rightLabel={editMode && !isNewContractor && CommonStrings.save}
+              rightLabel={
+                editMode && !isNewContractor ? CommonStrings.save : ''
+              }
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}

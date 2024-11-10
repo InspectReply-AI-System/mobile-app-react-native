@@ -22,12 +22,15 @@ export const styles = StyleSheet.create({
   },
   estimatedTxt: { ...typography.h5, marginTop: vh(18), alignSelf: 'center' },
   iconStyle: { height: vh(64), width: vw(64) },
-  mainView: { paddingHorizontal: vw(16) },
-  numberTxt: { ...typography.h2, alignSelf: 'center', marginTop: vh(40) },
+  mainView: {
+    paddingHorizontal: vw(16),
+    marginTop: vh(27),
+  },
+  numberTxt: { ...typography.h8, alignSelf: 'center', marginTop: vh(40) },
   purchasePrizeTxt: {
-    ...typography.h2,
+    ...typography.h8,
     alignSelf: 'center',
-    marginTop: vh(62),
+    marginTop: vh(60),
   },
   reportSvgView: {
     position: 'absolute',

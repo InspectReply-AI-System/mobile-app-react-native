@@ -4,7 +4,7 @@ import CustomHeader from '@inspectreplyai/components/header';
 import { Icons, SvgIcon } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import { CommonFunctions, CommonStrings } from '@inspectreplyai/utils';
+import { CommonFunctions, CommonStrings, vh } from '@inspectreplyai/utils';
 import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
@@ -53,6 +53,7 @@ const ReportSummary = () => {
             </Text>
           </Column>
         </Column>
+
         <Column style={styles.subView1}>
           <Column style={styles.textView2}>
             <Text style={styles.purchasePrizeTxt}>
@@ -66,15 +67,17 @@ const ReportSummary = () => {
             <Svg Component={SvgIcon.Dollar} imageStyle={styles.iconStyle} />
           </Column>
         </Column>
-        <PrimaryButton
-          title={CommonStrings.accessFullReport}
-          onPress={onPressAccessFullReport}
-        />
-        <PrimaryButton
-          title={CommonStrings.cancel}
-          onPress={onPressCancel}
-          containerStyle={styles.cancelBtnStyle}
-        />
+        <Column style={{ marginTop: vh(86) }}>
+          <PrimaryButton
+            title={CommonStrings.accessFullReport}
+            onPress={onPressAccessFullReport}
+          />
+          <PrimaryButton
+            title={CommonStrings.cancel}
+            onPress={onPressCancel}
+            containerStyle={styles.cancelBtnStyle}
+          />
+        </Column>
       </Column>
     </>
   );

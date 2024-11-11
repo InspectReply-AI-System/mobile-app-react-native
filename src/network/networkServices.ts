@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { apiConfig } from '../config';
 import { CommonStrings } from '@inspectreplyai/utils';
+import { endpoints } from './endpoints';
 
 const $http: AxiosInstance = axios.create({
   baseURL: apiConfig.BASE_URL,
@@ -13,6 +14,15 @@ const $http: AxiosInstance = axios.create({
 $http.interceptors.request.use(async (config: any) => {
   if (config.headers) {
     /* empty */
+    if (
+      config.url == endpoints.auth.login ||
+      config.url == endpoints.auth.register
+    ) {
+      config.headers['user_device_token'] =
+        'sfsdfdsfsdfsfoiw4y578q34y587cny34790q32yc780t3q278x34ym08q32yc29q3yc02yq3ycq2374ycv8q2';
+    } else {
+      delete config.headers['user_device_token'];
+    }
   }
   return config;
 });

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1086381048393",
+    "project_id": "inspectreply-ai",
+    "storage_bucket": "inspectreply-ai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086381048393:android:93e4b92f662249bdbcf598",
+        "android_client_info": {
+          "package_name": "com.inspectreplyai.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3sf_04boiBCf2ZVoxJDjzUiMmDZAmemo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

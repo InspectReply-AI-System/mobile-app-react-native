@@ -15,6 +15,7 @@ import { isIOS } from '@inspectreplyai/utils/platform';
 import Checkout from '@inspectreplyai/modules/reports/checkout';
 import ReportSummary from '@inspectreplyai/modules/reports/reportSummary';
 import WebViewer from '@inspectreplyai/modules/webView';
+import analytics from '@react-native-firebase/analytics';
 
 const RootStack = createNativeStackNavigator();
 
@@ -37,6 +38,24 @@ const RootNavigator = () => {
     return () => {
       subscription.remove();
     };
+  }, []);
+
+  const onPressPredefined = async () => {
+    await analytics().logLogin({
+      method: 'predefined',
+    });
+  };
+  const onPressCustom = async () => {
+    await analytics().logEvent('Inspect Reply AI', {
+      id: 'dxfhmjh_345chggvh',
+      item: 'Product 1',
+      description: ['sports', 'cricket'],
+      sizes: '9',
+    });
+  };
+  useEffect(() => {
+    onPressPredefined();
+    onPressCustom();
   }, []);
 
   return (

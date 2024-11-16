@@ -41,17 +41,26 @@ const RootNavigator = () => {
   }, []);
 
   const onPressPredefined = async () => {
-    await analytics().logLogin({
-      method: 'predefined',
-    });
+    try {
+      const result = await analytics().logLogin({
+        method: 'predefined',
+      });
+      console.log('result in onPressPredefined', result);
+    } catch (error) {
+      console.log('error onPressPredefined', error);
+    }
   };
   const onPressCustom = async () => {
-    await analytics().logEvent('Inspect Reply AI', {
-      id: 'dxfhmjh_345chggvh',
-      item: 'Product 1',
-      description: ['sports', 'cricket'],
-      sizes: '9',
-    });
+    try {
+      const result = await analytics().logEvent('Inspect_Reply_AI_2', {
+        id: 'dxfhmjh_345chggvh',
+        item: 'Product 1',
+        sizes: '9',
+      });
+      console.log('result in onPressCustom', result);
+    } catch (error) {
+      console.log('error in onPressCustom', error);
+    }
   };
   useEffect(() => {
     onPressPredefined();

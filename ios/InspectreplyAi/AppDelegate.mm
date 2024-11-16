@@ -1,5 +1,5 @@
-#import "AppDelegate.h"
 #import <Firebase.h>
+#import "AppDelegate.h"
 #import "RNSplashScreen.h"
 
 #import <React/RCTBundleURLProvider.h>

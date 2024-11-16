@@ -15,7 +15,6 @@ import { isIOS } from '@inspectreplyai/utils/platform';
 import Checkout from '@inspectreplyai/modules/reports/checkout';
 import ReportSummary from '@inspectreplyai/modules/reports/reportSummary';
 import WebViewer from '@inspectreplyai/modules/webView';
-import analytics from '@react-native-firebase/analytics';
 
 const RootStack = createNativeStackNavigator();
 
@@ -38,33 +37,6 @@ const RootNavigator = () => {
     return () => {
       subscription.remove();
     };
-  }, []);
-
-  const onPressPredefined = async () => {
-    try {
-      const result = await analytics().logLogin({
-        method: 'predefined',
-      });
-      console.log('result in onPressPredefined', result);
-    } catch (error) {
-      console.log('error onPressPredefined', error);
-    }
-  };
-  const onPressCustom = async () => {
-    try {
-      const result = await analytics().logEvent('Inspect_Reply_AI_2', {
-        id: 'dxfhmjh_345chggvh',
-        item: 'Product 1',
-        sizes: '9',
-      });
-      console.log('result in onPressCustom', result);
-    } catch (error) {
-      console.log('error in onPressCustom', error);
-    }
-  };
-  useEffect(() => {
-    onPressPredefined();
-    onPressCustom();
   }, []);
 
   return (

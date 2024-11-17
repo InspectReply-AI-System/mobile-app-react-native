@@ -26,6 +26,7 @@ import {
 import { loginUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { isIOS } from '@inspectreplyai/utils/platform';
+import analytics from '@react-native-firebase/analytics';
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -52,6 +53,27 @@ const Login = () => {
       currentStep: currentStep,
     });
   }, [currentStep]);
+
+  const logLoginAttempt = async (email: string) => {
+    await analytics().logEvent('login_attempt', {
+      email: email,
+    });
+  };
+
+  const logLoginSuccess = async (userData: any) => {
+    await analytics().logEvent('login_success', {
+      email: userData?.customer?.email,
+      user_id: userData?._id || '',
+      full_name: userData?.customer?.full_name,
+    });
+  };
+
+  const logLoginError = async (email: string, error: string) => {
+    await analytics().logEvent('login_error', {
+      email: email,
+      error_message: error,
+    });
+  };
 
   const onPressBack = () => {
     if (currentStep === 1) {
@@ -113,7 +135,7 @@ const Login = () => {
     });
   };
 
-  const onPressNext = () => {
+  const onPressNext = async () => {
     let emailError = '',
       passwordError = '';
 
@@ -124,6 +146,12 @@ const Login = () => {
     }
 
     if (emailError || passwordError) {
+      if (currentStep === 2) {
+        await logLoginError(
+          email,
+          'Validation Error: ' + (emailError || passwordError),
+        );
+      }
       return;
     }
 
@@ -132,7 +160,25 @@ const Login = () => {
         currentStep: 2,
       });
     } else if (currentStep === 2 && password && !passwordError) {
-      dispatch(loginUser({ email: email?.toLowerCase(), password }));
+      await logLoginAttempt(email);
+      try {
+        const resultAction = await dispatch(
+          loginUser({
+            email: email?.toLowerCase(),
+            password,
+          }),
+        );
+
+        if (loginUser.fulfilled.match(resultAction)) {
+          const userData = resultAction.payload;
+          await logLoginSuccess(userData);
+        } else if (loginUser.rejected.match(resultAction)) {
+          const error = resultAction.payload || resultAction.error;
+          await logLoginError(email, error?.message || 'Unknown error');
+        }
+      } catch (error: any) {
+        await logLoginError(email, error?.message || 'Unknown error');
+      }
     }
   };
 

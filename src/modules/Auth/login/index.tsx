@@ -26,6 +26,9 @@ import {
 import { loginUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { isIOS } from '@inspectreplyai/utils/platform';
+import AnalyticsService from '@inspectreplyai/services/analytics';
+import { EVENTS } from '@inspectreplyai/services/analytics/events';
+
 const Login = () => {
   const [state, updateState] = useSimpleReducer({
     currentStep: 1,
@@ -132,6 +135,7 @@ const Login = () => {
         currentStep: 2,
       });
     } else if (currentStep === 2 && password && !passwordError) {
+      AnalyticsService.logEvent(EVENTS.LOGIN_CLICK);
       dispatch(loginUser({ email: email?.toLowerCase(), password }));
     }
   };

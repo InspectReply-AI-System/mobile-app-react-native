@@ -30,7 +30,8 @@ import {
 import { registerUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { showErrorToast } from '@inspectreplyai/components/toast';
-import analytics from '@react-native-firebase/analytics';
+import AnalyticsService from '@inspectreplyai/services/analytics';
+import { EVENTS } from '@inspectreplyai/services/analytics/events';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -67,26 +68,6 @@ const SignUp = () => {
   } = state;
 
   const dispatch = useAppDispatch();
-
-  const logSignUpAttempt = async (email: string) => {
-    await analytics().logEvent('signup_attempt', {
-      email: email,
-    });
-  };
-
-  const logSignUpSuccess = async (email: string) => {
-    await analytics().logEvent('signup_success', {
-      email: email,
-      timestamp: new Date().toISOString(),
-    });
-  };
-
-  const logSignUpError = async (email: string, error: string) => {
-    await analytics().logEvent('signup_error', {
-      email: email,
-      error_message: error,
-    });
-  };
 
   const onPressCheckButton = () => {
     setChecked(!checked);
@@ -173,7 +154,7 @@ const SignUp = () => {
     );
   };
 
-  const onPressContinue = async () => {
+  const onPressContinue = () => {
     if (!checked) {
       showErrorToast(CommonStrings.acceptTermsAndConditions);
       return;
@@ -186,21 +167,16 @@ const SignUp = () => {
     onEnterConfirmPassword(confirmPassword);
 
     if (isContinueButtonEnabled()) {
-      await logSignUpAttempt(email);
-      try {
-        await dispatch(
-          registerUser({
-            first_name: firstName,
-            last_name: lastName,
-            email: email?.toLowerCase(),
-            password,
-            status: 1,
-          }),
-        );
-        await logSignUpSuccess(email);
-      } catch (error) {
-        await logSignUpError(email, error?.message || 'Unknown error');
-      }
+      AnalyticsService.logEvent(EVENTS.USER_REGISTER_CLICK);
+      dispatch(
+        registerUser({
+          first_name: firstName,
+          last_name: lastName,
+          email: email?.toLowerCase(),
+          password,
+          status: 1,
+        }),
+      );
     }
   };
 

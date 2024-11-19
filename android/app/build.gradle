@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.facebook.react'
 
 project.ext.envConfigFiles = [
@@ -84,26 +82,26 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.inspectreplyai.dev'
+    namespace 'com.inspectreplyai'
     defaultConfig {
-        applicationId 'com.inspectreplyai.dev'
+        applicationId 'com.inspectreplyai'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 3
         versionName '1.0'
-        resValue 'string', 'build_config_package', 'com.inspectreplyai.dev'
+        resValue 'string', 'build_config_package', 'com.inspectreplyai'
         vectorDrawables.useSupportLibrary = true
     }
 
     flavorDimensions.add('default')
     productFlavors {
         staging {
-            applicationId 'com.inspectreplyai.dev'
+            applicationId 'com.inspectreplyai'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
         production {
-            applicationId 'com.inspectreplyai.dev'
+            applicationId 'com.inspectreplyai'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
         }
@@ -134,10 +132,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            firebaseCrashlytics {
-                nativeSymbolUploadEnabled true
-                unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
-            }
+           
 
         }
     }
@@ -146,7 +141,6 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation('com.facebook.react:react-android')
-    implementation("com.google.firebase:firebase-analytics")
 
     if (hermesEnabled.toBoolean()) {
         implementation('com.facebook.react:hermes-android')

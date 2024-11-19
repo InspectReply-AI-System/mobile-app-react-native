@@ -30,8 +30,6 @@ import {
 import { registerUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { showErrorToast } from '@inspectreplyai/components/toast';
-import AnalyticsService from '@inspectreplyai/services/analytics';
-import { EVENTS } from '@inspectreplyai/services/analytics/events';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -167,7 +165,6 @@ const SignUp = () => {
     onEnterConfirmPassword(confirmPassword);
 
     if (isContinueButtonEnabled()) {
-      AnalyticsService.logEvent(EVENTS.USER_REGISTER_CLICK);
       dispatch(
         registerUser({
           first_name: firstName,

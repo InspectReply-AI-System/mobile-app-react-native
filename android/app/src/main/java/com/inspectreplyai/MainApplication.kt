@@ -1,4 +1,4 @@
-package com.inspectreplyai.dev
+package com.inspectreplyai
 
 import android.app.Application
 import com.facebook.react.PackageList

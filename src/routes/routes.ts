@@ -1,4 +1,3 @@
-// src/config/routes.js
 const ROUTES = {
   SPLASH: 'splash',
   AUTHNAVIGATOR: 'authNavigator',
@@ -21,6 +20,9 @@ const ROUTES = {
   CONTRACTORSDETAILS: 'contractorDetails',
   PASSWORDSCREEN: 'password',
   PROFILENAVIGATOR: 'profileNavigator',
+  CHECKOUTSCREEN: 'checkout',
+  REPORTSUMMARY: 'reportSummary',
+  WEBVIEW: 'webView',
 };
 
 export default ROUTES;

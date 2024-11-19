@@ -130,9 +130,9 @@ const Profile = () => {
     }
   };
 
-  const onPressTerms = () => {};
-
-  const onPressPrivacy = () => {};
+  const onPressTerms = () => {
+    navigate(ROUTES.WEBVIEW);
+  };
 
   const handleImagePicker = () => {
     Alert.alert(
@@ -371,7 +371,7 @@ const Profile = () => {
                 <Text style={styles.termsText}>{CommonStrings.terms}</Text>
               </Touchable>
               <Column style={styles.seperatorView} />
-              <Touchable onPress={onPressPrivacy}>
+              <Touchable onPress={onPressTerms}>
                 <Text style={styles.privacyText}>{CommonStrings.privacy}</Text>
               </Touchable>
               <Column style={styles.seperatorView} />

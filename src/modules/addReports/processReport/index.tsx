@@ -1,14 +1,47 @@
-import { StyleSheet, Text } from 'react-native';
-import React from 'react';
-import Column from '@inspectreplyai/components/general/Column';
-import { colors, typography } from '@inspectreplyai/themes';
-import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
-import { CommonStrings, vh, vw } from '@inspectreplyai/utils';
-import Loader from '@inspectreplyai/components/loader';
-import { reset } from '@inspectreplyai/utils/navigationUtils';
+import { Text } from 'react-native';
+import React, { useEffect } from 'react';
+
+import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
+import { ProcessReportRouteProp } from '../@types';
+import { typography } from '@inspectreplyai/themes';
+import { useRoute } from '@react-navigation/native';
+import { CommonStrings } from '@inspectreplyai/utils';
+import Loader from '@inspectreplyai/components/loader';
+import Column from '@inspectreplyai/components/general/Column';
+import {
+  showErrorToast,
+  showInfoToast,
+} from '@inspectreplyai/components/toast';
+import { reportSummary } from '@inspectreplyai/network/reportsApi';
+import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
+import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 
 const ProcessReport = () => {
+  const route = useRoute<ProcessReportRouteProp>();
+  const params = route.params;
+
+  const onPressFullReport = async () => {
+    try {
+      const result = await reportSummary(params.report_id);
+      navigate(ROUTES.REPORTSUMMARY, { reportDetail: result.data.report });
+    } catch (error: any) {
+      if (error !== 'Processing report.') showErrorToast(error);
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      await onPressFullReport();
+    }, 60000); // Retry every 1 minute
+
+    // Initial call
+    onPressFullReport();
+
+    // Cleanup interval on component unmount or success
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <Column style={styles.container}>
       <Loader />
@@ -23,6 +56,7 @@ const ProcessReport = () => {
           title='Ok'
           onPress={() => {
             reset(ROUTES.BOTTOMTAB);
+            showInfoToast(CommonStrings.reportGenerationInfo);
           }}
         />
       </Column>
@@ -31,28 +65,3 @@ const ProcessReport = () => {
 };
 
 export default ProcessReport;
-
-const styles = StyleSheet.create({
-  btnContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingBottom: 30,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: colors.primaryBalck,
-    paddingHorizontal: vw(16),
-  },
-  text1: {
-    marginHorizontal: vw(42),
-    color: colors.grey,
-    textAlign: 'center',
-    bottom: vh(100),
-  },
-  text2: {
-    marginHorizontal: vw(40),
-    color: colors.grey,
-    textAlign: 'center',
-    bottom: vh(86),
-  },
-});

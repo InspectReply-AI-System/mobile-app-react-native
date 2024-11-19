@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
 
   innerView: {

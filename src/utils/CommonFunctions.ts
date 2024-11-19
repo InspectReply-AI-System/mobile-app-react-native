@@ -1,4 +1,10 @@
-import { Platform, Keyboard, UIManager, LayoutAnimation } from 'react-native';
+import {
+  Platform,
+  Keyboard,
+  UIManager,
+  LayoutAnimation,
+  Share,
+} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { getUniqueId } from 'react-native-device-info';
 import moment from 'moment';
@@ -64,14 +70,6 @@ const showSnackbar = (title: string, color?: string) => {
       numberOfLines: 3,
       textColor: colors.white,
       backgroundColor: color ? color : colors.primaryBlue,
-      // fontFamily: fontFamily.HelveticaBold,
-      // action: {
-      //   text: 'Close',
-      //   textColor: COLORS.WHITE,
-      //   onPress: () => {
-      //     Snackbar.dismiss();
-      //   },
-      // },
     });
   }
 };
@@ -100,7 +98,7 @@ const isDeviceAndroid = () => {
  * @param PermissionIOS IOS Permissions
  */
 
-function debounce<T extends (...args: any[]) => void>(
+function debounce<T extends (...args: unknown[]) => void>(
   func: T,
   wait: number = 500,
 ): (...args: Parameters<T>) => void {
@@ -166,7 +164,7 @@ const removeEmojis = (string: string) => {
 
 function getFirstAndLastName(fullName: string) {
   if (fullName) {
-    let [firstName = '', lastName = ''] = fullName.split(' ');
+    const [firstName = '', lastName = ''] = fullName.split(' ');
     return { firstName, lastName };
   } else {
     return { firstName: fullName, lastName: '' };
@@ -190,11 +188,45 @@ function convertDataAccodingToFlatList(data: any[]) {
   //   data: grouped[key],
   // }));
 
-  return data.map((item) => ({
-    title: item._id,
-    data: item.contractors,
+  return data?.map((item) => ({
+    title: item?.categoryName,
+    data: item?.contractors,
   }));
 }
+
+const dateFormatter = (date = '', format: string = 'MM/DD/YYYY') => {
+  return moment(date).format(format);
+};
+
+const formatCurrency = (amount: number = 0) => {
+  return Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: amount % 1 ? 2 : 0,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
+
+const share = async ({
+  message,
+  onShare,
+}: {
+  message: string;
+  onShare: () => void;
+}) => {
+  const result = await Share.share({
+    message: message,
+  });
+  if (result.action === Share.sharedAction) {
+    if (result.activityType) {
+      onShare();
+    } else {
+      onShare();
+    }
+  } else if (result.action === Share.dismissedAction) {
+    // dismissed
+  }
+};
 
 export default {
   debounce,
@@ -212,4 +244,7 @@ export default {
   getAssetDataFromPath,
   addOpacityToHexColor,
   convertDataAccodingToFlatList,
+  dateFormatter,
+  formatCurrency,
+  share,
 };

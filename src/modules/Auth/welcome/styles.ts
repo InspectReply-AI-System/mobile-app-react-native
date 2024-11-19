@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: vh(125),
-    backgroundColor: colors.primaryBalck,
+    backgroundColor: colors.primaryBlack,
   },
   description: { textAlign: 'center', marginTop: vh(16) },
   dontAccount: {

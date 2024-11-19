@@ -1,3 +1,11 @@
+import { AuthModel } from '@inspectreplyai/models/authModel';
+
+export interface AuthState {
+  error: string;
+  loading: boolean;
+  isSignUp: boolean;
+  user: AuthModel;
+}
 export interface LoginUserPayload {
   email: string;
   password: string;

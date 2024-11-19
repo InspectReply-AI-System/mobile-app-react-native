@@ -10,13 +10,7 @@ export const styles = StyleSheet.create({
   bgStyle: {
     marginTop: vh(-15),
   },
-  container: {
-    flex: 1,
-    backgroundColor: colors.primaryBalck,
-  },
-  contentContainer: {
-    paddingBottom: vh(90),
-  },
+
   costText: {
     color: colors.white,
     marginBottom: vh(8),
@@ -54,6 +48,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: normalize(12),
     borderTopLeftRadius: normalize(12),
   },
+  fullReportView: { alignItems: 'flex-end', flex: 1 },
   itemContainer: {
     backgroundColor: colors.black27282B,
     borderRadius: normalize(8),
@@ -65,26 +60,17 @@ export const styles = StyleSheet.create({
   itemFooter: {
     justifyContent: 'space-between',
     marginTop: vh(48),
+    flex: 1,
   },
   itemHeader: {
     justifyContent: 'space-between',
     marginBottom: vh(8),
   },
+
   lastOption: {
     paddingHorizontal: vw(16),
     borderBottomLeftRadius: normalize(12),
     borderBottomRightRadius: normalize(12),
-  },
-  list: {
-    flex: 1,
-  },
-  moreOptions: {
-    color: colors.white,
-    fontSize: normalize(18),
-  },
-  optionStyle: {},
-  selectedTooltip: {
-    backgroundColor: colors.black27282B,
   },
   sharedText: {
     color: colors.grey,

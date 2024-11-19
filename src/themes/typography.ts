@@ -55,6 +55,11 @@ const typography = {
     fontSize: normalize(12),
     color: colors.white,
   },
+  h8: {
+    fontFamily: fonts.MEDIUM,
+    fontSize: normalize(28),
+    color: colors.white,
+  },
   // Add more typography styles as needed
 };
 

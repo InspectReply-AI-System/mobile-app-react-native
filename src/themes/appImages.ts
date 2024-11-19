@@ -1,5 +1,6 @@
 const fixedPath = '../assets';
 
+// import SVGs
 import UnselectedCheckBox from '../assets/svg/checkBoxIcon.svg';
 import SelectCheckBox from '../assets/svg/checkBoxSelectionIcon.svg';
 import checked from '../assets/svg/checked.svg';
@@ -16,6 +17,11 @@ import Edit from '@inspectreplyai/assets/svg/edit.svg';
 import BackIcon from '@inspectreplyai/assets/svg/backIcon.svg';
 import DownArrow from '@inspectreplyai/assets/svg/downArrow.svg';
 import Search from '@inspectreplyai/assets/svg/search.svg';
+import ReportIcon from '@inspectreplyai/assets/svg/reportIcon.svg';
+import Dollar from '@inspectreplyai/assets/svg/dollar.svg';
+import RightIcon from '@inspectreplyai/assets/svg/rightMark.svg';
+import Wifi from '@inspectreplyai/assets/svg/wifi.svg';
+import Share from '@inspectreplyai/assets/svg/share.svg';
 
 export const Icons = {
   backIcon: require(`${fixedPath}/icons/backButton.png`),
@@ -41,6 +47,7 @@ export const GIF = {
   //   example: require(`${fixedPath}json/example.json`),
 };
 
+// Export SVGs
 export const SvgIcon = {
   SelectCheckBox,
   UnselectedCheckBox,
@@ -58,4 +65,9 @@ export const SvgIcon = {
   BackIcon,
   DownArrow,
   Search,
+  ReportIcon,
+  Dollar,
+  RightIcon,
+  Wifi,
+  Share,
 };

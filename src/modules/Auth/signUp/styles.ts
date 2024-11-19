@@ -5,7 +5,7 @@ import { normalize, vh, vw } from '@inspectreplyai/utils';
 
 export const styles = StyleSheet.create({
   checkBoxView: { alignItems: 'center', marginTop: vh(24) },
-  container: { flex: 1, backgroundColor: colors.primaryBalck },
+  container: { flex: 1, backgroundColor: colors.primaryBlack },
   iAcceptText: { fontSize: normalize(13), marginLeft: vw(7) },
   imageStyle: {
     height: vw(80),

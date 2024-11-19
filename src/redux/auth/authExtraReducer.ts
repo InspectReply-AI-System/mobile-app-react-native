@@ -1,11 +1,8 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { getProfile, loginUser, registerUser } from './action';
-import { reset } from '@inspectreplyai/utils/navigationUtils';
-import ROUTES from '@inspectreplyai/routes/routes';
-import { AuthState } from './AuthSlice';
-import { showErrorToast } from '@inspectreplyai/components/toast';
-import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
+import { AuthState } from './@types';
 import { AuthModel } from '@inspectreplyai/models/authModel';
+import { getProfile, loginUser, registerUser } from './action';
+import { setAuthorizationToken } from '@inspectreplyai/network/networkServices';
 
 export const authExtraReducer = (
   builder: ActionReducerMapBuilder<AuthState>,
@@ -25,16 +22,12 @@ export const authExtraReducer = (
       state.user.userId = customer?._id || '';
       state.user.profilePhoto = customer?.profilePhoto || '';
       state.loading = false;
-      setTimeout(() => {
-        reset(ROUTES.BOTTOMTAB);
-      }, 0);
     })
     .addCase(loginUser.rejected, (state: AuthState, action) => {
       state.loading = false;
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 
   builder
@@ -52,16 +45,12 @@ export const authExtraReducer = (
       state.user.userId = customer?._id || '';
       state.isSignUp = true;
       state.loading = false;
-      setTimeout(() => {
-        reset(ROUTES.BOTTOMTAB);
-      }, 0);
     })
     .addCase(registerUser.rejected, (state: AuthState, action) => {
       state.loading = false;
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 
   builder
@@ -88,6 +77,5 @@ export const authExtraReducer = (
       state.error = action.payload
         ? (action.payload as string)
         : 'An error occurred';
-      showErrorToast(action.payload as string);
     });
 };

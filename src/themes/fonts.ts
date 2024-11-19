@@ -12,6 +12,12 @@ const fonts = {
   BOLD: 'Roboto Bold', // fontweight -- 700,800
   BLACK_ITALIC: 'Roboto Black Italic', // fontweight -- 900
   BLACK: 'Roboto Black', // fontweight -- 900
+  POPPINS_SEMIBOLD: 'Poppins-SemiBold',
+  POPPINS_LIGHT: 'Poppins-Light',
+  POPPINS_MEDIUM: 'Poppins-Medium',
+  POPPINS_REGULAR: 'Poppins-Regular',
+  POPPINS_BOLD: 'Poppins-Bold',
+  POPPINS_THIN: 'Poppins-Thin',
 };
 
 export default fonts;

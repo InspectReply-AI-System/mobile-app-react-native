@@ -1,5 +1,5 @@
 const colors = {
-  primaryBalck: '#1C1D1F',
+  primaryBlack: '#1C1D1F',
   primaryBlue: '#296FA9',
   blue296FA91A: '#296FA91A',
   grey47464F: '#47464F',
@@ -20,6 +20,13 @@ const colors = {
   grey313C42: '#313C42',
   black1E1E1E: '#1E1E1E',
   grey6F6F70: '#6F6F70',
+  yellow: '#FFC130',
+  green: '#92E546',
+  grey303238: '#303238',
+  blue465B85: '#465B85',
+  blue75BEF4: '#75BEF4',
+  whiteFFFFFFA6: '#FFFFFFA6',
+  blue296FA973: '#296FA973',
 };
 
 export default colors;

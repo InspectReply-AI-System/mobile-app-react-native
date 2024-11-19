@@ -30,6 +30,8 @@ import {
 import { registerUser } from '@inspectreplyai/redux/auth/action';
 import { RootState } from '@inspectreplyai/redux/Store';
 import { showErrorToast } from '@inspectreplyai/components/toast';
+import AnalyticsService from '@inspectreplyai/services/analytics';
+import { EVENTS } from '@inspectreplyai/services/analytics/events';
 
 const SignUp = () => {
   const { setRef, focusOnElement } = useRefs();
@@ -157,12 +159,15 @@ const SignUp = () => {
       showErrorToast(CommonStrings.acceptTermsAndConditions);
       return;
     }
+
     onEnterName(firstName);
     onEnterLastName(lastName);
     onEnterEmail(email);
     onEnterPassword(password);
     onEnterConfirmPassword(confirmPassword);
+
     if (isContinueButtonEnabled()) {
+      AnalyticsService.logEvent(EVENTS.USER_REGISTER_CLICK);
       dispatch(
         registerUser({
           first_name: firstName,
@@ -177,6 +182,9 @@ const SignUp = () => {
 
   const onPressSignIn = () => {
     navigate(ROUTES.LOGIN);
+  };
+  const onPressTerms = () => {
+    navigate(ROUTES.WEBVIEW);
   };
 
   return (
@@ -285,13 +293,15 @@ const SignUp = () => {
               <SvgIcon.UnselectedCheckBox />
             )}
           </Touchable>
-          <Text style={[typography.body, styles.iAcceptText]}>
+          <Text
+            onPress={onPressTerms}
+            style={[typography.body, styles.iAcceptText]}>
             {CommonStrings.iaccept}
             <Text style={styles.underlineText}>
               {CommonStrings.termsAndConditions}
             </Text>
             &
-            <Text style={styles.underlineText}>
+            <Text onPress={onPressTerms} style={styles.underlineText}>
               {CommonStrings.privacyPolicy}
             </Text>
           </Text>

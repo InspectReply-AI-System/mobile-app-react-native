@@ -12,6 +12,9 @@ import { AppState } from 'react-native';
 import { useAppDispatch } from '@inspectreplyai/hooks/reduxHooks';
 import { SET_CONFIG_DATA } from '@inspectreplyai/redux/config/ConfigSlice';
 import { isIOS } from '@inspectreplyai/utils/platform';
+import Checkout from '@inspectreplyai/modules/reports/checkout';
+import ReportSummary from '@inspectreplyai/modules/reports/reportSummary';
+import WebViewer from '@inspectreplyai/modules/webView';
 
 const RootStack = createNativeStackNavigator();
 
@@ -53,6 +56,9 @@ const RootNavigator = () => {
         name={ROUTES.CONTRACTORSDETAILS}
       />
       <RootStack.Screen component={Password} name={ROUTES.PASSWORDSCREEN} />
+      <RootStack.Screen component={Checkout} name={ROUTES.CHECKOUTSCREEN} />
+      <RootStack.Screen component={ReportSummary} name={ROUTES.REPORTSUMMARY} />
+      <RootStack.Screen component={WebViewer} name={ROUTES.WEBVIEW} />
     </RootStack.Navigator>
   );
 };

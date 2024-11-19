@@ -15,9 +15,16 @@ import {
   updateProfilePhoto,
   updateUserProfile,
 } from '@inspectreplyai/network/authApis';
-import { showSuccessToast } from '@inspectreplyai/components/toast';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
 import { setContentType } from '@inspectreplyai/network/networkServices';
 import { SET_CONFIG_DATA } from '../config/ConfigSlice';
+import { reset } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
+import AnalyticsService from '@inspectreplyai/services/analytics';
+import { EVENTS } from '@inspectreplyai/services/analytics/events';
 const sliceName = 'auth';
 
 export const loginUser = createAsyncThunk(
@@ -27,8 +34,22 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await signInWithEmail(payload);
       thunkAPI.dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+      const { customer } = response.data;
+      AnalyticsService.logEvent(EVENTS.LOGIN_SUCCESS, {
+        email: customer.email,
+        id: customer._id,
+        name: `${customer.first_name} ${customer.last_name}`,
+      });
+      setTimeout(() => {
+        reset(ROUTES.BOTTOMTAB);
+      }, 0);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
+      AnalyticsService.logEvent(EVENTS.LOGIN_FAILED, {
+        email: payload.email,
+        error: error.message,
+      });
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -40,8 +61,22 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await registerWithEmail(payload);
       thunkAPI.dispatch(SET_CONFIG_DATA({ welocmeScreen: true }));
+      const { customer } = response.data;
+      AnalyticsService.logEvent(EVENTS.USER_REGISTER_SUCCESS, {
+        email: customer.email,
+        id: customer._id,
+        name: `${customer.first_name} ${customer.last_name}`,
+      });
+      setTimeout(() => {
+        reset(ROUTES.BOTTOMTAB);
+      }, 0);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
+      AnalyticsService.logEvent(EVENTS.USER_REGISTER_FAILED, {
+        email: payload.email,
+        error: error.message,
+      });
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -53,7 +88,8 @@ export const getProfile = createAsyncThunk(
     try {
       const response = await getUserProfile(payload);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -88,7 +124,8 @@ export const setProfileImage = createAsyncThunk(
         thunkAPI.dispatch(getProfile({ customerId: args.customerId }));
       }
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      showErrorToast(error);
       return thunkAPI.rejectWithValue(error);
     }
   },

@@ -50,6 +50,7 @@ import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import { lauchGallery, launchCamera } from '@inspectreplyai/utils/ChooseFile';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CustomProfileInput from '@inspectreplyai/components/textInputs/profileInput';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ContractorDetails = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ const ContractorDetails = () => {
   const formRef = useRef<FormikProps<FormValues>>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { states } = useAppSelector((store) => store.contractorSlice);
-
+  const inset = useSafeAreaInsets();
   const [profileData, setProfileData] = useState({
     contractorName: '',
     company: '',
@@ -92,7 +93,10 @@ const ContractorDetails = () => {
   const bottomSheetRef2 = useRef<bottomSheetProps>(null);
 
   const route = useRoute<RouteProp<RouteParams, 'params'>>();
-  const { isNew, id } = route.params ?? { isNew: false };
+  const { id } = route.params ?? { isNew: false };
+  const [isNewContractor, setIsNewContractor] = useState(
+    route.params?.isNew || false,
+  );
 
   const getContractorData = async () => {
     try {
@@ -140,7 +144,7 @@ const ContractorDetails = () => {
   };
 
   useEffect(() => {
-    if (isNew) {
+    if (isNewContractor) {
       setEditMode(true);
     } else {
       setLoader(true);
@@ -261,7 +265,7 @@ const ContractorDetails = () => {
       zip_code: formData.zip,
       category: formData.category?._id,
       website: formData.website,
-      ...(!isNew && {
+      ...(!isNewContractor && {
         contractor_id: profileData?.contractor_id,
         status: 1,
       }),
@@ -269,8 +273,12 @@ const ContractorDetails = () => {
     setLoader(true);
     setContentType(null);
     try {
-      if (isNew) {
+      if (isNewContractor) {
         const result = await registerContractor(params);
+        setProfileData({
+          ...profileData,
+          contractor_id: result?.data?.contractor?.id,
+        });
         showSuccessToast(result?.data?.message);
         try {
           if (profileImage?.path) {
@@ -374,6 +382,7 @@ const ContractorDetails = () => {
           try {
             await submitForm(values);
             setEditMode(false);
+            setIsNewContractor(false);
           } catch (error) {
             // Optionally handle error
           } finally {
@@ -392,11 +401,16 @@ const ContractorDetails = () => {
           <>
             <CustomHeader
               title={
-                isNew ? CommonStrings.newContractor : profileData.contractorName
+                isNewContractor
+                  ? CommonStrings.newContractor
+                  : profileData.contractorName
               }
+              titleCustomStyle={{ textAlign: 'center' }}
               leftIcon={<SvgIcon.BackIcon />}
-              rightIcon={!editMode && <SvgIcon.Edit />}
-              rightLabel={editMode && CommonStrings.save}
+              rightIcon={!editMode && !isNewContractor && <SvgIcon.Edit />}
+              rightLabel={
+                editMode && !isNewContractor ? CommonStrings.save : ''
+              }
               onRightPress={() => onPressEdit(validateForm, handleSubmit)}
               onPressRightLabel={() => onPressEdit(validateForm, handleSubmit)}
               disabled={false}
@@ -627,15 +641,23 @@ const ContractorDetails = () => {
                 touched={Boolean(touched.website)}
               />
             </KeyboardAwareScrollView>
-            {editMode && !isNew && (
-              <Column style={{ marginBottom: vh(66) }}>
+            <Column style={{ marginBottom: vh(inset.bottom + 32) }}>
+              {!isNewContractor ? (
+                editMode && (
+                  <PrimaryButton
+                    title={CommonStrings.deleteContractor}
+                    onPress={handleModal}
+                    containerStyle={{ backgroundColor: colors.red }}
+                  />
+                )
+              ) : (
                 <PrimaryButton
-                  title={CommonStrings.deleteContractor}
-                  onPress={handleModal}
-                  containerStyle={{ backgroundColor: colors.red }}
+                  title={CommonStrings.addContractor}
+                  onPress={() => onPressEdit(validateForm, handleSubmit)}
+                  containerStyle={{ backgroundColor: colors.primaryBlue }}
                 />
-              </Column>
-            )}
+              )}
+            </Column>
             <RNBottomSheet ref={bottomSheetRef}>
               <CategoryList onSelectCategory={onSelectCategory} />
             </RNBottomSheet>

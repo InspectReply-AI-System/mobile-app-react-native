@@ -23,6 +23,7 @@ const NotificationService = () => {
   // get the fcm token
   const getFcmToken = async () => {
     try {
+      await messaging().registerDeviceForRemoteMessages();
       const fcmToken = await messaging().getToken();
 
       console.log('Your Firebase Token is Push Notification:', fcmToken);

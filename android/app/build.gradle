@@ -6,8 +6,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.facebook.react'
 
 project.ext.envConfigFiles = [
-        stagingRelease :".env.staging",
-        stagingDebug:".env.staging",
+        stagingRelease :'.env.staging',
+        stagingDebug:'.env.staging',
         productionDebug:'.env.production',
         productionRelease:'.env.production'
 ]
@@ -116,14 +116,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-          release {
+        release {
             storeFile file(MYAPP_RELEASE_STORE_FILE)
             storePassword MYAPP_RELEASE_STORE_PASSWORD
             keyAlias MYAPP_RELEASE_KEY_ALIAS
             keyPassword MYAPP_RELEASE_KEY_PASSWORD
         }
     }
-    
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -138,7 +138,6 @@ android {
                 nativeSymbolUploadEnabled true
                 unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
             }
-
         }
     }
 }
@@ -146,7 +145,8 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation('com.facebook.react:react-android')
-    implementation("com.google.firebase:firebase-analytics")
+    implementation('com.google.firebase:firebase-analytics')
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
 
     if (hermesEnabled.toBoolean()) {
         implementation('com.facebook.react:hermes-android')

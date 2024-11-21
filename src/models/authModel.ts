@@ -6,6 +6,7 @@ export type ActionType = {
 export class AuthModel {
   token: string = '';
   email: string = '';
+  fcmToken: string = '';
   refreshToken: string = '';
   firstName: string = '';
   lastName: string = '';

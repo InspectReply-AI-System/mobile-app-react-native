@@ -7,6 +7,7 @@ import { store } from '@inspectreplyai/redux/Store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import NetInfoHandler from '@inspectreplyai/components/netInfo';
 
+import NotificationService from '@inspectreplyai/services/notification/PushNotification';
 const App = () => {
   return (
     <SafeAreaProvider>
@@ -15,6 +16,7 @@ const App = () => {
           <NetInfoHandler />
           <Navigator />
         </GestureHandlerRootView>
+        <NotificationService />
       </Provider>
     </SafeAreaProvider>
   );

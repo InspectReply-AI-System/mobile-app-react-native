@@ -11,9 +11,9 @@ export const showErrorToast = (message: string) => {
   });
 };
 
-export const showSuccessToast = (message: string) => {
+export const showSuccessToast = (message: string, title = '') => {
   Toast.show({
-    text1: CommonStrings.Success,
+    text1: title || CommonStrings.Success,
     text2: message,
     position: 'top',
     type: 'success',

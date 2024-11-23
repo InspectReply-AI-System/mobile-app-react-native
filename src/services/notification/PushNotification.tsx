@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { Alert, AppState, Linking, Platform } from 'react-native';
-import messaging from '@react-native-firebase/messaging';
 import { useDispatch } from 'react-redux';
-import PushNotification from 'react-native-push-notification';
+import React, { useEffect, useRef } from 'react';
 import Permission from 'react-native-permissions';
+import { CommonStrings } from '@inspectreplyai/utils';
+import messaging from '@react-native-firebase/messaging';
+import { AppState, Linking, Platform } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import AlertComponent from '@inspectreplyai/components/alert';
 import { SET_DATA } from '@inspectreplyai/redux/auth/AuthSlice';
 import { showSuccessToast } from '@inspectreplyai/components/toast';
 
@@ -17,7 +19,7 @@ const NotificationService = () => {
       channelName: 'IRP Push Notifications Channel',
       channelDescription: 'IRP push notifications channel',
     },
-    (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    (created: string) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
   );
 
   // get the fcm token
@@ -25,7 +27,6 @@ const NotificationService = () => {
     try {
       await messaging().registerDeviceForRemoteMessages();
       const fcmToken = await messaging().getToken();
-
       console.log('Your Firebase Token is Push Notification:', fcmToken);
       if (fcmToken) {
         dispatch(SET_DATA({ fcmToken: fcmToken }));
@@ -47,43 +48,23 @@ const NotificationService = () => {
         ]);
         switch (status) {
           case Permission.RESULTS.DENIED:
-            Alert.alert(
-              'Notification Permission',
-              'Please allow notifications from app settings' +
-                'settings. Allow the app to send notification',
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => {},
-                  style: 'cancel',
-                },
-                {
-                  text: 'Ok',
-                  onPress: () => Linking.openSettings(),
-                },
-              ],
-            );
+            AlertComponent({
+              title: CommonStrings.notificationPermission,
+              description: CommonStrings.pleaseAllowPermission,
+              onPressText1: () => {},
+              onPressText2: () => Linking.openSettings(),
+            });
             break;
           case Permission.RESULTS.GRANTED:
             getFcmToken();
             break;
           case Permission.RESULTS.BLOCKED:
-            Alert.alert(
-              'Notification Permission',
-              'Please allow notifications from app settings' +
-                'settings. Allow the app to send notification',
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => {},
-                  style: 'cancel',
-                },
-                {
-                  text: 'Ok',
-                  onPress: () => Linking.openSettings(),
-                },
-              ],
-            );
+            AlertComponent({
+              title: CommonStrings.notificationPermission,
+              description: CommonStrings.pleaseAllowPermission,
+              onPressText1: () => {},
+              onPressText2: () => Linking.openSettings(),
+            });
             break;
           default:
             break;
@@ -101,23 +82,12 @@ const NotificationService = () => {
         getFcmToken();
       } else {
         if (messaging.AuthorizationStatus.DENIED === authStatus) {
-          Alert.alert(
-            'Notification Permission',
-            'Please allow notifications from app settings' +
-              'settings. Allow the app to send notification',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => {},
-                style: 'default',
-              },
-              {
-                text: 'OK',
-                onPress: () => Linking.openSettings(),
-                style: 'default',
-              },
-            ],
-          );
+          AlertComponent({
+            title: CommonStrings.notificationPermission,
+            description: CommonStrings.pleaseAllowPermission,
+            onPressText1: () => {},
+            onPressText2: () => Linking.openSettings(),
+          });
         }
       }
     }

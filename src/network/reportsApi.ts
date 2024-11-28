@@ -65,6 +65,13 @@ const reportSummary = async (report_id: string) => {
   return await postApiCall(endpoints.reports.reportSummary, { report_id });
 };
 
+const updateDeviceToken = async (params: {
+  cust_id: string;
+  user_device_token: string;
+}) => {
+  return await postApiCall(endpoints.auth.updateDeviceToken, { ...params });
+};
+
 export {
   generateReport,
   recentReports,
@@ -72,4 +79,5 @@ export {
   sharedReports,
   handleReportAction,
   reportSummary,
+  updateDeviceToken,
 };

@@ -74,6 +74,13 @@ const changeUserPassword = async (params: {
   return await postApiCall(endpoints.auth.changePassword, params);
 };
 
+const updateDeviceToken = async (params: {
+  cust_id: string;
+  user_device_token: string;
+}) => {
+  return await postApiCall(endpoints.auth.updateDeviceToken, params);
+};
+
 export {
   getUserProfile,
   signInWithEmail,
@@ -85,4 +92,5 @@ export {
   resetPassword,
   verifyOtp,
   updateUserProfile,
+  updateDeviceToken,
 };

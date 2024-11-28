@@ -18,8 +18,8 @@ import FloatingButton from '@inspectreplyai/components/floatingButton';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { styles } from './styles';
-import { updateDeviceToken } from '@inspectreplyai/network/reportsApi';
 import { showErrorToast } from '@inspectreplyai/components/toast';
+import { updateDeviceToken } from '@inspectreplyai/network/authApis';
 
 const Tab = createMaterialTopTabNavigator();
 

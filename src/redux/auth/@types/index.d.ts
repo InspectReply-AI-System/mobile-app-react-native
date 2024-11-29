@@ -5,6 +5,7 @@ export interface AuthState {
   loading: boolean;
   isSignUp: boolean;
   user: AuthModel;
+  fcmToken: string;
 }
 export interface LoginUserPayload {
   email: string;

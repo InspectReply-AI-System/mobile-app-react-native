@@ -203,4 +203,7 @@ export const CommonStrings = {
   done: 'Done',
   reportGenerationInfo:
     'We are working on your report, we will notify you as soon as it is ready',
+  notificationPermission: 'Notification Permission',
+  pleaseAllowPermission: `Please allow notifications from app settings' +
+                'settings. Allow the app to send notification`,
 };

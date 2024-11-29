@@ -10,6 +10,7 @@ export const endpoints = {
     updateProfilePhoto: 'api/customer/profile-photo',
     deleteUser: 'api/customer/delete',
     changePassword: 'api/customer/change-password',
+    updateDeviceToken: 'api/customer/update-device-token',
   },
   contractors: {
     register: '/api/contractor/register',

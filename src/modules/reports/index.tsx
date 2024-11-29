@@ -18,6 +18,8 @@ import FloatingButton from '@inspectreplyai/components/floatingButton';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
 import { styles } from './styles';
+import { showErrorToast } from '@inspectreplyai/components/toast';
+import { updateDeviceToken } from '@inspectreplyai/network/authApis';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,7 +27,21 @@ const Reports: React.FC = () => {
   const [isGuideVisible, setIsGuideVisible] = useState(false);
   const [step, setStep] = useState(1);
 
-  const { user, isSignUp } = useAppSelector((store) => store.AuthSlice);
+  const { user, isSignUp, fcmToken } = useAppSelector(
+    (store) => store.AuthSlice,
+  );
+
+  const handleToken = async () => {
+    try {
+      await updateDeviceToken({
+        cust_id: user?.userId,
+        user_device_token: fcmToken,
+      });
+    } catch (error: any) {
+      showErrorToast(error.message);
+    }
+  };
+
   const dispatch = useAppDispatch();
   const handleNextStep = () => {
     if (step < 3) {
@@ -37,6 +53,7 @@ const Reports: React.FC = () => {
   };
 
   useEffect(() => {
+    handleToken();
     dispatch(getProfile({ customerId: user?.userId }));
   }, []);
 

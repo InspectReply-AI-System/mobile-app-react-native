@@ -33,10 +33,11 @@ const Reports: React.FC = () => {
 
   const handleToken = async () => {
     try {
-      await updateDeviceToken({
+      const result = await updateDeviceToken({
         cust_id: user?.userId,
         user_device_token: fcmToken,
       });
+      console.log('fcm Updated', result);
     } catch (error: any) {
       showErrorToast(error.message);
     }

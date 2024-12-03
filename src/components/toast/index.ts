@@ -30,3 +30,18 @@ export const showInfoToast = (message: string) => {
     visibilityTime: 3000,
   });
 };
+
+export const showNotiSuccessToast = (
+  message: string,
+  title = '',
+  onPress?: () => void,
+) => {
+  Toast.show({
+    onPress: onPress,
+    text1: title || CommonStrings.Success,
+    text2: message,
+    position: 'top',
+    type: 'notiSuccess',
+    visibilityTime: 8000,
+  });
+};

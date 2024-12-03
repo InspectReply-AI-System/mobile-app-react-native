@@ -55,7 +55,7 @@ export const ReportsCard: React.FC<RepairItemProps> = ({
             <TooltipContent
               onClose={(type: ReportActions) => {
                 setTooltipVisibleId(null);
-                onTooltipAction(type, item._id);
+                onTooltipAction(type, item._id, item?.final_report);
               }}
               isSelected={isSelected}
             />

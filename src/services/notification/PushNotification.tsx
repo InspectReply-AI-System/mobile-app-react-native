@@ -7,7 +7,7 @@ import { AppState, Linking, Platform } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import AlertComponent from '@inspectreplyai/components/alert';
 import { SET_DATA } from '@inspectreplyai/redux/auth/AuthSlice';
-import { showSuccessToast } from '@inspectreplyai/components/toast';
+import { showNotiSuccessToast } from '@inspectreplyai/components/toast';
 
 const NotificationService = () => {
   const appState = useRef(AppState.currentState);
@@ -153,7 +153,7 @@ const NotificationService = () => {
       notification: { title = '', body = '' },
     }: any = remoteMessage;
     console.log('remoteMessage', remoteMessage);
-    showSuccessToast(body, title);
+    showNotiSuccessToast(body, title, () => {});
   };
 
   useEffect(() => {

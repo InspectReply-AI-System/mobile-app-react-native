@@ -78,7 +78,11 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
     updateState({ search: text.trimStart() });
   };
 
-  const onShare = async (reportId: string, actionType: ReportActions) => {
+  const onShare = async (
+    reportId: string,
+    actionType: ReportActions,
+    final_report?: string,
+  ) => {
     try {
       setTimeout(async () => {
         CommonFunctions.share({
@@ -89,6 +93,7 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
               const result = await handleReportAction(actionType, {
                 cust_id: user?.userId,
                 report_id: reportId,
+                final_report,
               });
               dispatch(getSharedReport({ cust_id: user?.userId }));
               updateState({ loading: false });
@@ -108,9 +113,10 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
   const handleTooltipAction = async (
     actionType: ReportActions,
     reportId: string,
+    final_report?: string,
   ) => {
     if (ReportActions.SHARE === actionType) {
-      onShare(reportId, actionType);
+      onShare(reportId, actionType, final_report);
       return;
     } else {
       try {

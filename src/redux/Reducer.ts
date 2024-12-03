@@ -5,12 +5,14 @@ import ConfigSlice from './config/ConfigSlice';
 import AuthSlice from './auth/AuthSlice';
 import contractorSlice from './contractor/contractorSlice';
 import reportsSlice from './reports/ReportSlice';
+import NotificationSlice from './notification/NotificationSlice';
 
 const RootReducer = combineReducers({
   AuthSlice,
   ConfigSlice,
   contractorSlice,
   reportsSlice,
+  NotificationSlice,
 });
 
 const rootReducer = (state: any, action: any) => {

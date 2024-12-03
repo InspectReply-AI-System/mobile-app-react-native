@@ -36,4 +36,9 @@ export const endpoints = {
   webview: {
     terms: 'https://www.inspectreply-ai.com/terms',
   },
+  notification: {
+    getNotifications: '/api/customer/notifications',
+    deleteNotification: '/api/customer/notification-delete',
+    markNotificationRead: '/api/customer/notification-read',
+  },
 };

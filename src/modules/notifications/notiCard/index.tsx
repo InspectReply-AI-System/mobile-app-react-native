@@ -14,9 +14,8 @@ const NotiCard = (props: NotiCardProps) => {
   const {
     heading,
     subLabel,
-    description,
+    onPressCard,
     onActionPress,
-    customDescStyle,
     onRightIconPress,
     customHeadingStyle,
     customSubLabelStyle,
@@ -24,26 +23,23 @@ const NotiCard = (props: NotiCardProps) => {
   } = props;
   return (
     <AppleStyleSwipeableRow hideEdit leftActionHandler={onActionPress}>
-      <Column style={styles.container} {...containerCustomStyle}>
-        <Row style={styles.textIconContainer}>
-          <Text style={[typography.body, { flex: 1 }, customHeadingStyle]}>
-            {heading}
+      <Touchable activeOpacity={0.8} onPress={onPressCard}>
+        <Column style={styles.container} {...containerCustomStyle}>
+          <Row style={styles.textIconContainer}>
+            <Text style={[typography.body, { flex: 1 }, customHeadingStyle]}>
+              {heading}
+            </Text>
+            <Touchable onPress={onRightIconPress}>
+              <ImageWrapper source={Icons.cross} style={styles.crossIcon} />
+            </Touchable>
+          </Row>
+          <Text
+            style={[typography.subBody1, styles.timeText]}
+            {...customSubLabelStyle}>
+            {subLabel}
           </Text>
-          <Touchable onPress={onRightIconPress}>
-            <ImageWrapper source={Icons.cross} style={styles.crossIcon} />
-          </Touchable>
-        </Row>
-        <Text
-          style={[typography.subBody1, styles.timeText]}
-          {...customSubLabelStyle}>
-          {subLabel}
-        </Text>
-        <Text
-          numberOfLines={3}
-          style={[typography.h6, styles.description, customDescStyle]}>
-          {description}
-        </Text>
-      </Column>
+        </Column>
+      </Touchable>
     </AppleStyleSwipeableRow>
   );
 };

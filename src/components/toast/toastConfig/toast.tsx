@@ -60,6 +60,22 @@ const toastConfig = {
       </Touchable>
     </Row>
   ),
+
+  notiSuccess: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
+    <Touchable onPress={props?.onPress}>
+      <Row style={styles.successToastContainer}>
+        <Row style={styles.innerContainer}>
+          <Svg Component={SvgIcon.Success} style={styles.leftIcon} />
+          <Text style={[typography.body, styles.successText]}>
+            {props.text2}
+          </Text>
+        </Row>
+        <Touchable onPress={hideToast}>
+          <Svg style={styles.rightIcon} Component={SvgIcon.Cross} />
+        </Touchable>
+      </Row>
+    </Touchable>
+  ),
 };
 
 /*

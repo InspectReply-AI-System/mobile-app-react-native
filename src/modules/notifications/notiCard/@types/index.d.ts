@@ -3,7 +3,7 @@ import { TextStyle, ViewStyle } from 'react-native';
 export interface NotiCardProps {
   heading: string;
   subLabel: string;
-  description: string;
+  onPressCard: () => void;
   onActionPress: () => void;
   customDescStyle?: TextStyle;
   onRightIconPress: () => void;

@@ -15,8 +15,13 @@ export interface RepairItemProps {
     address: string;
     cost: string;
     lastShared: string;
+    final_report?: string;
   };
-  onTooltipAction: (type: ReportActions, reportId: string) => void;
+  onTooltipAction: (
+    type: ReportActions,
+    reportId: string,
+    final_report?: string,
+  ) => void;
   tab: ReportsTopTabs;
   onPressFullReport: (id: string) => void;
 }

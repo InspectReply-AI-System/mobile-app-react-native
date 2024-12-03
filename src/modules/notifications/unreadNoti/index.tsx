@@ -2,19 +2,66 @@ import React from 'react';
 import NotiCard from '../notiCard';
 import { colors } from '@inspectreplyai/themes';
 import { normalize } from '@inspectreplyai/utils';
-import { Alert, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import Column from '@inspectreplyai/components/general/Column';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@inspectreplyai/hooks/reduxHooks';
+import moment from 'moment';
+import { NotiItem } from '../@types';
+import { postApiCall } from '@inspectreplyai/network/networkMethods';
+import { endpoints } from '@inspectreplyai/network/endpoints';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '@inspectreplyai/components/toast';
+import { getNotification } from '@inspectreplyai/redux/notification/action';
+import { navigate } from '@inspectreplyai/utils/navigationUtils';
+import ROUTES from '@inspectreplyai/routes/routes';
 
 const UnreadNoti = () => {
-  const _renderItem = () => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((store) => store.AuthSlice);
+  const { unreadNotis } = useAppSelector((store) => store.NotificationSlice);
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await postApiCall(
+        endpoints.notification.deleteNotification,
+        { notification_id: id },
+      );
+      dispatch(getNotification({ cust_id: user?.userId }));
+      showSuccessToast(response?.data?.message);
+    } catch (error: any) {
+      showErrorToast(error);
+    }
+  };
+  const onPressNotiCard = async (_id: string) => {
+    try {
+      const response = await postApiCall(
+        endpoints.notification.markNotificationRead,
+        {
+          notification_id: _id,
+        },
+      );
+      if (response?.status == 200) {
+        navigate(ROUTES.REPORTSUMMARY);
+      }
+    } catch (error: any) {
+      showErrorToast(error);
+    }
+  };
+
+  const _renderItem = ({ item }: NotiItem) => {
     return (
       <>
         <NotiCard
-          description={`Lorem ipsum dolor sit amet consectetur. Nulla tortor massa id miphasellus vivamus. Pretium pulvinar netus dictum et quamullamcorpereretium pulvinar netus dictum et quamullamcorperwjkdbewjkdekwjdeqwjbdkewd`}
-          heading={'Your report is ready to view'}
-          onActionPress={() => Alert.alert('Delete')}
+          heading={item?.content}
           onRightIconPress={() => {}}
-          subLabel={'3h ago'}
+          onPressCard={() => onPressNotiCard(item?._id)}
+          onActionPress={() => handleDelete(item?._id)}
+          subLabel={moment(item?.createdAt).fromNow()}
         />
       </>
     );
@@ -23,7 +70,7 @@ const UnreadNoti = () => {
   return (
     <Column style={styles.container}>
       <FlatList
-        data={[1, 2, 3, 4, 5]}
+        data={unreadNotis}
         renderItem={_renderItem}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: normalize(20) }}

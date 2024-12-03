@@ -5,7 +5,7 @@ import { Icons, SvgIcon } from '@inspectreplyai/themes/appImages';
 import Column from '@inspectreplyai/components/general/Column';
 import PrimaryButton from '@inspectreplyai/components/buttons/primaryButton';
 import { CommonFunctions, CommonStrings, vh } from '@inspectreplyai/utils';
-import { navigate, reset } from '@inspectreplyai/utils/navigationUtils';
+import { goBack, navigate } from '@inspectreplyai/utils/navigationUtils';
 import { styles } from './styles';
 import ROUTES from '@inspectreplyai/routes/routes';
 import Svg from '@inspectreplyai/components/general/Svg';
@@ -23,7 +23,7 @@ const ReportSummary = () => {
   };
 
   const onPressCancel = () => {
-    reset(ROUTES.BOTTOMTAB);
+    goBack();
   };
   return (
     <>

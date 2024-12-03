@@ -16,6 +16,7 @@ type GenerateReportParams = {
 type ReportRouteParams = {
   cust_id: string;
   report_id?: string;
+  final_report?: string;
 };
 
 const generateReport = async (params: GenerateReportParams): Promise<any> => {

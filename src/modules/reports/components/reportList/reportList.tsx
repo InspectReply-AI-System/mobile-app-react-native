@@ -86,14 +86,13 @@ const ReportList = ({ repairs, tab }: ReportListProps) => {
     try {
       setTimeout(async () => {
         CommonFunctions.share({
-          message: `Report ID: ${reportId} `,
+          message: `Report : ${final_report} `,
           onShare: async () => {
             try {
               updateState({ loading: true });
               const result = await handleReportAction(actionType, {
                 cust_id: user?.userId,
                 report_id: reportId,
-                final_report,
               });
               dispatch(getSharedReport({ cust_id: user?.userId }));
               updateState({ loading: false });

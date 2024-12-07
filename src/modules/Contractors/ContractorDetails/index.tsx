@@ -290,6 +290,7 @@ const ContractorDetails = () => {
           setContentType(null);
           setLoader(false);
           setEditMode(false);
+          setIsNewContractor(false);
         } catch (error: any) {
           showErrorToast(error);
           setLoader(false);
@@ -379,15 +380,8 @@ const ContractorDetails = () => {
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          try {
-            await submitForm(values);
-            setEditMode(false);
-            setIsNewContractor(false);
-          } catch (error) {
-            // Optionally handle error
-          } finally {
-            setSubmitting(false);
-          }
+          submitForm(values);
+          setSubmitting(false);
         }}>
         {({
           handleChange,

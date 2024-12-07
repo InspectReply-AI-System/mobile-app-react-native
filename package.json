@@ -32,7 +32,8 @@
     "androidProductionDebugAPK": "yarn clean && cd android && ./gradlew assembleProductionDebug && killall -9 java && cd .. && open ./android/app/build/outputs/apk/production/debug",
     "androidProductionReleaseAPK": "yarn clean && cd android && ./gradlew assembleProductionRelease && killall -9 java && cd .. && open ./android/app/build/outputs/apk/production/release",
     "androidStagingDebugAPK": "yarn clean && cd android && ./gradlew assembleStagingDebug && killall -9 java && open ./android/app/build/outputs/apk/staging/debug",
-    "androidStagingReleaseAPK": "yarn clean && cd android && ./gradlew assembleStagingRelease && killall -9 java && cd .. && open ./android/app/build/outputs/apk/staging/release"
+    "androidStagingReleaseAPK": "yarn clean && cd android && ./gradlew assembleStagingRelease && killall -9 java && cd .. && open ./android/app/build/outputs/apk/staging/release",
+    "androidStagingReleaseBundle": "yarn clean && cd android && ./gradlew bundleStagingRelease && killall -9 java && cd .. && open ./android/app/build/outputs/bundle/staging/release"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.6.4",
@@ -74,7 +75,7 @@
     "react-native-mmkv": "2.12.1",
     "react-native-modal": "13.0.1",
     "react-native-pager-view": "^6.4.0",
-    "react-native-permissions": "^3.8.4",
+    "react-native-permissions": "^5.2.1",
     "react-native-push-notification": "^8.1.1",
     "react-native-raw-bottom-sheet": "^3.0.0",
     "react-native-reanimated": "^3.15.0",

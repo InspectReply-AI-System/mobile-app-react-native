@@ -19,6 +19,7 @@ import {
 import { getNotification } from '@inspectreplyai/redux/notification/action';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
+import EmptyListCard from '../emptyListCard';
 
 const UnreadNoti = () => {
   const dispatch = useAppDispatch();
@@ -73,8 +74,13 @@ const UnreadNoti = () => {
         data={unreadNotis}
         renderItem={_renderItem}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: normalize(20) }}
+        contentContainerStyle={[
+          { paddingBottom: normalize(20) },
+          unreadNotis?.length <= 0 ? { flex: 1 } : {},
+        ]}
         ItemSeparatorComponent={() => <Column style={{ marginTop: 8 }} />}
+        keyExtractor={(item) => item?._id}
+        ListEmptyComponent={() => <EmptyListCard />}
       />
     </Column>
   );

@@ -19,6 +19,7 @@ import {
 } from '@inspectreplyai/components/toast';
 import { navigate } from '@inspectreplyai/utils/navigationUtils';
 import ROUTES from '@inspectreplyai/routes/routes';
+import EmptyListCard from '../emptyListCard';
 
 const ReadNoti = () => {
   const { readNotis } = useAppSelector((store) => store.NotificationSlice);
@@ -62,8 +63,13 @@ const ReadNoti = () => {
         data={readNotis}
         renderItem={_renderItem}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: normalize(20) }}
+        contentContainerStyle={[
+          { paddingBottom: normalize(20) },
+          readNotis?.length <= 0 ? { flex: 1 } : {},
+        ]}
         ItemSeparatorComponent={() => <Column style={{ marginTop: 8 }} />}
+        keyExtractor={(item) => item?._id}
+        ListEmptyComponent={() => <EmptyListCard />}
       />
     </Column>
   );

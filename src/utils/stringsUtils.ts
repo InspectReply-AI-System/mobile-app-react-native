@@ -146,6 +146,7 @@ export const CommonStrings = {
   noCity: 'No City Added',
   search: 'Search',
   noContractorFound: 'No Contractor Found',
+  noNotificationFound: 'No Notification Found',
   selectCityFirst: '*Please select state first',
   selectImageSource: 'Select Image Source',
   choosefromGalleryOrCamera: 'Choose from gallery or camera',

@@ -1,0 +1,61 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["tsconfig.json"]
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-native",
+    "react-hooks",
+    "prettier",
+    "etc"
+  ],
+  "rules": {
+    "etc/no-commented-out-code": "warn",
+    "react/sort-comp": "error",
+    "no-return-assign": "error",
+    "arrow-parens": ["error", "always"],
+    "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+    ],
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "prefer-const": "warn",
+    "react/destructuring-assignment": "off",
+    "prettier/prettier": "error",
+    "no-unused-expressions": [
+      "error",
+      { "allowShortCircuit": true, "allowTernary": true }
+    ],
+    "no-undef": "error",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react-native/no-unused-styles": "error",
+    "react-native/no-inline-styles": "off",
+    "react-native/no-color-literals": "error",
+
+    "react-native/no-raw-text": "error",
+    "react-native/no-single-element-style-arrays": "error",
+    "react-native/sort-styles": [
+      "warn",
+      "asc",
+      { "ignoreClassNames": false, "ignoreStyleProperties": true }
+    ]
+  }
+}

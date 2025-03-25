@@ -35,7 +35,6 @@ jobs:
 
       - name: Configure AWS Credentials (Tepia SES)
         id: creds
-        if: matrix.scanners == 'container_secret_scanning'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
@@ -45,6 +44,7 @@ jobs:
 
       - name: Configure AWS Credentials (Tepia Github OIDC)
         id: tepia_creds
+        if: matrix.scanners == 'container_secret_scanning'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ vars.AWS_REGION }}
